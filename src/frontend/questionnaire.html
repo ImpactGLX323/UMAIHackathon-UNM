@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Questionnaire</title>
+        <style>
+            input[type="text"], input[type="number"], select {
+                width: 150px;
+                padding: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1><center>Questionnaire</center></h1>
+        <center>
+        <form>
+            <label for="gender">Gender:</label><br><br>
+            <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select><br><br>
+
+            <label for="bloodsugar">Last Blood Sugar Level (Leave blank if not applicable)</label><br><br>
+            <input type="text" id="bloodsugar" name="bloodsugar" placeholder="Enter blood sugar level" oninput="this.value = this.value.replace(/[^0-9.]/g, '');"><br><br>
+
+            <label for="age">Age:</label><br><br>
+            <input type="number" id="age" name="age" min="1" max="120"><br><br>
+
+            <label for="bp_sys">Blood Pressure (Systolic / Diastolic):</label><br><br>
+            <input type="number" id="bp_sys" name="bp_sys" placeholder="Systolic" min="70" max="200"> /
+            <input type="number" id="bp_dia" name="bp_dia" placeholder="Diastolic" min="40" max="120"><br><br>
+            
+            <label for="height">Height:</label>
+            <input type="text" id="height" name="height" placeholder="Enter height" oninput="this.value = this.value.replace(/[^0-9.]/g, '');"><br><br>
+            
+            <label for="weight">Weight:</label>
+            <input type="text" id="weight" name="weight" placeholder="Enter weight" oninput="this.value = this.value.replace(/[^0-9.]/g, '');"><br><br>
+
+            <label for="hba1c">HbA1c:</label>
+            <input type="number" id="hba1c" name="hba1c" placeholder="Enter HbA1c level" min="1" max="10" step="0.1"><br><br>
+
+            <label for="heartdisease">Do you have heart disease?</label><br><br>
+            <input type="radio" id="heartyes" name="heartdisease" value="yes">
+            <label for="heartyes">Yes</label><br>
+            <input type="radio" id="heartno" name="heartdisease" value="no">
+            <label for="heartno">No</label><br><br>
+
+            <label for="smokehis">Do you have a smoking history?</label><br><br>
+            <input type="radio" id="smokecurrent" name="smokecurrent" value="current">
+            <label for="smokecurrent">Current</label><br>
+            <input type="radio" id="smokeformer" name="smokeformer" value="former">
+            <label for="smokeformer">Former</label><br>
+            <input type="radio" id="smokenever" name="smokenever" value="never">
+            <label for="smokenever">Never</label><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+        </center>
+    </body>
+</html>
