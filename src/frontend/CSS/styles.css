@@ -118,7 +118,8 @@ body
     height: 100vh;
     background-color: brown;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
-   
+    margin-left: 30%;
+    margin-right: 30%;
 }
 
 
