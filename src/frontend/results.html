@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Results</title>
+        <style>
+            .container {
+                display: flex;
+                justify-content: space-between;
+                margin: 20px;
+            }
+            .results-section {
+                width: 50%;
+            }
+            .bmi-section {
+                width: 60%;
+                border-left: 2px solid #ccc;
+                padding-left: 20px;
+            }
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+        </style>
+        <script>
+            function displayResults() {
+                const urlParams = new URLSearchParams(window.location.search);
+
+                const gender = urlParams.get('gender');
+                const age = urlParams.get('age');
+                const bpSys = urlParams.get('bp_sys');
+                const bpDia = urlParams.get('bp_dia');
+                const heartDisease = urlParams.get('heartdisease');
+                const smokeHistory = urlParams.get('smokehis');
+                const height = urlParams.get('height');
+                const weight = urlParams.get('weight');
+                const bsl = urlParams.get('BSL');
+                const bloodSugar = urlParams.get('bloodsugar');
+
+                document.getElementById('genderResult').innerText = gender;
+                document.getElementById('ageResult').innerText = age;
+                document.getElementById('bpResult').innerText = `${bpSys} / ${bpDia}`;
+                document.getElementById('heartDiseaseResult').innerText = heartDisease;
+                document.getElementById('smokeHistoryResult').innerText = smokeHistory;
+                document.getElementById('heightResult').innerText = `${height} cm`;
+                document.getElementById('weightResult').innerText = `${weight} kg`;
+                document.getElementById('bslResult').innerText = bsl || 'Not provided';
+                document.getElementById('bloodSugarResult').innerText = bloodSugar || 'Not provided';
+
+                const heightinmetres = height / 100;
+                const bmi = (weight / (heightinmetres ** 2)).toFixed(2);
+                document.getElementById('bmiresults').innerText = bmi;
+
+                let bmicat = '';
+                if (bmi < 18.5) {
+                    bmicat = 'Underweight';
+                } else if (bmi >= 18.5 && bmi <= 24.9) {
+                    bmicat = 'Normal Weight';
+                } else if (bmi > 24.9 && bmi <= 29.9) {
+                    bmicat = 'Overweight';
+                } else {
+                    bmicat = 'Obese';
+                }
+                document.getElementById('bmilevel').innerText = bmicat;
+                displayAdvice(bpSys, bpDia, smokeHistory, bmi, bloodSugar);
+            }
+
+            function displayAdvice(bpSys, bpDia, smokeHistory, bmi, bloodSugar) {
+                let bpAdvice = '';
+                if (parseInt(bpSys) > 130 || parseInt(bpDia) > 80) {
+                    bpAdvice = 'Your blood pressure is high. Consider reducing salt intake, staying active, and consulting your healthcare provider for personalized guidance.';
+                } else {
+                    bpAdvice = 'Your blood pressure is within a normal range. Keep up the healthy habits to maintain it.';
+                }
+
+                let smokeAdvice = '';
+                switch (smokeHistory.toLowerCase()) {
+                    case 'no info':
+                        smokeAdvice = 'Smoking history information is not available. Please consider providing accurate details for more personalized advice.';
+                        break;
+                    case 'never':
+                        smokeAdvice = 'Great job avoiding smoking! Keep it up for your long-term health.';
+                        break;
+                    case 'former':
+                        smokeAdvice = 'It\'s great that you quit smoking! Continuing to stay smoke-free will significantly benefit your health over time.';
+                        break;
+                    case 'current':
+                        smokeAdvice = 'Smoking is harmful to your health. Quitting smoking can greatly improve your overall health. Consider seeking support through programs or medical advice.';
+                        break;
+                    case 'not current':
+                        smokeAdvice = 'You\'ve stopped smoking, which is a positive step for your health! It\'s important to stay smoke-free for long-term well-being.';
+                        break;
+                    case 'ever':
+                        smokeAdvice = 'Having smoked in the past means you have an increased risk of health issues. It\'s essential to continue avoiding smoking and maintain a healthy lifestyle.';
+                        break;
+                    default:
+                        smokeAdvice = 'Invalid smoking history information. Please ensure accurate data for better guidance.';
+                        break;
+                }
+
+                let bmiAdvice = '';
+                if (bmi < 18.5) {
+                    bmiAdvice = 'You are underweight. Consider speaking to a nutritionist to create a balanced eating plan and ensure you are getting enough nutrients.';
+                } else if (bmi >= 18.5 && bmi <= 24.9) {
+                    bmiAdvice = 'Your weight is normal. Continue to maintain a balanced diet and stay active.';
+                } else if (bmi > 24.9 && bmi <= 29.9) {
+                    bmiAdvice = 'You are overweight. Consider adopting healthier eating habits, increasing physical activity, and consulting a healthcare professional for personalized advice.';
+                } else {
+                    bmiAdvice = 'You are obese. It is important to make changes in your diet and exercise routine. Consider speaking to a healthcare professional for guidance on weight management.';
+                }
+
+                let bloodSugarAdvice = '';
+                if (bloodSugar && parseInt(bloodSugar) > 126) {
+                    bloodSugarAdvice = 'Your blood sugar level is high. It is important to reduce sugar intake, exercise regularly, and consult with a doctor to manage your blood sugar.';
+                } else {
+                    bloodSugarAdvice = 'Your blood sugar levels are within a normal range. Maintain a balanced diet and regular exercise to keep it in check.';
+                }
+
+                document.getElementById('bpAdvice').innerText = bpAdvice;
+                document.getElementById('smokeAdvice').innerText = smokeAdvice;
+                document.getElementById('bmiAdvice').innerText = bmiAdvice;
+                document.getElementById('bloodSugarAdvice').innerText = bloodSugarAdvice;
+            }
+        </script>
+    </head>
+
+    <body onload="displayResults()">
+        <div class="container">
+            <div class="results-section">
+                <h1>Submitted Results</h1>
+                <ul>
+                    <li><b>Gender:</b> <span id="genderResult"></span></li>
+                    <li><b>Age:</b> <span id="ageResult"></span></li>
+                    <li><b>Blood Pressure (Systolic / Diastolic):</b> <span id="bpResult"></span></li>
+                    <li><b>Heart Disease:</b> <span id="heartDiseaseResult"></span></li>
+                    <li><b>Smoking History:</b> <span id="smokeHistoryResult"></span></li>
+                    <li><b>Height:</b> <span id="heightResult"></span></li>
+                    <li><b>Weight:</b> <span id="weightResult"></span></li>
+                    <li><b>Last Blood Sugar Knowledge:</b> <span id="bslResult"></span></li>
+                    <li><b>Last Blood Sugar Level:</b> <span id="bloodSugarResult"></span></li>
+                </ul>
+            </div>
+            <div class="bmi-section">
+                <h1>Advice based on results</h1>
+                <p><b>Your BMI:</b> <span id="bmiresults"></span></p>
+                <p><b>Category:</b> <span id="bmilevel"></span></p>
+                <p><b>Blood Pressure Advice:</b> <span id="bpAdvice"></span></p>
+                <p><b>Smoking History Advice:</b> <span id="smokeAdvice"></span></p>
+                <p><b>BMI Advice:</b> <span id="bmiAdvice"></span></p>
+                <p><b>Blood Sugar Advice:</b> <span id="bloodSugarAdvice"></span></p>
+            </div>
+        </div>
+    </body>
+</html>
