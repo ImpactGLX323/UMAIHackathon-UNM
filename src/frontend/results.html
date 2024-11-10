@@ -109,7 +109,11 @@
                 }
 
                 let bloodSugarAdvice = '';
-                if (bloodSugar && parseInt(bloodSugar) > 126) {
+                if (bloodSugar === 'no' || !bloodSugar) {
+                    bloodSugarAdvice = 'No blood sugar information is provided. For personalized advice, please provide blood sugar details.';
+                } else if (parseInt(bloodSugar) < 70) {
+                    bloodSugarAdvice = 'Your blood sugar level is low. Consider having small, frequent meals and speak to a healthcare provider if you experience symptoms like dizziness or weakness.';
+                } else if (parseInt(bloodSugar) > 126) {
                     bloodSugarAdvice = 'Your blood sugar level is high. It is important to reduce sugar intake, exercise regularly, and consult with a doctor to manage your blood sugar.';
                 } else {
                     bloodSugarAdvice = 'Your blood sugar levels are within a normal range. Maintain a balanced diet and regular exercise to keep it in check.';
