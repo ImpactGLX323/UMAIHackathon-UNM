@@ -2,25 +2,79 @@
 <html>
     <head>
         <title>Results</title>
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
         <style>
+            body {
+                font-family: 'Raleway', sans-serif;
+                background-color: #f4f4f9;
+                color: #333;
+                margin: 0;
+                padding: 0;
+            }
+        
             .container {
                 display: flex;
-                justify-content: space-between;
-                margin: 20px;
+                justify-content: center;
+                gap: 20px;
+                margin: 40px;
             }
-            .results-section {
-                width: 50%;
+        
+            .results-section, .bmi-section {
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                width: 45%;
+                transition: all 0.3s ease;
             }
-            .bmi-section {
-                width: 60%;
-                border-left: 2px solid #ccc;
-                padding-left: 20px;
+        
+            .results-section h1, .bmi-section h1 {
+                color: #4CAF50;
+                text-align: center;
             }
+        
             ul {
                 list-style-type: none;
                 padding: 0;
+                margin: 0;
+            }
+
+        
+            li {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+        
+            li:last-child {
+                border-bottom: none;
+            }
+        
+            li b {
+                color: hsl(187, 31%, 27%);
+            }
+        
+            .bmi-section p {
+                font-size: 1em;
+                color: hsl(187, 31%, 27%);
+                padding: 10px 0;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .bmi-section p:last-child{
+                border-bottom:none;
+            }
+        
+            .bmi-section span {
+                font-weight: normal;
+                color: #4CAF50;
+            }
+        
+            .container:hover .results-section,
+            .container:hover .bmi-section {
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             }
         </style>
+        
         <script>
             function displayResults() {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -33,7 +87,6 @@
                 const smokeHistory = urlParams.get('smokehis');
                 const height = urlParams.get('height');
                 const weight = urlParams.get('weight');
-                const bsl = urlParams.get('BSL');
                 const bloodSugar = urlParams.get('bloodsugar');
 
                 document.getElementById('genderResult').innerText = gender;
@@ -43,7 +96,6 @@
                 document.getElementById('smokeHistoryResult').innerText = smokeHistory;
                 document.getElementById('heightResult').innerText = `${height} cm`;
                 document.getElementById('weightResult').innerText = `${weight} kg`;
-                document.getElementById('bslResult').innerText = bsl || 'Not provided';
                 document.getElementById('bloodSugarResult').innerText = bloodSugar || 'Not provided';
 
                 const heightinmetres = height / 100;
@@ -66,64 +118,82 @@
 
             function displayAdvice(bpSys, bpDia, smokeHistory, bmi, bloodSugar) {
                 let bpAdvice = '';
+                let bpColor = '#333';
                 if (parseInt(bpSys) > 130 || parseInt(bpDia) > 80) {
                     bpAdvice = 'Your blood pressure is high. Consider reducing salt intake, staying active, and consulting your healthcare provider for personalized guidance.';
+                    bpColor = '#f44336';
                 } else {
                     bpAdvice = 'Your blood pressure is within a normal range. Keep up the healthy habits to maintain it.';
+                    bpColor = '#4CAF50';
                 }
 
                 let smokeAdvice = '';
+                let smokeColor = '#333';
                 switch (smokeHistory.toLowerCase()) {
                     case 'no info':
                         smokeAdvice = 'Smoking history information is not available. Please consider providing accurate details for more personalized advice.';
+                        smokeColor = '#777';
                         break;
                     case 'never':
                         smokeAdvice = 'Great job avoiding smoking! Keep it up for your long-term health.';
+                        smokeColor = '#4CAF50';
                         break;
                     case 'former':
                         smokeAdvice = 'It\'s great that you quit smoking! Continuing to stay smoke-free will significantly benefit your health over time.';
+                        smokeColor = '#4CAF50';
                         break;
                     case 'current':
                         smokeAdvice = 'Smoking is harmful to your health. Quitting smoking can greatly improve your overall health. Consider seeking support through programs or medical advice.';
+                        smokeColor = '#f44336';
                         break;
                     case 'not current':
                         smokeAdvice = 'You\'ve stopped smoking, which is a positive step for your health! It\'s important to stay smoke-free for long-term well-being.';
+                        smokeColor = '#4CAF50';
                         break;
                     case 'ever':
                         smokeAdvice = 'Having smoked in the past means you have an increased risk of health issues. It\'s essential to continue avoiding smoking and maintain a healthy lifestyle.';
+                        smokeColor = '#f44336';
                         break;
                     default:
                         smokeAdvice = 'Invalid smoking history information. Please ensure accurate data for better guidance.';
+                        smokeColor = '#f44336';
                         break;
                 }
 
                 let bmiAdvice = '';
+                let bmiColor = '#333';
                 if (bmi < 18.5) {
                     bmiAdvice = 'You are underweight. Consider speaking to a nutritionist to create a balanced eating plan and ensure you are getting enough nutrients.';
+                    bmiColor = '#f44336';
                 } else if (bmi >= 18.5 && bmi <= 24.9) {
                     bmiAdvice = 'Your weight is normal. Continue to maintain a balanced diet and stay active.';
+                    bmiColor = '#4CAF50';
                 } else if (bmi > 24.9 && bmi <= 29.9) {
                     bmiAdvice = 'You are overweight. Consider adopting healthier eating habits, increasing physical activity, and consulting a healthcare professional for personalized advice.';
+                    bmiColor = '#f44336'; 
                 } else {
                     bmiAdvice = 'You are obese. It is important to make changes in your diet and exercise routine. Consider speaking to a healthcare professional for guidance on weight management.';
+                    bmiColor = '#f44336'; 
                 }
 
                 let bloodSugarAdvice = '';
-                if (bloodSugar === 'no' || !bloodSugar) {
-                    bloodSugarAdvice = 'No blood sugar information is provided. For personalized advice, please provide blood sugar details.';
-                } else if (parseInt(bloodSugar) < 70) {
+                let sugarColor = '#333';
+                if (parseInt(bloodSugar) < 70) {
                     bloodSugarAdvice = 'Your blood sugar level is low. Consider having small, frequent meals and speak to a healthcare provider if you experience symptoms like dizziness or weakness.';
+                    sugarColor = '#f44336';
                 } else if (parseInt(bloodSugar) > 126) {
                     bloodSugarAdvice = 'Your blood sugar level is high. It is important to reduce sugar intake, exercise regularly, and consult with a doctor to manage your blood sugar.';
+                    sugarColor = '#f44336';
                 } else {
                     bloodSugarAdvice = 'Your blood sugar levels are within a normal range. Maintain a balanced diet and regular exercise to keep it in check.';
-                }
+                    sugarColor = '#4CAF50';
 
-                document.getElementById('bpAdvice').innerText = bpAdvice;
-                document.getElementById('smokeAdvice').innerText = smokeAdvice;
-                document.getElementById('bmiAdvice').innerText = bmiAdvice;
-                document.getElementById('bloodSugarAdvice').innerText = bloodSugarAdvice;
+                document.getElementById('bpAdvice').innerHTML = `<span style="color:${bpColor}">${bpAdvice}</span>`;
+                document.getElementById('smokeAdvice').innerHTML = `<span style="color:${smokeColor}">${smokeAdvice}</span>`;
+                document.getElementById('bmiAdvice').innerHTML = `<span style="color:${bmiColor}">${bmiAdvice}</span>`;
+                document.getElementById('bloodSugarAdvice').innerHTML = `<span style="color:${sugarColor}">${bloodSugarAdvice}</span>`;
             }
+        }
         </script>
     </head>
 
@@ -139,7 +209,6 @@
                     <li><b>Smoking History:</b> <span id="smokeHistoryResult"></span></li>
                     <li><b>Height:</b> <span id="heightResult"></span></li>
                     <li><b>Weight:</b> <span id="weightResult"></span></li>
-                    <li><b>Last Blood Sugar Knowledge:</b> <span id="bslResult"></span></li>
                     <li><b>Last Blood Sugar Level:</b> <span id="bloodSugarResult"></span></li>
                 </ul>
             </div>
