@@ -4,89 +4,7 @@
     <title>Questionnaire</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Raleway', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-
-        h1 {
-            color: #4CAF50;
-        }
-
-        form {
-            background: white;
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            transition: opacity 0.8s ease;
-        }
-
-        .fade-out {
-            opacity: 0;
-        }
-
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        input[type="text"], input[type="number"], select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .flex-inputs {
-            display: flex;
-            gap: 10px;
-        }
-
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        input[type="button"], input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-family: 'Raleway', sans-serif;
-        }
-
-        .field-section {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.8s ease, opacity 0.8s ease;
-        }
-
-        .field-section.active {
-            max-height: 500px;
-            opacity: 1;
-            transition: max-height 0.8s ease, opacity 0.8s ease;
-        }
-
-        .first-field .navigation-buttons {
-            justify-content: flex-end;
-        }
-    </style>
+    <link rel="stylesheet" href="css2.css">
 </head>
 <body>
     <h1><center>Diabetes Prediction Questionnaire</center></h1>
@@ -218,17 +136,14 @@
 
         function handleSubmit(event) {
             event.preventDefault();
-            const form = document.getElementById('questionnaireForm');
-            form.classList.add('fade-out');
+            const body = document.querySelector('body');
+            body.classList.add('fade-out');
             setTimeout(() => {
+                const form = document.getElementById('questionnaireForm');
                 form.submit();
             }, 800);
         }
     </script>
 </body>
 </html>
-</body>
-</html>
-    
-</body>
-</html>
+
