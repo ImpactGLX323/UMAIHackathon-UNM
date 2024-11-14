@@ -27,7 +27,7 @@
             <p><b>Blood Sugar Advice:</b> <span :style="{ color: bloodSugarAdvice.color }">{{ bloodSugarAdvice.text }}</span></p>
             </div>
         </div>
-        <!-- button for returning to questionnaire -->
+        <!-- button for returning to questionnaire --> 
         <div class="return-to-survey">
             <input type="button" value="Return To Questionnaire" @click="returnToQuestionnaire">
         </div>
@@ -135,7 +135,7 @@
       onMounted(loadResults);
 
       const router = useRouter();
-      //function to return to questionnaire page
+      //function to return to questionnaire page 
       const returnToQuestionnaire = () => {
         router.push({name:'QuestionnairePage'});
       };
