@@ -7,7 +7,6 @@
         <script>
             function displayResults() {
                 const urlParams = new URLSearchParams(window.location.search);
-
                 const gender = urlParams.get('gender');
                 const age = urlParams.get('age');
                 const bpSys = urlParams.get('bp_sys');
@@ -48,10 +47,10 @@
                 document.getElementById('bmilevel').innerText = bmicat;
                 document.getElementById('bmiresults').style.color = bmiColor;
                 document.getElementById('bmilevel').style.color = bmiColor;
-                displayAdvice(bpSys, bpDia, smokeHistory, bmi, bloodSugar);
+                displayAdvice(bpSys, bpDia, heartDisease, smokeHistory, bmi, bloodSugar);
             }
 
-            function displayAdvice(bpSys, bpDia, smokeHistory, bmi, bloodSugar) {
+            function displayAdvice(bpSys, bpDia, heartDisease, smokeHistory, bmi, bloodSugar) {
                 let bpAdvice = '';
                 let bpColor = '#333';
                 if (parseInt(bpSys) > 130 || parseInt(bpDia) > 80) {
@@ -124,21 +123,31 @@
                     sugarColor = '#4CAF50';
                 }
 
+                let heartDiseaseAdvice = '';
+                let heartDiseaseColor = '#333';
+                if (heartDisease.toLowerCase() === 'yes') {
+                    heartDiseaseAdvice = 'With a history of heart disease, regular checkups, a heart-healthy diet, staying active, and stress management are vital. Work with your doctor to monitor key health markers and keep your heart as healthy as possible.';
+                    heartDiseaseColor = '#f44336';
+                    document.getElementById('heartDiseaseSection').style.display = 'block';
+                } else {
+                    document.getElementById('heartDiseaseSection').style.display = 'none';
+                }
+
                 document.getElementById('bpAdvice').innerHTML = `<span style="color:${bpColor}">${bpAdvice}</span>`;
+                document.getElementById('heartAdvice').innerHTML = `<span style="color:${heartDiseaseColor}">${heartDiseaseAdvice}</span>`;
                 document.getElementById('smokeAdvice').innerHTML = `<span style="color:${smokeColor}">${smokeAdvice}</span>`;
                 document.getElementById('bmiAdvice').innerHTML = `<span style="color:${bmiColor}">${bmiAdvice}</span>`;
                 document.getElementById('bloodSugarAdvice').innerHTML = `<span style="color:${sugarColor}">${bloodSugarAdvice}</span>`;
             }
 
             function handleBack(event) {
-            event.preventDefault();
-            const body = document.querySelector('body');
-            body.classList.add('fade-out');
-            setTimeout(() => {
-                window.location.href = 'questionnaire.html';
-            }, 800);
-        }
-        
+                event.preventDefault();
+                const body = document.querySelector('body');
+                body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = 'questionnaire.html';
+                }, 800);
+            }
         </script>
     </head>
 
@@ -157,15 +166,25 @@
                     <li><b>Last Blood Sugar Level:</b> <span id="bloodSugarResult"></span></li>
                 </ul>
             </div>
+
             <div class="bmi-section">
-                <h1>Advice based on results</h1>
+                <h1>Calculated Results</h1>
                 <p><b>Your BMI:</b> <span id="bmiresults"></span> (<span id="bmilevel"></span>)</p>
+                <p><b>Diabetes Prediction:</b></p>
+            </div>
+
+            <div class="advice-section">
+                <h1>Advice based on results</h1>
                 <p><b>Blood Pressure Advice:</b> <span id="bpAdvice"></span></p>
+                <p id="heartDiseaseSection" style="display:none;">
+                    <b>Heart Disease Advice:</b> <span id="heartAdvice"></span>
+                </p>
                 <p><b>Smoking History Advice:</b> <span id="smokeAdvice"></span></p>
                 <p><b>BMI Advice:</b> <span id="bmiAdvice"></span></p>
                 <p><b>Blood Sugar Advice:</b> <span id="bloodSugarAdvice"></span></p>
             </div>
         </div>
+
         <center>
             <input type="button" class="back-button" value="Back to Questionnaire" onclick="handleBack(event)">
             <br><br>
