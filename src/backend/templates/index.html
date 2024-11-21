@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ML API</title>
+</head>
+
+<body>
+  <div class="login">
+    <h1>Diabetes Prediction</h1>
+
+    <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}" method="post">
+      <input type="text" name="feature0" placeholder="Age" required="required" />
+      <input type="text" name="feature1" placeholder="Hypertension" required="required" />
+      <input type="text" name="feature2" placeholder="Heart Disease" required="required" />
+      <input type="text" name="feature3" placeholder="BMI" required="required" />
+      <input type="text" name="feature4" placeholder="HbA1c Level" required="required" />
+      <input type="text" name="feature5" placeholder="Blood Glucose Level" required="required" />
+      <input type="text" name="feature6" placeholder="Gender (Female: 1, Male: 0)" required="required" />
+      <input type="text" name="feature7" placeholder="Gender (Female: 0, Male: 1)" required="required" />
+      <input type="text" name="feature8" placeholder="Smoking History: No Info" required="required" />
+      <input type="text" name="feature9" placeholder="Smoking History: Current" required="required" />
+      <input type="text" name="feature10" placeholder="Smoking History: Ever" required="required" />
+      <input type="text" name="feature11" placeholder="Smoking History: Former" required="required" />
+      <input type="text" name="feature12" placeholder="Smoking History: Never" required="required" />
+      <input type="text" name="feature13" placeholder="Smoking History: Not Current" required="required" />
+
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+
+    <br>
+    <br>
+    {{ prediction_text }}
+  </div>
+</body>
+</html>
