@@ -78,7 +78,8 @@ input[type="button"], input[type="submit"] {
 }
 
 .first-field .navigation-buttons {
-    justify-content: flex-end;
+    display: flex;
+    justify-content: center;
 }
 
 .container {

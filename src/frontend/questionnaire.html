@@ -9,8 +9,15 @@
 <body>
     <h1><center>Diabetes Prediction Questionnaire</center></h1>
     <center>
-        <form action="results.html" method="GET" id="questionnaireForm" onsubmit="handleSubmit(event)">        
+        <form action="results.html" method="GET" id="questionnaireForm" onsubmit="handleSubmit(event)"> 
             <div class="field-section active first-field">
+                <label><b>Shall we start this questionnaire?</b></label>
+                <br>
+                <div class="navigation-buttons">
+                    <input type="button" value="Start Questionnaire" onclick="nextField()">
+                </div>
+            </div>
+            <div class="field-section">
             <label for="gender"><b>Gender:</b></label>
             <select id="gender" name="gender" required>
                 <option value="" disabled selected>Select Here</option>
@@ -19,6 +26,7 @@
                 <option value="Prefer Not To Say">Prefer Not To Say</option>
             </select>
             <div class="navigation-buttons">
+                <input type="button" value="Back" onclick="previousField()">
                 <input type="button" value="Next" onclick="nextField()">
             </div>
         </div>
@@ -146,4 +154,3 @@
     </script>
 </body>
 </html>
-
