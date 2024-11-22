@@ -15,9 +15,33 @@ def Home():
 
 @flask_app.route("/predict", methods=["POST"])
 def predict():
-    # Retrieve features from the form
-    float_features = [float(request.form[f'feature{i}']) for i in range(14)]
-    features = [np.array(float_features)]
+    # Retrieve features from the form, including the selected options for smoking history
+    feature0 = float(request.form['feature0'])  # Age
+    feature1 = int(request.form['feature1'])  # Hypertension (Yes: 1, No: 0)
+    feature2 = int(request.form['feature2'])  # Heart Disease (Yes: 1, No: 0)
+    feature3 = float(request.form['feature3'])  # BMI
+    feature4 = float(request.form['feature4'])  # HbA1c Level
+    feature5 = float(request.form['feature5'])  # Blood Glucose Level
+
+    # Gender options (assuming 1 for Female, 0 for Male)
+    feature6 = int(request.form['feature6'])  # Gender: 1 for Female, 0 for Male
+
+    # Smoking History (mapping the option to 0 for Yes, 1 for No)
+    smoking_history = {
+        "Yes": 0,  # Yes for smoking history
+        "No": 1,   # No for smoking history
+    }
+    feature7 = smoking_history.get(request.form['feature7'], 1)  # Defaulting to No if invalid
+    feature8 = smoking_history.get(request.form['feature8'], 1)
+    feature9 = smoking_history.get(request.form['feature9'], 1)
+    feature10 = smoking_history.get(request.form['feature10'], 1)
+    feature11 = smoking_history.get(request.form['feature11'], 1)
+    feature12 = smoking_history.get(request.form['feature12'], 1)
+    feature13 = smoking_history.get(request.form['feature13'], 1)
+
+    # Create feature array
+    features = np.array([[feature0, feature1, feature2, feature3, feature4, feature5, 
+                          feature6, feature7, feature8, feature9, feature10, feature11, feature12, feature13]])
     
     # Predict using the model
     prediction = model.predict(features)
