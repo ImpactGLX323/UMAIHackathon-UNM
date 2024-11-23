@@ -1,36 +1,235 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ML API</title>
-</head>
+  <title>Diabetes Prediction</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+      flex-direction: column;
+    }
 
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      box-sizing: border-box;
+      overflow-y: auto; /* Allows scrolling if content overflows */
+      height: 80vh; /* Limit the container height */
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .form-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .btn-container button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .btn-container button:hover {
+      background-color: #0056b3;
+    }
+
+    .prediction-result {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    /* Responsive styling */
+    @media screen and (max-width: 768px) {
+      .container {
+        padding: 20px;
+        height: auto;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .btn-container button {
+        width: 100%;
+        max-width: none;
+      }
+
+      .prediction-result {
+        font-size: 16px;
+      }
+    }
+
+    /* Additional space for the top */
+    .form-group:first-child {
+      margin-top: 10px;
+    }
+
+  </style>
+</head>
 <body>
-  <div class="login">
+  <div class="container">
     <h1>Diabetes Prediction</h1>
 
-    <!-- Main Input For Receiving Query to our ML -->
-    <form action="{{ url_for('predict')}}" method="post">
-      <input type="text" name="feature0" placeholder="Age" required="required" />
-      <input type="text" name="feature1" placeholder="Hypertension" required="required" />
-      <input type="text" name="feature2" placeholder="Heart Disease" required="required" />
-      <input type="text" name="feature3" placeholder="BMI" required="required" />
-      <input type="text" name="feature4" placeholder="HbA1c Level" required="required" />
-      <input type="text" name="feature5" placeholder="Blood Glucose Level" required="required" />
-      <input type="text" name="feature6" placeholder="Gender (Female: 1, Male: 0)" required="required" />
-      <input type="text" name="feature7" placeholder="Gender (Female: 0, Male: 1)" required="required" />
-      <input type="text" name="feature8" placeholder="Smoking History: No Info" required="required" />
-      <input type="text" name="feature9" placeholder="Smoking History: Current" required="required" />
-      <input type="text" name="feature10" placeholder="Smoking History: Ever" required="required" />
-      <input type="text" name="feature11" placeholder="Smoking History: Former" required="required" />
-      <input type="text" name="feature12" placeholder="Smoking History: Never" required="required" />
-      <input type="text" name="feature13" placeholder="Smoking History: Not Current" required="required" />
+    <!-- Main Input Form for receiving query to our ML -->
+    <form action="{{ url_for('predict') }}" method="post">
+      <div class="form-group">
+        <label for="feature0">Age</label>
+        <input type="text" name="feature0" placeholder="Age" required="required" />
+      </div>
+      
+      <div class="form-group">
+        <label for="feature1">Hypertension</label>
+        <select id="feature1" name="feature1" required="required">
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="feature2">Heart Disease</label>
+        <select id="feature2" name="feature2" required="required">
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="feature3">BMI</label>
+        <input type="text" name="feature3" placeholder="BMI" required="required" />
+      </div>
 
-      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+      <div class="form-group">
+        <label for="feature4">HbA1c Level</label>
+        <input type="text" name="feature4" placeholder="HbA1c Level" required="required" />
+      </div>
+
+      <div class="form-group">
+        <label for="feature5">Blood Glucose Level</label>
+        <input type="text" name="feature5" placeholder="Blood Glucose Level" required="required" />
+      </div>
+
+      <div class="form-group">
+        <label for="feature6">Gender</label>
+        <select id="feature6" name="feature6" required="required">
+          <option value="0">Male</option>
+          <option value="1">Female</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feature7">Smoking History - No Info</label>
+        <select id="feature7" name="feature7" required="required">
+          <option value="1">No</option>
+          <option value="0">Yes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feature8">Smoking History - Current</label>
+        <select id="feature8" name="feature8" required="required">
+          <option value="1">No</option>
+          <option value="0">Yes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feature9">Smoking History - Ever</label>
+        <select id="feature9" name="feature9" required="required">
+          <option value="1">No</option>
+          <option value="0">Yes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feature10">Smoking History - Former</label>
+        <select id="feature10" name="feature10" required="required">
+          <option value="1">No</option>
+          <option value="0">Yes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feature11">Smoking History - Never</label>
+        <select id="feature11" name="feature11" required="required">
+          <option value="1">No</option>
+          <option value="0">Yes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feature12">Smoking History - Not Current</label>
+        <select id="feature12" name="feature12" required="required">
+          <option value="1">No</option>
+          <option value="0">Yes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feature13">Smoking History - Additional Info</label>
+        <select id="feature13" name="feature13" required="required">
+          <option value="1">No</option>
+          <option value="0">Yes</option>
+        </select>
+      </div>
+      
+
+      <div class="btn-container">
+        <button type="submit">Predict</button>
+      </div>
     </form>
 
-    <br>
-    <br>
-    {{ prediction_text }}
+    <div class="prediction-result">
+      {{ prediction_text }}
+    </div>
   </div>
 </body>
 </html>
