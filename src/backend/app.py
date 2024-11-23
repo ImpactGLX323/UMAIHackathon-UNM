@@ -4,18 +4,25 @@ import joblib
 
 # Create Flask app
 flask_app = Flask(__name__)
-model = joblib.load("../../model/stacking_classifier.pkl")
+model = joblib.load("model/stacking_classifier.pkl")
 
 # List to map prediction values to status
 status_order = ['non diabetic', 'stress induced prediabetic', 'stress induced type 2 diabetic', 'prediabetic', 'diabetic']
 
+# Home route
 @flask_app.route("/")
 def Home():
     return render_template("index.html")
 
+# Questionnaire route
+@flask_app.route("/questionnaire")
+def questionnaire():
+    return render_template("questionnaire.html")
+
+# Prediction route
 @flask_app.route("/predict", methods=["POST"])
 def predict():
-    # Retrieve features from the form, including the selected options for smoking history
+    # Retrieve features from the form
     feature0 = float(request.form['feature0'])  # Age
     feature1 = int(request.form['feature1'])  # Hypertension (Yes: 1, No: 0)
     feature2 = int(request.form['feature2'])  # Heart Disease (Yes: 1, No: 0)
@@ -48,9 +55,13 @@ def predict():
     
     # Map prediction index to status
     prediction_status = status_order[prediction[0]]
-    
-    # Return the result to the frontend
-    return render_template("index.html", prediction_text="The diabetes status is {}".format(prediction_status))
 
+    # Determine which template to render based on the request's referring page
+    if "questionnaire" in request.referrer:  # If the request came from the questionnaire page
+        return render_template("questionnaire.html", prediction_text="The diabetes status is {}".format(prediction_status))
+    else:  # Default to rendering the index page
+        return render_template("index.html", prediction_text="The diabetes status is {}".format(prediction_status))
+    
+# Run the Flask app
 if __name__ == "__main__":
     flask_app.run(debug=True)
