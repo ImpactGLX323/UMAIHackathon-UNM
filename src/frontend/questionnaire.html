@@ -202,7 +202,7 @@
             const age = parseInt(formData.get('age'), 10);
             const bpSys = parseInt(formData.get('bp_sys'), 10);
             const bpDia = parseInt(formData.get('bp_dia'), 10);
-            const heartDisease = formData.get('heartdisease');
+            const heartDisease = formData.get('heartdisease')=== 'Yes' ? 1 : 0;
             const smokeHistory = formData.get('smokehis');
             const height = parseInt(formData.get('height'), 10);
             const weight = parseFloat(formData.get('weight'));
@@ -212,14 +212,14 @@
             document.getElementById('genderResult').innerText = gender;
             document.getElementById('ageResult').innerText = age;
             document.getElementById('bpResult').innerText = `${bpSys} / ${bpDia}`;
-            document.getElementById('heartDiseaseResult').innerText = heartDisease;
+            document.getElementById('heartDiseaseResult').innerText = heartDisease ? 'Yes' : 'No';
             document.getElementById('smokeHistoryResult').innerText = smokeHistory;
             document.getElementById('heightResult').innerText = height;
             document.getElementById('weightResult').innerText = weight;
             document.getElementById('HbA1cResult').innerText=HbA1c;
             document.getElementById('bloodSugarResult').innerText = bloodSugar;
 
-            const heightInMeters = height / 100;
+            const heightInMeters = height / 100;    
             const bmi = (weight / (heightInMeters ** 2)).toFixed(2);
             document.getElementById('bmiresults').innerText = bmi;
 
@@ -251,7 +251,41 @@
             }
             document.getElementById('hypertensionResult').innerText = hypertensionStatus;
             document.getElementById('hypertensionResult').style.color = hypertensionColor;
+
             displayAdvice(bpSys, bpDia, heartDisease, smokeHistory, bmi, bloodSugar);
+
+            const hypertension = (bpSys > 130 || bpDia > 80) ? 1 : 0;
+            const feature6 = gender === 'Female' ? 1 : 0;
+            const feature7 = gender === 'Male' ? 1 : 0;
+            const smokeMappings = {
+            'No Info': [1, 0, 0, 0, 0, 0],
+            'Current': [0, 1, 0, 0, 0, 0],
+            'Ever': [0, 0, 1, 0, 0, 0],
+            'Former': [0, 0, 0, 1, 0, 0],
+            'Never': [0, 0, 0, 0, 1, 0],
+            'Not Current': [0, 0, 0, 0, 0, 1],
+        };
+            const smokeValues = smokeMappings[smokeHistory] || [0, 0, 0, 0, 0, 0];
+
+            const features = [
+            age,
+            hypertension,
+            heartDisease,
+            bmi,
+            HbA1c, 
+            bloodSugar,
+            feature6,
+            feature7,
+            ...smokeValues
+        ];
+
+        fields.forEach((field, index) => {
+        const input = field.querySelector('input, select');
+        if (input) {
+            input.name = `feature${index}`;
+            input.value = features[index];
+        }
+    });
             document.getElementById('questionnaireForm').classList.add('hidden');
             const resultsSection = document.getElementById('resultsSection');
             resultsSection.classList.remove('hidden');
@@ -334,7 +368,7 @@
 
                 let heartDiseaseAdvice = '';
                 let heartDiseaseColor = '#333';
-                if (heartDisease.toLowerCase() === 'yes') {
+                if (heartDisease === 1) {
                     heartDiseaseAdvice = 'With a history of heart disease, regular checkups, a heart-healthy diet, staying active, and stress management are vital. Work with your doctor to monitor key health markers and keep your heart as healthy as possible.';
                     heartDiseaseColor = '#f44336';
                     document.getElementById('heartDiseaseSection').style.display = 'block';
