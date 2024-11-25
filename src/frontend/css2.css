@@ -42,6 +42,10 @@ input[type="text"], input[type="number"], select {
     box-sizing: border-box;
 }
 
+.hidden{
+    display:none;
+}
+
 .flex-inputs {
     display: flex;
     gap: 10px;
@@ -108,7 +112,7 @@ input[type="button"], input[type="submit"] {
     padding: 20px;
     transition: all 0.3s ease;
     margin-bottom: 20px;
-    flex-grow: 1; /* Ensures it fills the remaining space */
+    flex-grow: 1;
 }
 
 .results-section h1, .bmi-section h1 {
