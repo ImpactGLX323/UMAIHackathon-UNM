@@ -4,7 +4,7 @@
     <title>Diabetes Prediction Questionnaire</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css2.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css2.css') }}">
 </head>
 <body>
     <h1><center>Diabetes Prediction Questionnaire</center></h1>
@@ -142,7 +142,7 @@
                 <h1>Calculated Results</h1>
                 <p><b>Your BMI:</b> <span id="bmiresults"></span> (<span id="bmilevel"></span>)</p>
                 <p><b>Hypertension Status:</b> <span id="hypertensionResult"></span></p>
-                <p><b>Diabetes Prediction:</b></p>
+                <p><b>Diabetes Prediction:</b> <span id="diabetesPrediction"></span></p>
             </div>
 
             <div class="advice-section">
@@ -192,105 +192,132 @@
             }
         }
 
-        function handleFormSubmit(event) {
+        async function handleFormSubmit(event) {
             event.preventDefault();
             const form = document.getElementById('questionnaireForm');
             form.classList.add('fade-out');
-            setTimeout(() =>{
-            const formData = new FormData(form);
-            const gender = formData.get('gender');
-            const age = parseInt(formData.get('age'), 10);
-            const bpSys = parseInt(formData.get('bp_sys'), 10);
-            const bpDia = parseInt(formData.get('bp_dia'), 10);
-            const heartDisease = formData.get('heartdisease')=== 'Yes' ? 1 : 0;
-            const smokeHistory = formData.get('smokehis');
-            const height = parseInt(formData.get('height'), 10);
-            const weight = parseFloat(formData.get('weight'));
-            const HbA1c = parseFloat(formData.get('HbA1c'));
-            const bloodSugar = parseInt(formData.get('bloodsugar'), 10);
+            setTimeout(async () =>{
+                const formData = new FormData(form);
+                const gender = formData.get('gender');
+                const age = parseInt(formData.get('age'), 10);
+                const bpSys = parseInt(formData.get('bp_sys'), 10);
+                const bpDia = parseInt(formData.get('bp_dia'), 10);
+                const heartDisease = formData.get('heartdisease') === 'Yes' ? 1 : 0;
+                const smokeHistory = formData.get('smokehis');
+                const height = parseInt(formData.get('height'), 10);
+                const weight = parseFloat(formData.get('weight'));
+                const HbA1c = parseFloat(formData.get('HbA1c'));
+                const bloodSugar = parseInt(formData.get('bloodsugar'), 10);
 
-            document.getElementById('genderResult').innerText = gender;
-            document.getElementById('ageResult').innerText = age;
-            document.getElementById('bpResult').innerText = `${bpSys} / ${bpDia}`;
-            document.getElementById('heartDiseaseResult').innerText = heartDisease ? 'Yes' : 'No';
-            document.getElementById('smokeHistoryResult').innerText = smokeHistory;
-            document.getElementById('heightResult').innerText = height;
-            document.getElementById('weightResult').innerText = weight;
-            document.getElementById('HbA1cResult').innerText=HbA1c;
-            document.getElementById('bloodSugarResult').innerText = bloodSugar;
+                // Display submitted results
+                document.getElementById('genderResult').innerText = gender;
+                document.getElementById('ageResult').innerText = age;
+                document.getElementById('bpResult').innerText = `${bpSys} / ${bpDia}`;
+                document.getElementById('heartDiseaseResult').innerText = heartDisease ? 'Yes' : 'No';
+                document.getElementById('smokeHistoryResult').innerText = smokeHistory;
+                document.getElementById('heightResult').innerText = height;
+                document.getElementById('weightResult').innerText = weight;
+                document.getElementById('HbA1cResult').innerText = HbA1c;
+                document.getElementById('bloodSugarResult').innerText = bloodSugar;
 
-            const heightInMeters = height / 100;    
-            const bmi = (weight / (heightInMeters ** 2)).toFixed(2);
-            document.getElementById('bmiresults').innerText = bmi;
+                // Calculate and display BMI
+                const heightInMeters = height / 100;    
+                const bmi = (weight / (heightInMeters ** 2)).toFixed(2);
+                document.getElementById('bmiresults').innerText = bmi;
 
-            let bmicat = '';
-            let bmiColor = '#4CAF50';
-            if (bmi < 18.5) {
-                bmicat = 'Underweight';
-                bmiColor = '#FFD700';
-            } else if (bmi >= 18.5 && bmi <= 24.9) {
-                bmicat = 'Normal Weight';
-            } else if (bmi > 24.9 && bmi <= 29.9) {
-                bmicat = 'Overweight';
-                bmiColor = '#FFA500';
-            } else {
-                bmicat = 'Obese';
-                bmiColor = '#f44336';
-            }
-            document.getElementById('bmilevel').innerText = bmicat;
-            document.getElementById('bmiresults').style.color = bmiColor;
-            document.getElementById('bmilevel').style.color = bmiColor;
+                let bmicat = '';
+                let bmiColor = '#4CAF50';
+                if (bmi < 18.5) {
+                    bmicat = 'Underweight';
+                    bmiColor = '#FFD700';
+                } else if (bmi >= 18.5 && bmi <= 24.9) {
+                    bmicat = 'Normal Weight';
+                } else if (bmi > 24.9 && bmi <= 29.9) {
+                    bmicat = 'Overweight';
+                    bmiColor = '#FFA500';
+                } else {
+                    bmicat = 'Obese';
+                    bmiColor = '#f44336';
+                }
+                document.getElementById('bmilevel').innerText = bmicat;
+                document.getElementById('bmiresults').style.color = bmiColor;
+                document.getElementById('bmilevel').style.color = bmiColor;
 
-            let hypertensionStatus = '';
-            let hypertensionColor = '#4CAF50';
-            if (bpSys > 130 || bpDia > 80) {
-                hypertensionStatus = 'Hypertension Detected';
-                hypertensionColor = '#f44336';
-            } else {
-                hypertensionStatus = 'No Hypertension';
-            }
-            document.getElementById('hypertensionResult').innerText = hypertensionStatus;
-            document.getElementById('hypertensionResult').style.color = hypertensionColor;
+                // Determine and display Hypertension Status
+                let hypertensionStatus = '';
+                let hypertensionColor = '#4CAF50';
+                if (bpSys > 130 || bpDia > 80) {
+                    hypertensionStatus = 'Hypertension Detected';
+                    hypertensionColor = '#f44336';
+                } else {
+                    hypertensionStatus = 'No Hypertension';
+                }
+                document.getElementById('hypertensionResult').innerText = hypertensionStatus;
+                document.getElementById('hypertensionResult').style.color = hypertensionColor;
 
-            displayAdvice(bpSys, bpDia, heartDisease, smokeHistory, bmi, bloodSugar);
+                // Display personalized advice
+                displayAdvice(bpSys, bpDia, heartDisease, smokeHistory, bmi, bloodSugar);
 
-            const hypertension = (bpSys > 130 || bpDia > 80) ? 1 : 0;
-            const feature6 = gender === 'Female' ? 1 : 0;
-            const feature7 = gender === 'Male' ? 1 : 0;
-            const smokeMappings = {
-            'No Info': [1, 0, 0, 0, 0, 0],
-            'Current': [0, 1, 0, 0, 0, 0],
-            'Ever': [0, 0, 1, 0, 0, 0],
-            'Former': [0, 0, 0, 1, 0, 0],
-            'Never': [0, 0, 0, 0, 1, 0],
-            'Not Current': [0, 0, 0, 0, 0, 1],
-        };
-            const smokeValues = smokeMappings[smokeHistory] || [0, 0, 0, 0, 0, 0];
+                // Prepare features for prediction
+                const hypertension = (bpSys > 130 || bpDia > 80) ? 1 : 0;
+                const feature6 = gender === 'Female' ? 1 : 0;
+                const is_male = gender === 'Male' ? 1 : 0;
+                const smokeMappings = {
+                    'No Info': [1, 0, 0, 0, 0, 0],
+                    'Current': [0, 1, 0, 0, 0, 0],
+                    'Ever': [0, 0, 1, 0, 0, 0],
+                    'Former': [0, 0, 0, 1, 0, 0],
+                    'Never': [0, 0, 0, 0, 1, 0],
+                    'Not Current': [0, 0, 0, 0, 0, 1],
+                };
+                const smokeValues = smokeMappings[smokeHistory] || [0, 0, 0, 0, 0, 0];
 
-            const features = [
-            age,
-            hypertension,
-            heartDisease,
-            bmi,
-            HbA1c, 
-            bloodSugar,
-            feature6,
-            feature7,
-            ...smokeValues
-        ];
+                // Prepare data with feature0 to feature13
+                const features = {
+                    'feature0': age,
+                    'feature1': hypertension,
+                    'feature2': heartDisease,
+                    'feature3': bmi,
+                    'feature4': HbA1c,
+                    'feature5': bloodSugar,
+                    'feature6': feature6,
+                    'feature7': is_male,
+                    'feature8': smokeHistory === 'No Info' ? 1 : (smokeHistory === 'Current' ? 2 : (smokeHistory === 'Ever' ? 3 :
+                        (smokeHistory === 'Former' ? 4 : (smokeHistory === 'Never' ? 5 : (smokeHistory === 'Not Current' ? 6 : 0))))),
+                    'feature9': smokeHistory === 'No Info' ? 1 : 0,
+                    'feature10': smokeHistory === 'Never' ? 1 : 0,
+                    'feature11': smokeHistory === 'Ever' ? 1 : 0,
+                    'feature12': smokeHistory === 'Former' ? 1 : 0,
+                    'feature13': smokeHistory === 'Not Current' ? 1 : 0,
+                };
 
-        fields.forEach((field, index) => {
-        const input = field.querySelector('input, select');
-        if (input) {
-            input.name = `feature${index}`;
-            input.value = features[index];
-        }
-    });
-            document.getElementById('questionnaireForm').classList.add('hidden');
-            const resultsSection = document.getElementById('resultsSection');
-            resultsSection.classList.remove('hidden');
-            resultsSection.classList.add('fade-in');
-        }, 800);
+                // Send POST request to /predict
+                try {
+                    const response = await fetch('/predict', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams(features),
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        document.getElementById('diabetesPrediction').innerText = data.prediction;
+                    } else {
+                        document.getElementById('diabetesPrediction').innerText = 'Error during prediction.';
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    document.getElementById('diabetesPrediction').innerText = 'Error during prediction.';
+                }
+
+                // Hide the form and show results
+                document.getElementById('questionnaireForm').classList.add('hidden');
+                const resultsSection = document.getElementById('resultsSection');
+                resultsSection.classList.remove('hidden');
+                resultsSection.classList.add('fade-in');
+            }, 800);
         }
 
         function displayAdvice(bpSys, bpDia, heartDisease, smokeHistory, bmi, bloodSugar) {
@@ -384,12 +411,12 @@
         }
 
         function restartForm() {
-        const resultsSection = document.getElementById('resultsSection');
-        resultsSection.classList.add('fade-out');
-        setTimeout(() => {
-            window.location.reload();
-        }, 800);
-    }
-</script>
+            const resultsSection = document.getElementById('resultsSection');
+            resultsSection.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.reload();
+            }, 800);
+        }
+    </script>
 </body>
 </html>
