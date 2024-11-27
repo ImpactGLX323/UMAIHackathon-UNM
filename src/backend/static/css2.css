@@ -1,0 +1,207 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #4CAF50;
+    text-align: center;
+}
+
+form {
+    background: white;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: opacity 0.8s ease;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.flex-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+input[type="button"], input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.field-section {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.8s ease, opacity 0.8s ease;
+}
+
+.field-section.active {
+    max-height: 500px;
+    opacity: 1;
+    transition: max-height 0.8s ease, opacity 0.8s ease;
+}
+
+.first-field .navigation-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px;
+    align-items: stretch;
+}
+
+.results-section, .bmi-section {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    flex-grow: 0;
+    width: 45%;
+}
+
+.advice-section {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Ensures it fills the remaining space */
+}
+
+.results-section h1, .bmi-section h1 {
+    color: #4CAF50;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+li b {
+    color: hsl(187, 31%, 27%);
+}
+
+.bmi-section p {
+    font-size: 1em;
+    color: hsl(187, 31%, 27%);
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.bmi-section p:last-child {
+    border-bottom: none;
+}
+
+.bmi-section span {
+    font-weight: normal;
+    color: #4CAF50;
+}
+
+.container:hover .results-section,
+.container:hover .bmi-section,
+.container:hover .advice-section {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.back-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    margin-top: 20px;
+}
+
+.advice-section {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.advice-section p{
+    font-size: 1em;
+    color: hsl(187, 31%, 27%);
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.advice-section p:last-child{
+    border-bottom: none;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .results-section, .bmi-section {
+        width: 100%;
+        flex-grow: unset;
+    }
+
+    form {
+        max-width: 100%;
+    }
+}
