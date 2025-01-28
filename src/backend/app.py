@@ -1,23 +1,47 @@
 import numpy as np
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, redirect, url_for
 import joblib
-import os 
+import os
 
 # Create Flask app
-flask_app = Flask(__name__,
-                 template_folder = "templates",
-                 static_folder = "static")
+flask_app = Flask(
+    __name__,
+    template_folder="templates",
+    static_folder="static"
+)
 
 # Load the model
-model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stacking_classifier.pkl")
-model = joblib.load(model_path)
+model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../model/stacking_classifier.pkl")
+try:
+    model = joblib.load(model_path)
+except FileNotFoundError:
+    print("Error: Model file not found.")
+    model = None
 
 # List to map prediction values to status
 status_order = ['non diabetic', 'stress induced prediabetic', 'stress induced type 2 diabetic', 'prediabetic', 'diabetic']
 
+# Route for the home page
+@flask_app.route("/")
+def home():
+    return render_template("home.html")
+
+# Route for the login page
+@flask_app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # Placeholder for login logic
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if username == "admin" and password == "password":  # Example hardcoded credentials
+            return redirect(url_for("home"))
+        else:
+            error = "Invalid credentials. Please try again."
+            return render_template("login.html", error=error)
+    return render_template("login.html")
 
 # Route for the questionnaire page
-@flask_app.route("/")
+@flask_app.route("/questionnaire")
 def questionnaire():
     return render_template("questionnaire.html")
 
@@ -60,4 +84,5 @@ def predict():
 # Run the Flask app
 if __name__ == "__main__":
     flask_app.run(debug=True)
+
 
