@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Diabetes Prediction & Advisory Tool</title>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Diabetes Prediction & Advisory Tool" width="350px" height="80px" id="logo">
+
+            <div class="dashboard">
+                <a href="{{ url_for('home') }}" class="button">Home</a>
+                <a href="{{ url_for('questionnaire') }}" class="button">Test</a>
+                <a href="{{ url_for('home') }}" class="button">History</a>
+                <a href="{{ url_for('home') }}" class="button">Profile</a>
+            </div>
+        </header>
+        <main class="main">
+            <div class="home">
+                <h1>Home</h1>
+            </div>
+            <div class="text">
+                <p>Diabetes Prediction and Multiple Advisory Application as a preliminary diagnostic tool for diabetes and a handy advisory tool to prevent or control probable high blood sugar of users through dietary control, lifestyle changes, exercise and the like. This application is based on the gender, age, hypertension, heart disease, smoking history, Body Mass Index (BMI), Blood Glucose Level and/or HbA1c Level of the users. The application will use Machine Learning, Deep Learning and the likewise algorithms to do prediction and detection of diabetes, give monitoring glucose level advice to users, lifestyle (i.e. exercise) and dietary changes to pre-diabetics and overweight users, prediction of future diabetes improvement or deterioration of users following the adherence or violation of the advice given.</p>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
