@@ -1,0 +1,138 @@
+/*Home page */
+body 
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(227, 226, 226);
+    color: rgb(0, 0, 0);
+    
+
+}
+
+.container 
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.2fr 3fr;
+    grid-template-areas: 
+        "header header header"
+        "main main main";
+    height: 100vh;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px; 
+}
+
+.header 
+{
+    grid-area: header;
+    height: 90px;
+    background-color: rgb(156, 156, 156);
+
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px 0 30px;
+
+    font-size: 50px;
+    
+}
+
+#logo
+{
+    display: grid;
+    align-items: left;
+}
+
+
+.button {
+    display: inline-block;
+    padding: 20px 50px;
+    
+    color: rgb(0, 0, 0);
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 19px;
+}
+
+.button:hover {
+    background-color: rgb(238, 235, 235);
+}
+
+.main 
+{
+    grid-area: main;
+    background-color: rgb(238, 235, 235);
+    font-size: large;
+}
+
+.main h1
+{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.main p
+{
+    display: flex;
+    margin-bottom: 800px;
+    justify-content: center;
+    padding-left: 400px;
+    padding-right: 400px;
+    text-align: center;
+}
+
+/*Register page */
+
+.box
+{
+    grid-area: form;
+    display: inline-block;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    align-self: center;
+    padding: 30px 30px;    
+}
+
+
+
+.wrapper
+{
+    display: grid;
+    grid-template-columns: 1fr 350px 1fr;
+    grid-template-areas: ". form .";
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: brown;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+
+.input
+{
+    display: grid;
+    padding: 5px;
+    border-radius: 100px;
+}
+
+.submit
+{
+    display: grid;
+    justify-content: center;
+    margin-top: 5px;
+}
