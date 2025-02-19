@@ -60,7 +60,6 @@ body
 
 .s2text_item
 {
-    width: 100vw;
     display: flex;
     flex-direction: row; 
     gap: 250px;
@@ -95,7 +94,6 @@ body
 
 .s3text_item
 {
-    width: 100vw;
     display: flex;
     flex-direction: row; 
     gap: 250px;
