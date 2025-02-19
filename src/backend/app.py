@@ -45,6 +45,11 @@ def login():
 def questionnaire():
     return render_template("questionnaire.html")
 
+# Route for the test page
+@flask_app.route("/test")
+def test():
+    return render_template("test.html")
+
 # Prediction route
 @flask_app.route("/predict", methods=["POST"])
 def predict():
