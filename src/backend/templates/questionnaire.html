@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css2.css') }}">
 </head>
 <body>
+    <div class="header_container">
+        <header class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="GlucAware&Advisory" width="350px" height="80px" id="logo">
+    
+            <div class="dashboard">
+                <a href="{{ url_for('home') }}" class="button {% if request.path == '/' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('questionnaire') }}" class="button {% if request.path == '/questionnaire' %}active{% endif %}">Test</a>
+                <a href="{{ url_for('test') }}" class="button {% if request.path == '/test' %}active{% endif %}">History</a>
+                <a href="{{ url_for('test') }}" class="button {% if request.path == '/test' %}active{% endif %}">Profile</a>
+            </div>
+        </header>
+    </div>
     <h1><center>Diabetes Prediction Questionnaire</center></h1>
     <center>
         <form id="questionnaireForm" onsubmit="handleFormSubmit(event)">
