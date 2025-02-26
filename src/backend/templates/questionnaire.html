@@ -19,6 +19,7 @@
             </div>
         </header>
     </div>
+    <br>
     <h1><center>Diabetes Prediction Questionnaire</center></h1>
     <center>
         <form id="questionnaireForm" onsubmit="handleFormSubmit(event)">
@@ -156,23 +157,17 @@
                 <p><b>Hypertension Status:</b> <span id="hypertensionResult"></span></p>
                 <p><b>Diabetes Prediction:</b> <span id="diabetesPrediction"></span></p>
             </div>
-
-            <div class="advice-section">
-                <h1>Advice based on results</h1>
-                <p><b>Blood Pressure Advice:</b> <span id="bpAdvice"></span></p>
-                <p id="heartDiseaseSection" style="display:none;">
-                    <b>Heart Disease Advice:</b> <span id="heartAdvice"></span>
-                </p>
-                <p><b>Smoking History Advice:</b> <span id="smokeAdvice"></span></p>
-                <p><b>BMI Advice:</b> <span id="bmiAdvice"></span></p>
-                <p><b>Blood Sugar Advice:</b> <span id="bloodSugarAdvice"></span></p>
-            </div>
         </div>
-
-        <center>
-            <input type="button" class="back-button" value="Back to Questionnaire" onclick="restartForm();">
-            <br><br>
-        </center>
+        <div class="advice-section">
+            <h1>Advice based on results</h1>
+            <p><b>Blood Pressure Advice:</b> <span id="bpAdvice"></span></p>
+            <p id="heartDiseaseSection" style="display:none;">
+                <b>Heart Disease Advice:</b> <span id="heartAdvice"></span>
+            </p>
+            <p><b>Smoking History Advice:</b> <span id="smokeAdvice"></span></p>
+            <p><b>BMI Advice:</b> <span id="bmiAdvice"></span></p>
+            <p><b>Blood Sugar Advice:</b> <span id="bloodSugarAdvice"></span></p>
+        </div>
     </div>
 
     <script>
