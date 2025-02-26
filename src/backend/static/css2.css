@@ -66,19 +66,28 @@
     border-top: 5px solid white;
 }
 
-body 
-{
+body {
     font-family: 'Raleway', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: rgb(227, 226, 226);
     color: #333;
+    background-color: rgba(227, 226, 226, 0.8); /* Fallback background color */
+    background-image: linear-gradient(rgba(227, 226, 226, 0.65), rgba(227, 226, 226, 0.65)), url("/static/flower.jpeg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
 h1 {
-    color: #4CAF50;
+    color: rgb(115, 133, 170);
     text-align: center;
+}
+
+#questionnaireForm.hidden {
+    display: none; /* Completely hide the form and remove its space */
 }
 
 form {
@@ -124,7 +133,7 @@ input[type="text"], input[type="number"], select {
 }
 
 input[type="button"], input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: rgb(75, 162, 213);
     color: white;
     padding: 10px 20px;
     border: none;
@@ -135,6 +144,7 @@ input[type="button"], input[type="submit"] {
 }
 
 .field-section {
+    color: hsl(231, 30%, 27%);
     max-height: 0;
     opacity: 0;
     overflow: hidden;
@@ -178,11 +188,12 @@ input[type="button"], input[type="submit"] {
     padding: 20px;
     transition: all 0.3s ease;
     margin-bottom: 20px;
-    flex-grow: 1; /* Ensures it fills the remaining space */
+    width: 87%; /* Match the combined width of results and BMI sections */
+    margin: 0 auto; /* Center horizontally */
 }
 
 .results-section h1, .bmi-section h1 {
-    color: #4CAF50;
+    color: rgb(115, 133, 170);
     text-align: center;
 }
 
@@ -202,12 +213,12 @@ li:last-child {
 }
 
 li b {
-    color: hsl(187, 31%, 27%);
+    color: hsl(231, 30%, 27%);
 }
 
 .bmi-section p {
     font-size: 1em;
-    color: hsl(187, 31%, 27%);
+    color: hsl(231, 30%, 27%);
     padding: 10px 0;
     border-bottom: 1px solid #ddd;
 }
@@ -218,7 +229,7 @@ li b {
 
 .bmi-section span {
     font-weight: normal;
-    color: #4CAF50;
+    color: rgb(75, 162, 213);
 }
 
 .container:hover .results-section,
@@ -228,7 +239,7 @@ li b {
 }
 
 .back-button {
-    background-color: #4CAF50;
+    background-color: rgb(75, 162, 213);
     color: white;
     padding: 10px 20px;
     border: none;
@@ -251,7 +262,7 @@ li b {
 
 .advice-section p{
     font-size: 1em;
-    color: hsl(187, 31%, 27%);
+    color: hsl(231, 30%, 27%);
     padding: 10px 0;
     border-bottom: 1px solid #ddd;
 }
