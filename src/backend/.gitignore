@@ -1,0 +1,17 @@
+# Ignore compiled Python files
+*.pyc
+*.pyo
+*.cpy
+__pycache__/
+
+# Ignore virtual environment
+venv/
+
+# Ignore system and editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Ignore Firebase key file
+serviceAccountKey.json
+.env
