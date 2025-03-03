@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Diabetes Prediction & Advisory Tool - Login</title>
+    <title>Login - Diabetes Prediction & Advisory Tool</title>
 </head>
 <body>
     <div class="container">
@@ -18,8 +18,8 @@
             </div>
         </header>
 
-        <div class="form-container">
-            <div class="form-box">
+        <section class="section_1">
+            <div class="form_container">
                 <h2>Login</h2>
 
                 <!-- Flash Messages for Error Display -->
@@ -35,7 +35,7 @@
 
                 <form action="{{ url_for('login') }}" method="post">
                     <div class="input">
-                        <input type="text" name="email" placeholder="Email" required>
+                        <input type="email" name="email" placeholder="Email" required>
                     </div>
                     <div class="input">
                         <input type="password" name="password" placeholder="Password" required>
@@ -45,11 +45,10 @@
                     </div>
                     <div class="alt">
                         <h4>Don't have an account? <a href="{{ url_for('register') }}">Register now!</a></h4>
-                        <!-- <h4><a href="{{ url_for('forgot_password') }}">Forgot Password?</a></h4> --> 
                     </div>
                 </form>
             </div>
-        </div>
+        </section>
     </div>
 </body>
 </html>
