@@ -99,4 +99,3 @@ def configure_routes(app):
         except Exception as e:
             print("Error in /predict:", traceback.format_exc())  # Full traceback
             return jsonify({'error': 'Internal Server Error. Check logs.'}), 500
-
