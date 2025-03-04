@@ -2,7 +2,6 @@ import os
 from flask import Flask
 from dotenv import load_dotenv
 
-
 # Load environment variables from .env file
 load_dotenv()
 
@@ -15,6 +14,9 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default-secret-key')
 
     from app.routes import configure_routes
-    configure_routes(app)
+
+    # Ensure app context is active when configuring routes
+    with app.app_context():
+        configure_routes(app)  
 
     return app

@@ -1,2 +1,7 @@
 *.ipynb_checkpoints
 venv/
+.DS_Store
+src/backend/app/__pycache__/__init__.cpython-313.pyc
+src/backend/app/__pycache__/model.cpython-313.pyc
+src/backend/app/__pycache__/routes.cpython-313.pyc
+src/backend/app/__pycache__/__init__.cpython-313.pyc

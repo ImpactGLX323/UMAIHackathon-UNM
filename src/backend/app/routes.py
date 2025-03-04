@@ -7,7 +7,7 @@ import traceback
 
 # Get absolute path of the JSON key
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Gets the app/ directory path
-JSON_PATH = os.path.join(BASE_DIR, "src/backend/config/firebase-adminsdk.json")  # Moves up one level
+JSON_PATH = os.path.join(BASE_DIR, "../config/firebase-adminsdk.json")  # Moves up one level
 
 # Initialize Firebase
 cred = credentials.Certificate(JSON_PATH)  # ✅ Use the correct path
@@ -60,6 +60,28 @@ def configure_routes(app):
 
         return render_template("register.html")
     
+    @app.route("/forgot_password", methods=["GET", "POST"])
+    def forgot_password():
+        if request.method == "POST":
+            email = request.form.get("email")
+            print(f"Received email: {email}")  # ✅ Check if email is received correctly
+
+            try:
+                reset_link = auth.generate_password_reset_link(email)
+                print(f"Generated reset link: {reset_link}")  # ✅ See if Firebase generates a link
+                
+                flash("Password reset link sent! Check your email.", "success")
+                return redirect(url_for("login"))
+            except firebase_admin.auth.UserNotFoundError:
+                flash("No account found with this email!", "error")
+                print("Error: User not found!")  # ✅ Debugging output
+            except Exception as e:
+                flash("An error occurred. Please try again later.", "error")
+                print("Error in forgot_password:", traceback.format_exc())  # ✅ Print full error stack
+
+        return render_template("forgot_password.html")
+
+    
     @app.route("/questionnaire")
     def questionnaire():
         return render_template("questionnaire.html")
@@ -99,4 +121,3 @@ def configure_routes(app):
         except Exception as e:
             print("Error in /predict:", traceback.format_exc())  # Full traceback
             return jsonify({'error': 'Internal Server Error. Check logs.'}), 500
-
