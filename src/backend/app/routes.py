@@ -7,7 +7,7 @@ import traceback
 
 # Get absolute path of the JSON key
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Gets the app/ directory path
-JSON_PATH = os.path.join(BASE_DIR, "../config/firebase-adminsdk.json")  # Moves up one level
+JSON_PATH = os.path.join(BASE_DIR, "src/backend/config/firebase-adminsdk.json")  # Moves up one level
 
 # Initialize Firebase
 cred = credentials.Certificate(JSON_PATH)  # ✅ Use the correct path
