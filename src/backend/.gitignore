@@ -1,17 +1,21 @@
 # Ignore compiled Python files
+__pycache__/
 *.pyc
 *.pyo
 *.cpy
-__pycache__/
+*.pyd
 
-# Ignore virtual environment
+# Ignore virtual environment (if inside project)
 venv/
 
-# Ignore system and editor files
-.DS_Store
-.idea/
-.vscode/
+# Ignore Firebase key
+firebase_key.json
 
-# Ignore Firebase key file
-serviceAccountKey.json
-.env
+# Ignore temporary files
+*.log
+*.tmp
+.DS_Store
+
+src/backend/app/__pycache__/__init__.cpython-313.pyc
+src/backend/app/__pycache__/model.cpython-313.pyc
+src/backend/app/__pycache__/routes.cpython-313.pyc
