@@ -4,10 +4,14 @@ import firebase_admin
 from firebase_admin import credentials, auth, initialize_app
 import os
 import traceback
+import requests
+
 
 # Get absolute path of the JSON key
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Gets the app/ directory path
 JSON_PATH = os.path.join(BASE_DIR, "../config/firebase-adminsdk.json")  # Moves up one level
+
+FIREBASE_API_KEY = "AIzaSyCMjC4N4MvkIFvIuJhon_FMi2zOo9eyja8"  # Replace with your Firebase API Key
 
 # Initialize Firebase
 cred = credentials.Certificate(JSON_PATH)  # ✅ Use the correct path
@@ -29,18 +33,39 @@ def configure_routes(app):
             password = request.form.get("password")
 
             try:
-                user = auth.get_user_by_email(email)
-                session["user_id"] = user.uid  # Store user session
+                # Firebase REST API endpoint for authentication
+                url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={FIREBASE_API_KEY}"
+
+                payload = {
+                    "email": email,
+                    "password": password,
+                    "returnSecureToken": True
+                }
+
+                headers = {"Content-Type": "application/json"}
+
+                # Send request to Firebase Authentication
+                response = requests.post(url, json=payload, headers=headers)
+                data = response.json()
+
+                if "error" in data:
+                    flash("Invalid email or password. Please try again.", "error")
+                    return render_template("login.html")
+
+                # Successful login, store user session
+                session["user_id"] = data["localId"]  # Store Firebase UID in session
+                session["id_token"] = data["idToken"]  # Store authentication token
                 flash("Login successful!", "success")
                 return redirect(url_for("home"))
-            except firebase_admin.auth.UserNotFoundError:
-                flash("User not found. Please check your email.", "error")
-                return render_template("login.html")
-        
+
+            except Exception as e:
+                flash("An error occurred. Please try again.", "error")
+                print("Error in login:", traceback.format_exc())  # Debugging output
+
         return render_template("login.html")
 
     @app.route("/register", methods=["GET", "POST"])
-    def register():
+    def register():  
         if request.method == "POST":
             email = request.form.get("email")
             password = request.form.get("password")
@@ -51,12 +76,24 @@ def configure_routes(app):
                 return render_template("register.html")
 
             try:
-                user = auth.create_user(email=email, password=password)
+                # Firebase REST API for account creation
+                url = f"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={FIREBASE_API_KEY}"
+                payload = {"email": email, "password": password, "returnSecureToken": True}
+                headers = {"Content-Type": "application/json"}
+
+                response = requests.post(url, json=payload, headers=headers)
+                data = response.json()
+
+                if "error" in data:
+                    flash("Email already in use or invalid. Try another one.", "error")
+                    return render_template("register.html")
+
                 flash("Registration successful! Please log in.", "success")
                 return redirect(url_for("login"))
-            except firebase_admin._auth_utils.DuplicateEmailError:
-                flash("Email already in use. Try another one.", "error")
-                return render_template("register.html")
+
+            except Exception as e:
+                flash("An error occurred. Please try again.", "error")
+                print("Error in register:", traceback.format_exc())
 
         return render_template("register.html")
     

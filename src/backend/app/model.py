@@ -16,7 +16,7 @@ status_order = ['non diabetic', 'stress induced prediabetic', 'stress induced ty
 
 def predict_diabetes(features):
     if model is None:
-        return {'error': 'Model not loaded'}
+        return {'error': 'Model not loaded'} 
     
     prediction = model.predict(features)
     return{'prediction': status_order[prediction[0]],}
