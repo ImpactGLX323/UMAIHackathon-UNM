@@ -7,6 +7,10 @@ __pycache__/
 
 # Ignore virtual environment (if inside project)
 venv/
+.env/
+.venv/
+env/
+ENV/
 
 # Ignore Firebase key
 firebase_key.json
@@ -15,7 +19,20 @@ firebase_key.json
 *.log
 *.tmp
 .DS_Store
+Thumbs.db
 
-src/backend/app/__pycache__/__init__.cpython-313.pyc
-src/backend/app/__pycache__/model.cpython-313.pyc
-src/backend/app/__pycache__/routes.cpython-313.pyc
+#Ignore IDE files
+.vscode/
+.idea/
+*.swp
+
+# Ignore logs and compiled files
+logs/
+*.log
+
+# Ignore database files
+*.sqlite3
+*.db
+
+# Ignore Firebase JSON credentials (VERY IMPORTANT)
+config/firebase-adminsdk.json
