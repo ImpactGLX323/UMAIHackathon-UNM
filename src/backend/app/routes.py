@@ -5,7 +5,18 @@ from firebase_admin import credentials, auth, initialize_app
 import os
 import traceback
 import requests
+from flask_mail import Mail, Message
 
+
+# Configure Flask-Mail
+flask_app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Change for Outlook, Yahoo, etc.
+flask_app.config['MAIL_PORT'] = 587
+flask_app.config['MAIL_USE_TLS'] = True
+flask_app.config['MAIL_USERNAME'] = 'joshuamak2004@gmail.com'  # Use your actual email
+flask_app.config['MAIL_PASSWORD'] = 'tvkz qdto xeeq uxjr'  # Use an App Password, NOT your real password
+flask_app.config['MAIL_DEFAULT_SENDER'] = 'your_email@gmail.com'  # Replace with your email
+
+mail = Mail(flask_app)
 
 # Get absolute path of the JSON key
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Gets the app/ directory path
@@ -158,3 +169,42 @@ def configure_routes(app):
         except Exception as e:
             print("Error in /predict:", traceback.format_exc())  # Full traceback
             return jsonify({'error': 'Internal Server Error. Check logs.'}), 500
+
+        # Route to Send Email
+@flask_app.route("/send_email", methods=["POST"])
+def send_email():
+    try:
+        data = request.json  # Receive JSON data
+        recipient_email = data['email']  # Extract email dynamically
+        results = data['results']  # Extract prediction results
+
+        # Create email message
+        msg = Message("Your Diabetes Prediction Results", recipients=[recipient_email])
+        msg.body = f"""
+        Here are your submitted results:
+
+        Gender: {results['gender']}
+        Age: {results['age']}
+        Blood Pressure: {results['bp']}
+        Heart Disease: {results['heartDisease']}
+        Smoking History: {results['smokingHistory']}
+        Height: {results['height']} cm
+        Weight: {results['weight']} kg
+        HbA1c Level: {results['HbA1c']}
+        Blood Sugar Level: {results['bloodSugar']}
+        
+        BMI: {results['bmi']} ({results['bmiCategory']})
+        Hypertension Status: {results['hypertensionStatus']}
+        Diabetes Prediction: {results['diabetesPrediction']}
+
+        Thank you for using our diabetes prediction service!
+        """
+
+        # Send email
+        mail.send(msg)
+
+        return jsonify({"message": "Email sent successfully"}), 200
+
+    except Exception as e:
+        print(f"Email error: {e}")
+        return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
