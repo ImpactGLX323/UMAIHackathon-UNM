@@ -14,8 +14,8 @@
             <div class="dashboard">
                 <a href="{{ url_for('home') }}" class="button {% if request.path == '/' %}active{% endif %}">Home</a>
                 <a href="{{ url_for('questionnaire') }}" class="button {% if request.path == '/questionnaire' %}active{% endif %}">Test</a>
-                <a href="{{ url_for('test') }}" class="button {% if request.path == '/test' %}active{% endif %}">History</a>
-                <a href="{{ url_for('test') }}" class="button {% if request.path == '/test' %}active{% endif %}">Profile</a>
+                <a href="{{ url_for('login') }}" class="button {% if request.path == '/login' %}active{% endif %}">History</a>
+                <a href="{{ url_for('login') }}" class="button {% if request.path == '/login' %}active{% endif %}">Profile</a>
             </div>
         </header>
     </div>
