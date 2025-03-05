@@ -271,6 +271,57 @@ li b {
     border-bottom: none;
 }
 
+.email-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+.email-container h2 {
+    color: rgb(75, 162, 213);
+    margin-bottom: 15px;
+}
+
+.email-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.email-container input[type="email"] {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.email-container button {
+    background-color: rgb(75, 162, 213);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.email-container button:hover {
+    background-color: rgb(65, 142, 193);
+}
+
+#emailMessage {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #f44336;
+}
+
 @media screen and (max-width: 768px) {
     .container {
         flex-direction: column;
