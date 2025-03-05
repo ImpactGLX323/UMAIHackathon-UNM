@@ -1,38 +1,34 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
-import numpy as np
-import firebase_admin
-from firebase_admin import credentials, auth, initialize_app
 import os
 import traceback
+import numpy as np
 import requests
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
+import firebase_admin
+from firebase_admin import credentials, auth, initialize_app
 from flask_mail import Mail, Message
 
-
-# Configure Flask-Mail
-flask_app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Change for Outlook, Yahoo, etc.
-flask_app.config['MAIL_PORT'] = 587
-flask_app.config['MAIL_USE_TLS'] = True
-flask_app.config['MAIL_USERNAME'] = 'joshuamak2004@gmail.com'  # Use your actual email
-flask_app.config['MAIL_PASSWORD'] = 'tvkz qdto xeeq uxjr'  # Use an App Password, NOT your real password
-flask_app.config['MAIL_DEFAULT_SENDER'] = 'your_email@gmail.com'  # Replace with your email
-
-mail = Mail(flask_app)
-
 # Get absolute path of the JSON key
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Gets the app/ directory path
-JSON_PATH = os.path.join(BASE_DIR, "../config/firebase-adminsdk.json")  # Moves up one level
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  
+JSON_PATH = os.getenv("FIREBASE_CREDENTIALS", os.path.join(BASE_DIR, "../config/firebase-adminsdk.json"))
+FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY")
 
-FIREBASE_API_KEY = "AIzaSyCMjC4N4MvkIFvIuJhon_FMi2zOo9eyja8"  # Replace with your Firebase API Key
-
-# Initialize Firebase
-cred = credentials.Certificate(JSON_PATH)  # ✅ Use the correct path
-
-if not firebase_admin._apps: # Check whether firebase has been initialized before or not
-    firebase_app = initialize_app(cred) 
+# Initialize Firebase if not already initialized
+if not firebase_admin._apps:
+    cred = credentials.Certificate(JSON_PATH)
+    firebase_app = initialize_app(cred)
 
 def configure_routes(app):
-    from .model import predict_diabetes  # Using relative import
+    from app.model import predict_diabetes  # Correct import path
     
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Change for Outlook, Yahoo, etc.
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USERNAME'] = 'joshuamak2004@gmail.com'  # Use your actual email
+    app.config['MAIL_PASSWORD'] = 'tvkz qdto xeeq uxjr'  # Use an App Password, NOT your real password
+    app.config['MAIL_DEFAULT_SENDER'] = 'your_email@gmail.com'  # Replace with your email
+
+    mail = Mail(app)
+
     @app.route("/")
     def home():
         return render_template("home.html")
@@ -44,18 +40,10 @@ def configure_routes(app):
             password = request.form.get("password")
 
             try:
-                # Firebase REST API endpoint for authentication
                 url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={FIREBASE_API_KEY}"
-
-                payload = {
-                    "email": email,
-                    "password": password,
-                    "returnSecureToken": True
-                }
-
+                payload = {"email": email, "password": password, "returnSecureToken": True}
                 headers = {"Content-Type": "application/json"}
 
-                # Send request to Firebase Authentication
                 response = requests.post(url, json=payload, headers=headers)
                 data = response.json()
 
@@ -63,15 +51,14 @@ def configure_routes(app):
                     flash("Invalid email or password. Please try again.", "error")
                     return render_template("login.html")
 
-                # Successful login, store user session
-                session["user_id"] = data["localId"]  # Store Firebase UID in session
-                session["id_token"] = data["idToken"]  # Store authentication token
+                session["user_id"] = data["localId"]
+                session["id_token"] = data["idToken"]
                 flash("Login successful!", "success")
                 return redirect(url_for("home"))
 
             except Exception as e:
                 flash("An error occurred. Please try again.", "error")
-                print("Error in login:", traceback.format_exc())  # Debugging output
+                print("Error in login:", traceback.format_exc())
 
         return render_template("login.html")
 
@@ -87,7 +74,6 @@ def configure_routes(app):
                 return render_template("register.html")
 
             try:
-                # Firebase REST API for account creation
                 url = f"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={FIREBASE_API_KEY}"
                 payload = {"email": email, "password": password, "returnSecureToken": True}
                 headers = {"Content-Type": "application/json"}
@@ -112,24 +98,19 @@ def configure_routes(app):
     def forgot_password():
         if request.method == "POST":
             email = request.form.get("email")
-            print(f"Received email: {email}")  # ✅ Check if email is received correctly
 
             try:
                 reset_link = auth.generate_password_reset_link(email)
-                print(f"Generated reset link: {reset_link}")  # ✅ See if Firebase generates a link
-                
                 flash("Password reset link sent! Check your email.", "success")
                 return redirect(url_for("login"))
-            except firebase_admin.auth.UserNotFoundError:
+            except auth.UserNotFoundError:
                 flash("No account found with this email!", "error")
-                print("Error: User not found!")  # ✅ Debugging output
             except Exception as e:
                 flash("An error occurred. Please try again later.", "error")
-                print("Error in forgot_password:", traceback.format_exc())  # ✅ Print full error stack
+                print("Error in forgot_password:", traceback.format_exc())
 
         return render_template("forgot_password.html")
 
-    
     @app.route("/questionnaire")
     def questionnaire():
         return render_template("questionnaire.html")
@@ -167,44 +148,40 @@ def configure_routes(app):
             return jsonify(response)
 
         except Exception as e:
-            print("Error in /predict:", traceback.format_exc())  # Full traceback
+            print("Error in /predict:", traceback.format_exc())
             return jsonify({'error': 'Internal Server Error. Check logs.'}), 500
 
-        # Route to Send Email
-@flask_app.route("/send_email", methods=["POST"])
-def send_email():
-    try:
-        data = request.json  # Receive JSON data
-        recipient_email = data['email']  # Extract email dynamically
-        results = data['results']  # Extract prediction results
+    @app.route("/send_email", methods=["POST"])
+    def send_email():
+        try:
+            data = request.json
+            recipient_email = data['email']
+            results = data['results']
 
-        # Create email message
-        msg = Message("Your Diabetes Prediction Results", recipients=[recipient_email])
-        msg.body = f"""
-        Here are your submitted results:
+            msg = Message("Your Diabetes Prediction Results", recipients=[recipient_email])
+            msg.body = f"""
+            Here are your submitted results:
 
-        Gender: {results['gender']}
-        Age: {results['age']}
-        Blood Pressure: {results['bp']}
-        Heart Disease: {results['heartDisease']}
-        Smoking History: {results['smokingHistory']}
-        Height: {results['height']} cm
-        Weight: {results['weight']} kg
-        HbA1c Level: {results['HbA1c']}
-        Blood Sugar Level: {results['bloodSugar']}
-        
-        BMI: {results['bmi']} ({results['bmiCategory']})
-        Hypertension Status: {results['hypertensionStatus']}
-        Diabetes Prediction: {results['diabetesPrediction']}
+            Gender: {results['gender']}
+            Age: {results['age']}
+            Blood Pressure: {results['bp']}
+            Heart Disease: {results['heartDisease']}
+            Smoking History: {results['smokingHistory']}
+            Height: {results['height']} cm
+            Weight: {results['weight']} kg
+            HbA1c Level: {results['HbA1c']}
+            Blood Sugar Level: {results['bloodSugar']}
+            
+            BMI: {results['bmi']} ({results['bmiCategory']})
+            Hypertension Status: {results['hypertensionStatus']}
+            Diabetes Prediction: {results['diabetesPrediction']}
 
-        Thank you for using our diabetes prediction service!
-        """
+            Thank you for using our diabetes prediction service!
+            """
 
-        # Send email
-        mail.send(msg)
+            mail.send(msg)
+            return jsonify({"message": "Email sent successfully"}), 200
 
-        return jsonify({"message": "Email sent successfully"}), 200
-
-    except Exception as e:
-        print(f"Email error: {e}")
-        return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
+        except Exception as e:
+            print(f"Email error: {e}")
+            return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
