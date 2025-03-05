@@ -18,67 +18,101 @@
             </div>
         </header>
         <section class="section_1">
-            <div class="slider_container">
-                <ion-icon class="arrow l_arrow" name="chevron-back-outline" onclick="prev_slide()"></ion-icon>
-                <div class="slider slide_1">
-                    <div class="home_text">
-                        <h1>Home</h1>
-                        <p>Diabetes Prediction and Multiple Advisory Application as a preliminary diagnostic tool for diabetes and a handy advisory tool to prevent or control probable high blood sugar of users through dietary control, lifestyle changes, exercise and the like. This application is based on the gender, age, hypertension, heart disease, smoking history, Body Mass Index (BMI), Blood Glucose Level and/or HbA1c Level of the users. The application will use Machine Learning, Deep Learning and the likewise algorithms to do prediction and detection of diabetes, give monitoring glucose level advice to users, lifestyle (i.e. exercise) and dietary changes to pre-diabetics and overweight users, prediction of future diabetes improvement or deterioration of users following the adherence or violation of the advice given.</p>
-                    </div>
+            <div class="carousel">
+                <button class="slide_button button_left">❮</button>
+                <div class="slide_track_container">
+                    <ul class="slide_track">
+                        <li class="slide">
+                            <div class="slide_1">
+                                <div class="content_1">
+                                    <h1>"Explore & Better Your Health Today!"</h1>
+                                    <p>
+                                        Your health is your greatest asset, 
+                                        and every step matters. With just a quick survey, 
+                                        we can accurately predict your diabetes risk and provide personalized advice on nutrition, 
+                                        fitness, and overall well-being—tailored to your unique needs. Take control of your health today!
+                                    </p>
+                                    <a href="{{ url_for('questionnaire') }}" class="slide_1_btn {% if request.path == '/questionnaire' %}active{% endif %}">Take The Test</a>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="slide">
+                            <div class="slide_2">
+                                <div class="content_2">
+                                    <h1>"Diabetes Uncovered: Know the Types, Prevent the Risks"</h1>
+                                    <p>Understanding diabetes is the first step to prevention. 
+                                        Learn about the different types, their causes, 
+                                        and simple lifestyle changes that can help you stay healthy and in control.</p>
+                                    <a href="#section02" class="slide_1_btn">Explore</a>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="slide">
+                            <div class="slide_3">
+                                <div class="content_3">
+                                    <h1>"Need Quick Health Tips?"</h1>
+                                    <p>Looking for general health tips? Here’s a collection of advice to guide you toward better habits and overall well-being.</p>
+                                    <a href="#section04" class="slide_1_btn">General Advice</a>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="slider slide_2">
-                    <div class="slide1_text">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis aliquid commodi aut minima, eum asperiores at accusamus rerum laborum quis, totam magnam voluptas deserunt? Totam nisi natus quasi eveniet error?</p>
-                    </div>
+                <button class="slide_button button_right">❯</button>
+                <div class="slide_indicator">
+                    <button class="indicator active"></button>
+                    <button class="indicator"></button>
+                    <button class="indicator"></button>
                 </div>
-                <div class="slider slide_3">
-                    <div class="slide2_text">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla in quia, excepturi sit quis provident repudiandae sapiente culpa officiis, ex quos officia voluptas maiores rem omnis temporibus, veniam tenetur esse.</p>
-                    </div>
-                </div>
-                <ion-icon class="arrow r_arrow" name="chevron-forward-outline" onclick="next_slide()"></ion-icon>
             </div>
         </section>
 
-        <svg class="s1_svg" viewBox="0 0 1440 130" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
+        <svg class="s1_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
             <path fill="#FFFFFF" d="M0,120 L360,90 L720,130 L1080,80 L1440,110 V200 H0 Z"></path>
         </svg>
 
-        <section class="section_2">
+        <section class="section_2" id="section02">
             <div class="s2text_item">
                 <div class="s2_title">
-                    <h1>Types Of Diabetes</h1>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non ipsa, ratione alias sapiente fugiat dolorum vero voluptatum odio dignissimos est itaque, facilis distinctio suscipit? Dolores eaque sed enim voluptate. Magnam!</p>
+                    <h1 style="color: rgb(8, 76, 125);">Types Of Diabetes</h1>
+                    <p>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem suscipit eveniet sit vitae voluptatum labore dicta eaque quibusdam illum nam eum odio, laudantium vel cumque repudiandae esse corporis? Nesciunt, deleniti?
+                    </p>
+                    <a href="https://www.cdc.gov/diabetes/about" class="s2_bt" target="_blank">Learn More</a>
                 </div>
-                <img src="{{ url_for('static', filename='s2.png') }}" alt="section2_image" width="550px" height="400px" id="s2_image">
+                <img src="{{ url_for('static', filename='s2.png') }}" alt="section2_image" width="450px" height="300px" id="s2_image">
             </div>
-        </section>
+        </section> 
 
-        <svg class="s2_svg" viewBox="0 0 1440 130" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
+        <svg class="s2_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
             <path fill="#FFFFFF" d="M0,30 L360,60 L720,10 L1080,70 L1440,40 V0 H0 Z"></path>
         </svg>         
 
         <section class="section_3">
             <div class="s3text_item">
-                <img src="{{ url_for('static', filename='s3.png') }}" alt="section3_image" width="550px" height="400px" id="s3_image">
+                <img src="{{ url_for('static', filename='s3.png') }}" alt="section3_image" width="450px" height="300px" id="s3_image">
                 <div class="s3_title">
-                    <h1>How To Prevent Diabetes</h1>
+                    <h1 style="color: rgb(8, 76, 125);">How To Prevent Diabetes</h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi consequuntur facilis impedit accusantium odit molestiae repellat voluptate, culpa ullam adipisci! Alias excepturi atque a repellendus quaerat voluptate rerum reprehenderit. Laudantium.</p>
+                    <a href="https://www.pantai.com.my/health-pulse/how-to-prevent-diabetes" class="s3_bt" target="_blank">Learn More</a>
                 </div>
             </div>
         </section>
 
-        <svg class="s3_svg" viewBox="0 0 1440 130" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
-            <path fill="#f4f4f4" d="M0,50 L360,30 L720,60 L1080,20 L1440,50 V0 H0 Z"></path>
+        <svg class="s3_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
+            <path fill="#f4f4f4" d="M0,90 L360,70 L720,100 L1080,60 L1440,90 V0 H0 Z"></path>
         </svg>         
 
-        <section class="section_4">
-            <div class="s4">
-                <h1>Looking for some general advice?</h1>
+        <section class="section_4" id="section04">
+            <div class="s4_title">
+                <h1 style="color: rgb(8, 76, 125);" >Looking For Some General Advice?</h1>
             </div>
             <div class="expandable">
                 <div class="expandable_bar">
-                    <span class="expandable_title">Common Diabetest Symptoms</span>
+                    <span class="expandable_title">"What Are Common Diabetest Symptoms?"</span>
                     <ion-icon class="ion-icon" name="add-outline"></ion-icon>
                 </div>
                 <div class="content_container">
@@ -97,7 +131,7 @@
             </div>
             <div class="expandable">
                 <div class="expandable_bar">
-                    <span class="expandable_title">Maintaining A Healthy Weight</span>
+                    <span class="expandable_title">"How do I Maintaining A Healthy Weight?"</span>
                     <ion-icon class="ion-icon" name="add-outline"></ion-icon>
                 </div>
                 <div class="content_container">
@@ -111,64 +145,147 @@
                     </div>
                 </div>
             </div>
+            <div class="expandable">
+                <div class="expandable_bar">
+                    <span class="expandable_title">"How To Quit Smoking?"</span>
+                    <ion-icon class="ion-icon" name="add-outline"></ion-icon>
+                </div>
+                <div class="content_container">
+                    <div class="expandable_content"> 
+                        <ul>1. Find Your Reason – Identify a strong, personal reason to quit (health, family, finances, etc.).</ul>
+                        <ul>2. Make a Plan – Set a quit date and decide whether to quit cold turkey or gradually reduce smoking.</ul>
+                        <ul>3. Know Your Triggers & Avoid Them – Identify common triggers (stress, coffee, alcohol) and replace smoking with healthier habits.</ul>
+                        <ul>4. Use Nicotine Replacement Therapy – Consider nicotine patches, gum, lozenges, or prescription medications.</ul>
+                        <ul>5. Seek Support – Inform friends, family, or join a support group for encouragement.</ul>
+                        <ul>6. Stay Busy – Keep your hands and mouth occupied (chewing gum, stress ball, drinking water).</ul>
+                        <ul>7. Handle Cravings – Cravings last 5-10 minutes; distract yourself with an activity or deep breathing.</ul>
+                        <ul>8. Prepare for Withdrawal – Manage symptoms like irritability and anxiety with exercise or meditation.</ul>
+                        <ul>9. Reward Yourself – Save money from cigarettes and treat yourself for reaching milestones.</ul>
+                        <ul>10. Don't Give Up – Relapses happen; learn from them and keep trying.</ul>
+                    </div>
+                </div>
+            </div>
+            <div class="expandable">
+                <div class="expandable_bar">
+                    <span class="expandable_title">"How do I Maintain A Healthy Lifestyle?"</span>
+                    <ion-icon class="ion-icon" name="add-outline"></ion-icon>
+                </div>
+                <div class="content_container">
+                    <div class="expandable_content"> 
+                        <ul>1. Eat a Balanced Diet – Include a variety of vegetables, fruits, lean proteins, whole grains, and healthy fats.</ul>
+                        <ul>2. Limit Processed Foods – Reduce intake of sugary drinks, excessive salt, and unhealthy fats.</ul>
+                        <ul>3. Stay Hydrated – Drink plenty of water throughout the day to keep your body functioning properly.</ul>
+                        <ul>4. Exercise Regularly – Aim for at least 150 minutes of moderate exercise per week, including strength training.</ul>
+                        <ul>5. Stay Active – Move throughout the day by walking, stretching, or taking short breaks from sitting.</ul>
+                        <ul>6. Get Enough Sleep – Aim for 7-9 hours of quality sleep and maintain a consistent sleep schedule.</ul>
+                        <ul>7. Manage Stress – Practice meditation, deep breathing, or engage in activities that help you relax.</ul>
+                        <ul>8. Stay Mentally Healthy – Build strong relationships, practice gratitude, and seek support when needed.</ul>
+                        <ul>9. Avoid Harmful Habits – Quit smoking, limit alcohol intake, and reduce caffeine consumption.</ul>
+                        <ul>10. Maintain Good Hygiene – Wash hands regularly, take care of oral hygiene, and visit doctors for regular checkups.</ul>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
     <script>
-        document.body.addEventListener("click", (ev) => 
-        {
-            const isClicked = !!ev.target.closest(".expandable_bar");
-            const expandable = ev.target.closest(".expandable");
+        document.body.addEventListener("click", e => {
+            const isClicked = e.target.closest(".expandable_bar");    // target expandable bar
+            const expandable = e.target.closest(".expandable");         //target expandable section
 
-            if(!isClicked)
+            //returns if clicked area is outside of expandible bar
+            if (!isClicked) 
             {
                 return;
             }
-            const icon_change = expandable.classList.toggle("expandable_open");
-            const icon = expandable.querySelector("ion-icon");
-            icon.setAttribute("name", icon_change ? "remove-outline" : "add-outline");
+
+            const icon_change = expandable.classList.toggle("expandable_open"); //toggles expandble content on/off 
+            const icon = expandable.querySelector("ion-icon");  //select icon element 
+            icon.setAttribute("name", icon_change ? "remove-outline" : "add-outline");  //changes icon - or plus depending on icon_change toggle
         });
 
-// slider logic, just for reference havent figured out how it works(ignore)
-let slides = document.querySelectorAll('.slider');
-let currentSlide = 0;
+        const carousel = document.querySelector('.carousel');   //select carousel element
+        const track = carousel.querySelector('.slide_track');   // select slide_track element 
+        const slides = Array.from(track.children);     //initialise number of slides in accordance to children of track
+        const nextButton = carousel.querySelector('.button_right'); //select slide buttons right
+        const prevButton = carousel.querySelector('.button_left'); // select slide button right
+        const dotsNav = carousel.querySelector('.slide_indicator'); // select slide indicator
+        const dots = Array.from(dotsNav.children);  //initialse number of indicator in accordance to children of slide_indicator
 
-// Initialize slider
-function initSlider() {
-    slides.forEach((slide, index) => {
-        slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
-        if (index === currentSlide) slide.classList.add('active');
-    });
-}
+        const updateSlidePositions = () => {
+            const slideWidth = slides[0].getBoundingClientRect().width; //width of initail slide
+            
+            //set each slides left property according to index 
+            slides.forEach((slide, index) => {
+                slide.style.left = slideWidth * index + 'px';
+            });
 
-function moveSlide(direction) {
-    slides[currentSlide].classList.remove('active');
-    slides[currentSlide].style.transform = `translateX(${direction === 'next' ? -100 : 100}%)`;
+            const currentSlide = track.querySelector('.current-slide') || slides[0];    // select slide marked as current or initial slide
+            track.style.transition = 'none';    //disable transition so repositioning is instant
+            track.style.transform = 'translateX(-' + currentSlide.style.left + ')';     //move slide left by current slides's offset
 
-    currentSlide = direction === 'next' 
-        ? (currentSlide + 1) % slides.length
-        : (currentSlide - 1 + slides.length) % slides.length;
+            //re-enable transition ensure future movement is animated
+            setTimeout(() => {
+                track.style.transition = 'transform 0.5s ease-in-out';  
+            }, 0);
+        };
 
-    slides[currentSlide].classList.add('active');
-    slides[currentSlide].style.transform = 'translateX(0)';
-}
+        updateSlidePositions();
+        slides[0].classList.add('current-slide');   //marks initial slide as current slide
 
-// Update arrow click handlers
-function next_slide() {
-    moveSlide('next');
-}
+        window.addEventListener('resize', updateSlidePositions);    //updates when window is resized ensure proper alignment
 
-function prev_slide() {
-    moveSlide('prev');
-}
+        const updateDots = (currentDot, targetDot) => {
+            currentDot.classList.remove('active');  //remove active from current indicator
+            targetDot.classList.add('active');  //add active to target indicator.
+        };
 
-// Initialize on load
-window.addEventListener('load', () => {
-    initSlider();
-    slides[currentSlide].classList.add('active');
-});
+        const moveToSlide = (track, currentSlide, targetSlide) => {
+            track.style.transition = 'transform 0.5s ease-in-out';  //transition of slide animation
+            track.style.transform = 'translateX(-' + targetSlide.style.left + ')';  //moves slide by targetslide offset
+            currentSlide.classList.remove('current-slide'); // remove current-slide marker from current
+            targetSlide.classList.add('current-slide'); // add to current-slide marker to target
+        };
+
+        prevButton.addEventListener('click', e => {
+            const currentSlide = track.querySelector('.current-slide') || slides[0];    //select the current slide or initial slide
+            const prevSlide = currentSlide.previousElementSibling || slides[slides.length - 1]; // find previous slide 
+            const currentDot = dotsNav.querySelector('.active');    //select current slide indicator
+            const prevDot = currentDot.previousElementSibling || dots[dots.length - 1]; // find previous slide indicator
+
+            moveToSlide(track, currentSlide, prevSlide);    //moves the slide
+            updateDots(currentDot, prevDot);    //update indicator
+        }); 
+
+        //same mechanism with prevButton but instead finds the next slide and indicator
+        nextButton.addEventListener('click', e => {
+            const currentSlide = track.querySelector('.current-slide') || slides[0];
+            const nextSlide = currentSlide.nextElementSibling || slides[0];
+            const currentDot = dotsNav.querySelector('.active');
+            const nextDot = currentDot.nextElementSibling || dots[0];
+
+            moveToSlide(track, currentSlide, nextSlide);
+            updateDots(currentDot, nextDot);
+        });
+
+        dotsNav.addEventListener('click', e => {
+            const targetDot = e.target.closest('button');   //target indicator buttons
+
+            //returns if clicked outside of buttons
+            if (!targetDot) 
+            {
+                return;
+            }
+
+            const currentSlide = track.querySelector('.current-slide') || slides[0];    //select the current slide or initial slide
+            const currentDot = dotsNav.querySelector('.active');    // select current slid eindicator
+            const targetIndex = dots.findIndex(dot => dot === targetDot); //get the clicked button's index
+            const targetSlide = slides[targetIndex];    //assign corresponding slide
+
+            moveToSlide(track, currentSlide, targetSlide); //moves the slide to corresponding target index
+            updateDots(currentDot, targetDot);  //updates dot indicator
+        });
     </script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
 </body>
 </html>
