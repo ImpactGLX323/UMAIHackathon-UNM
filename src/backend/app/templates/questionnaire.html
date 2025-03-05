@@ -14,8 +14,8 @@
             <div class="dashboard">
                 <a href="{{ url_for('home') }}" class="button {% if request.path == '/' %}active{% endif %}">Home</a>
                 <a href="{{ url_for('questionnaire') }}" class="button {% if request.path == '/questionnaire' %}active{% endif %}">Test</a>
-                <a href="{{ url_for('login') }}" class="button {% if request.path == '/login' %}active{% endif %}">History</a>
-                <a href="{{ url_for('login') }}" class="button {% if request.path == '/login' %}active{% endif %}">Profile</a>
+                <a href="{{ url_for('test') }}" class="button {% if request.path == '/test' %}active{% endif %}">History</a>
+                <a href="{{ url_for('test') }}" class="button {% if request.path == '/test' %}active{% endif %}">Profile</a>
             </div>
         </header>
     </div>
@@ -167,6 +167,13 @@
             <p><b>Smoking History Advice:</b> <span id="smokeAdvice"></span></p>
             <p><b>BMI Advice:</b> <span id="bmiAdvice"></span></p>
             <p><b>Blood Sugar Advice:</b> <span id="bloodSugarAdvice"></span></p>
+        </div>
+        <div id="emailContainer" class="email-container hidden">
+            <h2>Receive Your Results via Email</h2>
+            <label for="userEmail">Enter your email:</label>
+            <input type="email" id="userEmail" name="userEmail" required>
+            <button onclick="submitEmail()">Submit</button>
+            <p id="emailMessage"></p>
         </div>
     </div>
 
@@ -324,6 +331,8 @@
                 const resultsSection = document.getElementById('resultsSection');
                 resultsSection.classList.remove('hidden');
                 resultsSection.classList.add('fade-in');
+                const emailContainer = document.getElementById('emailContainer');
+                emailContainer.classList.remove('hidden');
             }, 800);
         }
 
@@ -423,6 +432,59 @@
             setTimeout(() => {
                 window.location.reload();
             }, 800);
+        }
+
+        async function submitEmail() {
+            const emailInput = document.getElementById('userEmail');
+            const emailMessage = document.getElementById('emailMessage');
+
+            if (!emailInput.checkValidity()) {
+                emailMessage.innerText = 'Please enter a valid email address.';
+                emailMessage.style.color = 'red';
+                return;
+            }
+
+            const email = emailInput.value;  // Extract email from user input
+
+            // Collect user results
+            const results = {
+                gender: document.getElementById('genderResult').innerText,
+                age: document.getElementById('ageResult').innerText,
+                bp: document.getElementById('bpResult').innerText,
+                heartDisease: document.getElementById('heartDiseaseResult').innerText,
+                smokingHistory: document.getElementById('smokeHistoryResult').innerText,
+                height: document.getElementById('heightResult').innerText,
+                weight: document.getElementById('weightResult').innerText,
+                HbA1c: document.getElementById('HbA1cResult').innerText,
+                bloodSugar: document.getElementById('bloodSugarResult').innerText,
+                bmi: document.getElementById('bmiresults').innerText,
+                bmiCategory: document.getElementById('bmilevel').innerText,
+                hypertensionStatus: document.getElementById('hypertensionResult').innerText,
+                diabetesPrediction: document.getElementById('diabetesPrediction').innerText
+            };
+
+            try {
+                const response = await fetch('/send_email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, results })  // Send email dynamically
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    emailMessage.innerText = 'Thank you! Your results have been sent to your email.';
+                    emailMessage.style.color = '#4CAF50';
+                } else {
+                    emailMessage.innerText = 'Error sending email. Please try again.';
+                    emailMessage.style.color = 'red';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                emailMessage.innerText = 'Error sending email. Please try again.';
+                emailMessage.style.color = 'red';
+            }
         }
     </script>
 </body>
