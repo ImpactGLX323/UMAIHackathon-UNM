@@ -23,8 +23,8 @@ def configure_routes(app):
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Change for Outlook, Yahoo, etc.
     app.config['MAIL_PORT'] = 587
     app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USERNAME'] = 'joshuamak2004@gmail.com'  # Use your actual email
-    app.config['MAIL_PASSWORD'] = 'tvkz qdto xeeq uxjr'  # Use an App Password, NOT your real password
+    app.config['MAIL_USERNAME'] = 'aipredict2025@gmail.com'  # Use your actual email
+    app.config['MAIL_PASSWORD'] = 'fjzj xrxo owaa lwwh'  # Use an App Password, NOT your real password
     app.config['MAIL_DEFAULT_SENDER'] = 'your_email@gmail.com'  # Replace with your email
 
     mail = Mail(app)
