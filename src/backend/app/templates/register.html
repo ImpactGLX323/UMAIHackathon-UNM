@@ -19,6 +19,15 @@
         </header>
         
         <section class="section_1">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
             <div class="form_container">
                 <h2>Register</h2>
                 <form action="{{ url_for('register') }}" method="post">

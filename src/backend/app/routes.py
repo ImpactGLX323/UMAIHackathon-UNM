@@ -10,7 +10,7 @@ from flask_mail import Mail, Message
 # Get absolute path of the JSON key
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  
 JSON_PATH = os.getenv("FIREBASE_CREDENTIALS", os.path.join(BASE_DIR, "../config/firebase-adminsdk.json"))
-FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY")
+FIREBASE_API_KEY = 'AIzaSyCMjC4N4MvkIFvIuJhon_FMi2zOo9eyja8'
 
 # Initialize Firebase if not already initialized
 if not firebase_admin._apps:
