@@ -176,7 +176,10 @@ def configure_routes(app):
             Hypertension Status: {results['hypertensionStatus']}
             Diabetes Prediction: {results['diabetesPrediction']}
 
-            Thank you for using our diabetes prediction service!
+            Thank you for using our Diabetes Advisory Service!
+
+            Regards,
+            GlucAware Advisory Team
             """
 
             mail.send(msg)
