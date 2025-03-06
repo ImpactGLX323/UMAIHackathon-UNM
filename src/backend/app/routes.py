@@ -100,11 +100,21 @@ def configure_routes(app):
             email = request.form.get("email")
 
             try:
-                reset_link = auth.generate_password_reset_link(email)
-                flash("Password reset link sent! Check your email.", "success")
+                # Firebase REST API to trigger the password reset email
+                url = f"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={FIREBASE_API_KEY}"
+                payload = {"requestType": "PASSWORD_RESET", "email": email}
+                headers = {"Content-Type": "application/json"}
+
+                response = requests.post(url, json=payload, headers=headers)
+                data = response.json()
+
+                if "error" in data:
+                    flash("Error sending reset email. Please check your email address.", "error")
+                else:
+                    flash("Password reset email sent! Check your inbox.", "success")
+
                 return redirect(url_for("login"))
-            except auth.UserNotFoundError:
-                flash("No account found with this email!", "error")
+
             except Exception as e:
                 flash("An error occurred. Please try again later.", "error")
                 print("Error in forgot_password:", traceback.format_exc())
