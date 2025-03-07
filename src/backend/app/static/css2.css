@@ -1,11 +1,6 @@
 
 .header_container
 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 0.2fr 3fr;
-    grid-template-areas: 
-    "header header header";
     height: 10vh;
 }
 
@@ -21,7 +16,6 @@
 
 .header 
 {
-    grid-area: header;
     height: 90px;
     width: 100%;
      background-color: rgb(75, 162, 213);
@@ -64,6 +58,24 @@
 
 .button:hover {
     border-top: 5px solid white;
+}
+
+.log_btn
+{
+    display: inline-block;
+    padding: 15px 25px;
+    border-radius: 25px;
+    background-color: rgb(255, 255, 255);
+    font-size: medium;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    transition: 0.5s;
+}
+
+.log_btn:hover
+{
+    background-color: rgb(227, 227, 227);
 }
 
 body {
@@ -328,6 +340,30 @@ li b {
         justify-content: center;
         align-items: center;
         gap: 30px;
+    }
+
+    .header 
+    {
+        font-size: 30px; 
+        padding: 0 10px;
+    }
+
+    #logo 
+    {
+        height: 60px;
+        width: 200px;
+    }
+
+    .button 
+    {
+        font-size: 14px;
+        padding: 33px 10px;
+    }
+
+    .log_btn
+    {
+        font-size: 14px;
+        padding: 10px 10px;
     }
 
     .results-section, .bmi-section {
