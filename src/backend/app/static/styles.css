@@ -140,7 +140,6 @@ body
 
 .header 
 {
-    grid-area: header;
     height: 90px;
     width: 100%;
     background-color: rgb(75, 162, 213);
