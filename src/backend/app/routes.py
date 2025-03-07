@@ -121,6 +121,13 @@ def configure_routes(app):
 
         return render_template("forgot_password.html")
 
+    @app.route("/logout")
+    def logout():
+        session.pop('user_id', None)
+        session.pop('id_token', None)
+        flash("You have been logged out.", "success")
+        return redirect(url_for("home"))
+
     @app.route("/questionnaire")
     def questionnaire():
         return render_template("questionnaire.html")
