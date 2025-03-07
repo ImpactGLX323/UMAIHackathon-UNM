@@ -181,6 +181,24 @@ body
     border-top: 5px solid white;
 }
 
+.log_btn
+{
+    display: inline-block;
+    padding: 15px 20px;
+    border-radius: 25px;
+    background-color: rgb(255, 255, 255);
+    font-size: medium;
+    text-align: center;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: 0.5s;
+}
+
+.log_btn:hover
+{
+    background-color: rgb(227, 227, 227);
+}
+
 .carousel 
 {
     position: relative;
@@ -455,6 +473,18 @@ body
         width: 200px;
     }
 
+    .button
+    {
+        font-size: 14px;
+        padding: 33px 10px;
+    }
+
+    .log_btn
+    {
+        font-size: 14px;
+        padding: 10px 10px;
+    }
+
     .section_1
     {
         min-height: 500px;
@@ -501,12 +531,6 @@ body
         text-align: center;
     }
 
-    .button 
-    {
-        font-size: 14px;
-        padding: 33px 10px;
-    }
-
     .expandable 
     {
         width: 80vw;
@@ -547,89 +571,5 @@ body
     {
         padding: 10px;
         font-size: 18px;
-    }
-}
-
-/* Register Page */
-.form_container {
-    width: 400px;
-    background: white;
-    padding: 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    text-align: center;
-}
-
-.section_1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-    padding-top: 100px;
-}
-
-.form_container h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-.input {
-    margin-bottom: 15px;
-}
-
-.input input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.submit input {
-    width: 100%;
-    padding: 10px;
-    background: rgb(75, 162, 213);
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-}
-
-.submit input:hover {
-    background: rgb(60, 140, 190);
-}
-
-.alt {
-    margin-top: 10px;
-}
-
-.alt h4 {
-    font-size: 14px;
-    color: #555;
-}
-
-.alt a {
-    color: rgb(75, 162, 213);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.alt a:hover {
-    text-decoration: underline;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 600px) {
-    .form_container {
-        width: 90%;
-        padding: 20px;
-    }
-
-    .section_1 {
-        padding-top: 50px;
     }
 }
