@@ -13,11 +13,11 @@
             <div class="dashboard">
                 <a href="{{ url_for('home') }}" class="button {% if request.path == '/' %}active{% endif %}">Home</a>
                 <a href="{{ url_for('questionnaire') }}" class="button {% if request.path == '/questionnaire' %}active{% endif %}">Test</a>
-                <a href="{{ url_for('login') }}" class="button {% if request.path == '/login' %}active{% endif %}">History</a>
-                <a href="{{ url_for('login') }}" class="button {% if request.path == '/login' %}active{% endif %}">Profile</a>
                 {% if not session.get('user_id') %}
                     <a href="{{ url_for('login') }}" class="log_btn {% if request.path == '/login' %}active{% endif %}">Sign In</a>
                 {% else %}
+                <a href="{{ url_for('login') }}" class="button {% if request.path == '/login' %}active{% endif %}">History</a>
+                <a href="{{ url_for('profile') }}" class="button {% if request.path == '/profile' %}active{% endif %}">Profile</a>
                     <a href="{{ url_for('logout') }}" class="log_btn">Sign Out</a>
                 {% endif %}
             </div>
