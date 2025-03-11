@@ -67,6 +67,7 @@ body
     display: flex;
     flex-direction: row; 
     gap: 50px;
+    font-size: 20px;
 }
 
 .s2_title, .s3_title
@@ -140,6 +141,7 @@ body
 
 .header 
 {
+    grid-area: header;
     height: 90px;
     width: 100%;
     background-color: rgb(75, 162, 213);
@@ -427,6 +429,7 @@ body
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     padding: 14px;
+    font-size: 20px;
     color: white;
 }
 
@@ -447,6 +450,7 @@ body
     grid-template-rows: 0fr;
     background-color: rgb(234, 232, 230);
     transition: grid-template-rows 0.5s ease-out;
+    font-size: 20px;
 }
 
 .expandable_bar ion-icon 
