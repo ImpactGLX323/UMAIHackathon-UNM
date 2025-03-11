@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+    <title>Profile - Diabetes Prediction & Advisory Tool</title>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="GlucAware&Advisory" width="350px" height="80px" id="logo">
+            <div class="dashboard">
+                <a href="{{ url_for('home') }}" class="button {% if request.path == '/' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('questionnaire') }}" class="button {% if request.path == '/questionnaire' %}active{% endif %}">Test</a>
+                {% if not session.get('user_id') %}
+                    <a href="{{ url_for('login') }}" class="log_btn {% if request.path == '/login' %}active{% endif %}">Sign In</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="button {% if request.path == '/login' %}active{% endif %}">History</a>
+                    <a href="{{ url_for('profile') }}" class="button {% if request.path == '/profile' %}active{% endif %}">Profile</a>
+                    <a href="{{ url_for('logout') }}" class="log_btn">Sign Out</a>
+                {% endif %}
+            </div>
+        </header>
+
+        <div class="profile_container">
+            <form action="{{ url_for('profile') }}" method="post">
+                <div class="profile_title">
+                    <h2>Profile</h2>
+                </div>
+                <div class="input">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="input">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="">Select Here</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Prefer Not To Say">Prefer Not To Say</option>
+                    </select>
+                </div>
+                <div class="input">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input">
+                    <label for="birthDate">Date of Birth</label>
+                    <input type="date" id="birthDate" name="birthDate">
+                </div>
+                <div class="input">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter new password">
+                </div>
+                <div class="submit">
+                    <button type="submit" class="submit_btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
