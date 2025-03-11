@@ -1,0 +1,204 @@
+
+
+body {
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #333;
+    background-color: rgba(227, 226, 226, 0.8); /* Fallback background color */
+    background-image: linear-gradient(rgba(227, 226, 226, 0.65), rgba(227, 226, 226, 0.65)), url("/static/flower.jpeg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+.container 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.header 
+{
+    height: 90px;
+    width: 100%;
+    background-color: rgb(75, 162, 213);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+#logo 
+{
+    display: block;
+}
+
+.dashboard 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 3%;
+    gap: 20px;
+}
+
+.button
+{
+    display: inline-block;
+    padding: 33px 20px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-decoration: none;
+    font-size: 19px;
+    border-top: 5px solid transparent;
+}
+
+.button.active
+{
+    border-top: 5px solid white;
+}
+
+.button:hover
+{
+    border-top: 5px solid white;
+}
+
+.log_btn
+{
+    display: inline-block;
+    padding: 15px 20px;
+    border-radius: 25px;
+    background-color: rgb(255, 255, 255);
+    font-size: medium;
+    text-align: center;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: 0.5s;
+}
+
+.log_btn:hover
+{
+    background-color: rgb(227, 227, 227);
+}
+
+.profile_container 
+{
+    margin-top: 120px; 
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.profile_title 
+{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile_title h2 
+{
+    color: rgb(75, 162, 213);
+    font-size: 28px;
+}
+
+form 
+{
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.input 
+{
+    margin-bottom: 20px;
+}
+
+.input label 
+{
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.input input, .input select 
+{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.input input[type="date"] 
+{
+    padding: 8px; 
+}
+
+.input input:focus, .input select:focus 
+{
+    border-color: rgb(75, 162, 213);
+    outline: none;
+}
+
+.submit 
+{
+    text-align: center;
+}
+
+.submit_btn 
+{
+    background-color: rgb(75, 162, 213);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover 
+{
+    background-color: rgb(65, 142, 193);
+}
+
+@media screen and (max-width: 768px) 
+{
+    .profile_container {
+        padding: 10px;
+        max-width: 90%;
+    }
+
+    .header {
+        padding: 0 10px;
+    }
+
+    .dashboard {
+        gap: 10px;
+    }
+
+    .button 
+    {
+        padding: 33px 15px;
+        font-size: 16px;
+    }
+
+    .log_btn
+    {
+        font-size: 14px;
+        padding: 10px 10px;
+    }
+}
