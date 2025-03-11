@@ -131,6 +131,10 @@ def configure_routes(app):
     @app.route("/questionnaire")
     def questionnaire():
         return render_template("questionnaire.html")
+    # route for profile 
+    @app.route("/profile")
+    def profile():
+        return render_template("profile.html")
     
     @app.route("/test")
     def test():
