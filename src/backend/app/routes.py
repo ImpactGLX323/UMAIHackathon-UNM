@@ -201,6 +201,7 @@ def configure_routes(app):
     @app.route("/predict", methods=["POST"])
     def predict():
         try:
+            # Extract input features from the form
             age = float(request.form.get('feature0', 0))
             blood_pressure = int(request.form.get('feature1', 0))
             heart_disease = int(request.form.get('feature2', 0))
@@ -216,19 +217,66 @@ def configure_routes(app):
             former = int(request.form.get('feature12', 0))
             not_current = int(request.form.get('feature13', 0))
 
+            # Prepare features for prediction
             features = np.array([[age, blood_pressure, heart_disease, bmi, hba1c_level,
-                                  blood_sugar_level, gender, is_male, smoking_history,
-                                  no_info, never, ever, former, not_current]])
+                                blood_sugar_level, gender, is_male, smoking_history,
+                                no_info, never, ever, former, not_current]])
 
+            # Get prediction from the model
             response = predict_diabetes(features)
             if "error" in response:
                 return jsonify(response), 500
+
+            # Store prediction data in Firestore
+            user_id = session.get("user_id")
+            if user_id:
+                prediction_data = {
+                    "age": age,
+                    "blood_pressure": blood_pressure,
+                    "heart_disease": heart_disease,
+                    "bmi": bmi,
+                    "hba1c_level": hba1c_level,
+                    "blood_sugar_level": blood_sugar_level,
+                    "gender": gender,
+                    "is_male": is_male,
+                    "smoking_history": smoking_history,
+                    "no_info": no_info,
+                    "never": never,
+                    "ever": ever,
+                    "former": former,
+                    "not_current": not_current,
+                    "prediction_result": response.get("prediction", "Unknown"),
+                    "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                }
+                db.collection("users").document(user_id).collection("predictions").add(prediction_data)
 
             return jsonify(response)
 
         except Exception as e:
             print("Error in /predict:", traceback.format_exc())
             return jsonify({'error': 'Internal Server Error. Check logs.'}), 500
+
+
+    @app.route("/history")
+    def history():
+        # Check if the user is logged in
+        user_id = session.get("user_id")
+        if not user_id:
+            flash("You need to log in to access your history.", "error")
+            return redirect(url_for("login"))
+
+        try:
+            # Fetch the user's prediction history from Firestore
+            predictions_ref = db.collection("users").document(user_id).collection("predictions")
+            predictions = [doc.to_dict() for doc in predictions_ref.stream()]
+
+            # Render the history template with prediction data
+            return render_template("history.html", predictions=predictions)
+
+        except Exception as e:
+            flash("An error occurred while retrieving your history.", "error")
+            print("Error in /history route:", traceback.format_exc())
+            return redirect(url_for("home"))
 
     @app.route("/send_email", methods=["POST"])
     def send_email():
