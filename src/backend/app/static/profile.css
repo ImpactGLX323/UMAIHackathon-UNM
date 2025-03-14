@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     font-family: 'Raleway', sans-serif;
     margin: 0;
@@ -79,8 +80,8 @@ body {
 
 .profile_container {
     margin-top: 120px;
-    width: 100%;
-    max-width: 800px; /* Increased max-width for better readability */
+    width: 90%;
+    max-width: 1200px;
     padding: 20px;
     background: white;
     border-radius: 10px;
@@ -94,68 +95,102 @@ body {
     margin-bottom: 20px;
 }
 
-.user-details {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
-.user-details p {
+.personal-info, .previous-tests, .advice {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.personal-info h3, .previous-tests h3, .advice h3 {
+    color: rgb(75, 162, 213);
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.personal-info p, .advice ul {
     margin: 0;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.6;
 }
 
-.user-details strong {
-    color: rgb(75, 162, 213);
+.previous-tests table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.previous-tests th, .previous-tests td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.previous-tests th {
+    background-color: rgb(75, 162, 213);
+    color: white;
     font-weight: 600;
+}
+
+.grading {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+}
+
+.grading.positive {
+    background-color: #ffcccc;
+    color: #cc0000;
+}
+
+.grading.negative {
+    background-color: #ccffcc;
+    color: #006600;
+}
+
+.advice ul {
+    list-style-type: disc;
+    padding-left: 20px;
 }
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
     .profile_container {
+        margin-top: 100px;
         padding: 15px;
-        max-width: 90%;
     }
 
-    .header {
-        padding: 0 10px;
+    .personal-info, .previous-tests, .advice {
+        padding: 15px;
     }
+}
 
-    .dashboard {
-        gap: 10px;
-    }
-
-    .button {
-        padding: 33px 15px;
-        font-size: 16px;
-    }
-
-    .log_btn {
-        font-size: 14px;
-        padding: 10px 10px;
+@media screen and (max-width: 480px) {
+    .profile_container {
+        margin-top: 80px;
+        padding: 10px;
     }
 
     .profile_container h2 {
         font-size: 24px;
     }
 
-    .user-details p {
-        font-size: 16px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .profile_container {
-        margin-top: 100px;
-        padding: 10px;
-    }
-
-    .profile_container h2 {
-        font-size: 22px;
-    }
-
-    .user-details p {
+    .personal-info p, .advice ul {
         font-size: 14px;
+    }
+
+    .previous-tests th, .previous-tests td {
+        padding: 8px;
     }
 }
