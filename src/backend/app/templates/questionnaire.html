@@ -27,6 +27,21 @@
     <br>
     <h1><center>Diabetes Prediction Questionnaire</center></h1>
     <center>
+        <button type="button" class="bmi-toggle-button" onclick="toggleBMICalculator()">Calculate BMI</button>
+        <div id ="BMIContainer" class="BMI-container">
+            <h2>BMI Calculator</h2>
+            <label for="bmiHeight"><b>Height (cm):</b></label>
+            <input type="number" id="bmiHeight" name="bmiHeight" min="1" required>
+            
+            <label for="bmiWeight"><b>Weight (kg):</b></label>
+            <input type="number" id="bmiWeight" name="bmiWeight" min="1" step="0.1" required>
+            
+            <button type="button" onclick="calculateBMI()">Calculate BMI</button>
+            
+            <p><b>Your BMI:</b> <span id="bmiResult"></span> (<span id="bmiCategory"></span>)</p>
+        </div>
+    </center>
+    <center>
         <form id="questionnaireForm" onsubmit="handleFormSubmit(event)">
             <div class="field-section active first-field">
                 <label><b>Shall we start this questionnaire?</b></label>
@@ -35,7 +50,6 @@
                     <input type="button" value="Start Questionnaire" onclick="nextField()">
                 </div>
             </div>
-            
             <div class="field-section">
                 <label for="gender"><b>Gender:</b></label>
                 <select id="gender" name="gender" required>
@@ -140,6 +154,13 @@
     </center>
 
     <div id="resultsSection" class="hidden">
+        <div id="emailContainer" class="email-container hidden">
+            <h2>Receive Your Results via Email</h2>
+            <label for="userEmail">Enter your email:</label>
+            <input type="email" id="userEmail" name="userEmail" required>
+            <button onclick="submitEmail()">Submit</button>
+            <p id="emailMessage"></p>
+        </div>
         <div class="container">
             <div class="results-section">
                 <h1>Submitted Results</h1>
@@ -172,13 +193,6 @@
             <p><b>Smoking History Advice:</b> <span id="smokeAdvice"></span></p>
             <p><b>BMI Advice:</b> <span id="bmiAdvice"></span></p>
             <p><b>Blood Sugar Advice:</b> <span id="bloodSugarAdvice"></span></p>
-        </div>
-        <div id="emailContainer" class="email-container hidden">
-            <h2>Receive Your Results via Email</h2>
-            <label for="userEmail">Enter your email:</label>
-            <input type="email" id="userEmail" name="userEmail" required>
-            <button onclick="submitEmail()">Submit</button>
-            <p id="emailMessage"></p>
         </div>
     </div>
 
@@ -490,6 +504,44 @@
                 emailMessage.innerText = 'Error sending email. Please try again.';
                 emailMessage.style.color = 'red';
             }
+        }
+
+        function toggleBMICalculator() {
+            const bmiContainer = document.getElementById('BMIContainer');
+            const toggleButton = document.querySelector('.bmi-toggle-button');
+            
+            if (bmiContainer.style.display === 'none' || bmiContainer.style.display === '') {
+                bmiContainer.style.display = 'block';
+                toggleButton.innerText = 'Hide Field';
+            } else {
+                bmiContainer.style.display = 'none';
+                toggleButton.innerText = 'Calculate BMI';
+            }
+        }
+
+        function calculateBMI() {
+            const height = parseFloat(document.getElementById('bmiHeight').value) / 100;
+            const weight = parseFloat(document.getElementById('bmiWeight').value);
+            
+            if (!height || !weight) {
+                alert('Please enter valid height and weight.');
+                return;
+            }
+            
+            const bmi = (weight / (height * height)).toFixed(2);
+            document.getElementById('bmiResult').innerText = bmi;
+            
+            let category = '';
+            if (bmi < 18.5) {
+                category = 'Underweight';
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                category = 'Normal weight';
+            } else if (bmi >= 25 && bmi < 29.9) {
+                category = 'Overweight';
+            } else {
+                category = 'Obese';
+            }
+            document.getElementById('bmiCategory').innerText = category;
         }
     </script>
 </body>

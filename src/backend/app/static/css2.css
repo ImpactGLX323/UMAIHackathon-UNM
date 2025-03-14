@@ -102,6 +102,10 @@ h1 {
     display: none; /* Completely hide the form and remove its space */
 }
 
+#resultsSection.hidden {
+    display: none; /* Completely hide the form and remove its space */
+}
+
 form {
     background: white;
     max-width: 600px;
@@ -294,7 +298,7 @@ li b {
 }
 
 .email-container h2 {
-    color: rgb(75, 162, 213);
+    color: rgb(115, 133, 170);
     margin-bottom: 15px;
 }
 
@@ -332,6 +336,64 @@ li b {
     margin-top: 10px;
     font-size: 14px;
     color: #f44336;
+}
+
+.BMI-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+    display: none; /* Initially hidden */
+}
+
+.BMI-container h2 {
+    color: rgb(115, 133, 170);
+    margin-bottom: 15px;
+}
+
+.BMI-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.BMI-container input[type="number"] {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.BMI-container button, .bmi-toggle-button {
+    background-color: rgb(75, 162, 213);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    margin-top: 10px;
+}
+
+.BMI-container button:hover, .bmi-toggle-button:hover {
+    background-color: rgb(65, 142, 193);
+}
+
+.BMI-container p {
+    font-size: 1em;
+    color: hsl(231, 30%, 27%);
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.BMI-container p:last-child {
+    border-bottom: none;
 }
 
 @media screen and (max-width: 768px) {
