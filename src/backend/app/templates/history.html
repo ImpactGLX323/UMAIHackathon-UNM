@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='history.css') }}">
     <title>Prediction History - Diabetes Prediction & Advisory Tool</title>
 </head>
 <body>
@@ -23,37 +24,43 @@
             </div>
         </header>
 
-        <div class="profile_container">
+        <div class="history_container">
             <h2>Prediction History</h2>
             {% if predictions %}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Timestamp</th>
-                            <th>Prediction Result</th>
-                            <th>Details</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for prediction in predictions %}
+                <div class="history-table">
+                    <table>
+                        <thead>
                             <tr>
-                                <td>{{ prediction.timestamp }}</td>
-                                <td>{{ prediction.prediction_result }}</td>
-                                <td>
-                                    <ul>
-                                        <li>Age: {{ prediction.age }}</li>
-                                        <li>Blood Pressure: {{ prediction.blood_pressure }}</li>
-                                        <li>BMI: {{ prediction.bmi }}</li>
-                                        <li>HbA1c Level: {{ prediction.hba1c_level }}</li>
-                                        <li>Blood Sugar Level: {{ prediction.blood_sugar_level }}</li>
-                                    </ul>
-                                </td>
+                                <th>Timestamp</th>
+                                <th>Prediction Result</th>
+                                <th>Details</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for prediction in predictions %}
+                                <tr>
+                                    <td>{{ prediction.timestamp }}</td>
+                                    <td>
+                                        <span class="prediction-result {% if prediction.prediction_result == 'Positive' %}positive{% else %}negative{% endif %}">
+                                            {{ prediction.prediction_result }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="details">
+                                            <p><strong>Age:</strong> {{ prediction.age }}</p>
+                                            <p><strong>Blood Pressure:</strong> {{ prediction.blood_pressure }}</p>
+                                            <p><strong>BMI:</strong> {{ prediction.bmi }}</p>
+                                            <p><strong>HbA1c Level:</strong> {{ prediction.hba1c_level }}</p>
+                                            <p><strong>Blood Sugar Level:</strong> {{ prediction.blood_sugar_level }}</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             {% else %}
-                <p>No prediction history found.</p>
+                <p class="no-history">No prediction history found.</p>
             {% endif %}
         </div>
     </div>
