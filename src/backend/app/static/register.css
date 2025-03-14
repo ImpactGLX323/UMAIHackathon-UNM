@@ -1,54 +1,46 @@
 /* Register Page */
 
-body 
-{
-    font-family: 'Raleway', sans-serif;
+body {
+    font-family: 'Helvetica', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.container 
-{
+.container {
     display: flex;
-    position: relative;
     flex-direction: column;
 }
 
-.dashboard 
-{
+.dashboard {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
     margin-right: 3%;
-    gap: 20px; 
+    gap: 20px;
 }
 
-.header 
-{
-    grid-area: header;
+.header {
     height: 90px;
     width: 100%;
-    background-color: rgb(75, 162, 213);
+    background-color: rgb(154, 119, 49);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 30px 0 30px;
+    padding: 0 30px;
     font-size: 50px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: fixed;
     z-index: 1000;
 }
 
-#logo 
-{
-    display: grid;
-    align-items: left;
+#logo {
+    height: 80px;
+    width: 350px;
 }
 
-.button 
-{
+.button {
     display: inline-block;
     padding: 33px 20px;
     color: rgb(255, 255, 255);
@@ -58,14 +50,19 @@ body
     border-top: 5px solid transparent;
 }
 
-.button.active 
-{
+.button.active,
+.button:hover {
     border-top: 5px solid white;
 }
 
-.button:hover 
-{
-    border-top: 5px solid white;
+/* Form Styling */
+.section_1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    padding-top: 100px;
 }
 
 .form_container {
@@ -77,15 +74,6 @@ body
     text-align: center;
 }
 
-.section_1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-    padding-top: 100px;
-}
-
 .form_container h2 {
     margin-bottom: 20px;
     font-size: 24px;
@@ -94,9 +82,19 @@ body
 
 .input {
     margin-bottom: 15px;
+    text-align: left;
 }
 
-.input input {
+.input label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.input input,
+.input textarea,
+.input select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -104,7 +102,17 @@ body
     font-size: 16px;
 }
 
-.submit input {
+.input textarea {
+    height: 80px;
+    resize: none;
+}
+
+/* Submit Button */
+.submit {
+    margin-top: 15px;
+}
+
+.submit_btn {
     width: 100%;
     padding: 10px;
     background: rgb(75, 162, 213);
@@ -116,10 +124,11 @@ body
     transition: background 0.3s ease-in-out;
 }
 
-.submit input:hover {
+.submit_btn:hover {
     background: rgb(60, 140, 190);
 }
 
+/* Alternative Link */
 .alt {
     margin-top: 10px;
 }
@@ -141,29 +150,27 @@ body
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
-    .header 
-    {
-        font-size: 30px; 
+    .header {
+        font-size: 30px;
         padding: 0 10px;
     }
 
-    #logo 
-    {
+    #logo {
         height: 60px;
         width: 200px;
     }
 
-    .button 
-    {
+    .button {
         font-size: 14px;
         padding: 33px 10px;
     }
 
     .form_container {
+        width: 90%;
         padding: 20px;
     }
 
     .section_1 {
-        padding-top: 50px;
+        padding-top: 80px;
     }
 }

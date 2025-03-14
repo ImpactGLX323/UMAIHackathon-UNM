@@ -26,24 +26,61 @@
                     </div>
                 {% endif %}
             {% endwith %}
+
             <div class="form_container">
                 <h2>Register</h2>
                 <form action="{{ url_for('register') }}" method="post">
+
                     <div class="input">
-                        <input type="text" name="name" placeholder="Name" required>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter Username" required>
                     </div>
+
                     <div class="input">
-                        <input type="email" name="email" placeholder="Email" required>
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter Full Name" required>
                     </div>
+
                     <div class="input">
-                        <input type="password" name="password" placeholder="Password" required>
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" required>
                     </div>
+
                     <div class="input">
-                        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter Email" required>
                     </div>
+
+                    <div class="input">
+                        <label for="medical_history">Medical History (Optional)</label>
+                        <textarea id="medical_history" name="medical_history" placeholder="Enter any relevant medical history"></textarea>
+                    </div>
+
+                    <div class="input">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                            <option value="Prefer Not To Say">Prefer Not To Say</option>
+                        </select>
+                    </div>
+
+                    <div class="input">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                    </div>
+
+                    <div class="input">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter Password" required>
+                    </div>
+
                     <div class="submit">
-                        <input type="submit" value="Register">
+                        <button type="submit" class="submit_btn">Register</button>
                     </div>
+
                     <div class="alt">
                         <h4>Already have an account? <a href="{{ url_for('login') }}">Login now!</a></h4>
                     </div>

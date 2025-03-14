@@ -4,18 +4,27 @@ import numpy as np
 import requests
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
 import firebase_admin
-from firebase_admin import credentials, auth, initialize_app
+from firebase_admin import credentials, auth, initialize_app, firestore
 from flask_mail import Mail, Message
+from datetime import datetime
 
 # Get absolute path of the JSON key
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  
 JSON_PATH = os.getenv("FIREBASE_CREDENTIALS", os.path.join(BASE_DIR, "../config/firebase-adminsdk.json"))
-FIREBASE_API_KEY = 'AIzaSyCMjC4N4MvkIFvIuJhon_FMi2zOo9eyja8'
+
+FIREBASE_API_KEY = 'AIzaSyCMjC4N4MvkIFvIuJhon_FMi2zOo9eyja8' #Firebase API Key
 
 # Initialize Firebase if not already initialized
 if not firebase_admin._apps:
     cred = credentials.Certificate(JSON_PATH)
     firebase_app = initialize_app(cred)
+    db = firestore.client()  # Initialize db to take inputs from the user
+
+def calculate_age(dob):
+    today = datetime.today()
+    birth_date = datetime.strptime(dob, "%Y-%m-%d")
+    age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+    return age
 
 def configure_routes(app):
     from app.model import predict_diabetes  # Correct import path
@@ -25,7 +34,7 @@ def configure_routes(app):
     app.config['MAIL_USE_TLS'] = True
     app.config['MAIL_USERNAME'] = 'aipredict2025@gmail.com'  # Use your actual email
     app.config['MAIL_PASSWORD'] = 'fjzj xrxo owaa lwwh'  # Use an App Password, NOT your real password
-    app.config['MAIL_DEFAULT_SENDER'] = 'your_email@gmail.com'  # Replace with your email
+    app.config['MAIL_DEFAULT_SENDER'] = 'aipredict2025@gmail.com'  # Replace with your email
 
     mail = Mail(app)
 
@@ -53,8 +62,9 @@ def configure_routes(app):
 
                 session["user_id"] = data["localId"]
                 session["id_token"] = data["idToken"]
+                
                 flash("Login successful!", "success")
-                return redirect(url_for("home"))
+                return redirect(url_for("profile"))  # Redirect to profile after login
 
             except Exception as e:
                 flash("An error occurred. Please try again.", "error")
@@ -65,9 +75,13 @@ def configure_routes(app):
     @app.route("/register", methods=["GET", "POST"])
     def register():  
         if request.method == "POST":
+            username = request.form.get("username")
             email = request.form.get("email")
+            dob = request.form.get("dob")
             password = request.form.get("password")
             confirm_password = request.form.get("confirm_password")
+            medical_history = request.form.getlist("medical_history")
+            gender = request.form.getlist("gender")
 
             if password != confirm_password:
                 flash("Passwords do not match!", "error")
@@ -83,8 +97,18 @@ def configure_routes(app):
 
                 if "error" in data:
                     flash("Email already in use or invalid. Try another one.", "error")
-                    return render_template("register.html")
+                    return render_template("register.html") #Return back to the registration page
 
+                user_id = data["localId"]
+                user_data = {
+                    "username": username,
+                    "email": email,
+                    "dob": dob,
+                    "medical_history": medical_history,
+                    "gender": gender
+                }
+                db.collection("users").document(user_id).set(user_data)
+            
                 flash("Registration successful! Please log in.", "success")
                 return redirect(url_for("login"))
 
@@ -131,11 +155,45 @@ def configure_routes(app):
     @app.route("/questionnaire")
     def questionnaire():
         return render_template("questionnaire.html")
-    # route for profile 
+    
     @app.route("/profile")
     def profile():
-        return render_template("profile.html")
-    
+        # Check if the user is logged in
+        user_id = session.get("user_id")
+        
+        if not user_id:
+            flash("You need to log in to access your profile.", "error")
+            return redirect(url_for("login"))
+
+        try:
+            # Fetch the user's data from Firestore
+            user_doc = db.collection("users").document(user_id).get()
+            
+            if not user_doc.exists:
+                flash("User data not found. Please complete your profile.", "error")
+                return redirect(url_for("home"))
+
+            user_data = user_doc.to_dict()
+            print("Fetched user data:", user_data)  # Debugging
+
+            # Validate date of birth
+            if "dob" not in user_data or not user_data["dob"]:
+                flash("Date of birth is missing. Update your profile.", "error")
+                return redirect(url_for("home"))
+
+            # Calculate the user's age
+            age = calculate_age(user_data["dob"])
+
+            # Render the profile template with user data
+            return render_template("profile.html", 
+                                user=user_data,  # Pass the entire user_data as 'user'
+                                age=age)         # Pass the calculated age
+            
+        except Exception as e:
+            flash("An error occurred while retrieving your profile.", "error")
+            print("Error in /profile route:", traceback.format_exc())  # Debugging
+            return redirect(url_for("home"))
+            
     @app.route("/test")
     def test():
         return render_template("test.html")
