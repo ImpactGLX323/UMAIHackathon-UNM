@@ -8,20 +8,25 @@
 </head>
 <body>
     <div class="container">
+        <!-- Header Section -->
         <header class="header">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="GlucAware&Advisory" width="350px" height="80px" id="logo">
-            <div class="dashboard">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="GlucAware&Advisory" class="logo">
+            <nav class="dashboard">
                 <a href="{{ url_for('home') }}" class="button">Home</a>
                 <a href="{{ url_for('questionnaire') }}" class="button">Test</a>
                 <a href="{{ url_for('profile') }}" class="button">Profile</a>
                 <a href="{{ url_for('history') }}" class="button">History</a>
                 <a href="{{ url_for('logout') }}" class="log_btn">Sign Out</a>
-            </div>
+            </nav>
         </header>
 
-        <div class="chart_container">
-            <h2>Custom Charts</h2>
-            <form action="{{ url_for('chart') }}" method="post">
+        <!-- Main Content Section -->
+        <main class="main-content">
+            <h1>Custom Charts</h1>
+            <p class="subtitle">Generate personalized health advice based on your preferences.</p>
+
+            <!-- Advice Form -->
+            <form action="{{ url_for('chart') }}" method="post" class="advice-form">
                 <div class="form-group">
                     <label for="category">Select Category:</label>
                     <select id="category" name="category" required>
@@ -50,17 +55,20 @@
                 <button type="submit" class="submit_btn">Generate Advice</button>
             </form>
 
+            <!-- Display Generated Advice -->
             {% if advice %}
                 <div class="advice-display">
-                    <h3>Your Custom Advice</h3>
-                    <ul>
+                    <h2>Your Custom Advice</h2>
+                    <div class="advice-list">
                         {% for key, value in advice.advice.items() %}
-                            <li><strong>{{ key }}:</strong> {{ value }}</li>
+                            <div class="advice-item">
+                                <strong>{{ key }}:</strong> {{ value }}
+                            </div>
                         {% endfor %}
-                    </ul>
+                    </div>
                 </div>
             {% endif %}
-        </div>
+        </main>
     </div>
 </body>
 </html>
