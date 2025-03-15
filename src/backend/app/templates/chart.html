@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='chart.css') }}">
+    <title>Custom Charts - Diabetes Prediction & Advisory Tool</title>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="GlucAware&Advisory" width="350px" height="80px" id="logo">
+            <div class="dashboard">
+                <a href="{{ url_for('home') }}" class="button">Home</a>
+                <a href="{{ url_for('questionnaire') }}" class="button">Test</a>
+                <a href="{{ url_for('profile') }}" class="button">Profile</a>
+                <a href="{{ url_for('history') }}" class="button">History</a>
+                <a href="{{ url_for('logout') }}" class="log_btn">Sign Out</a>
+            </div>
+        </header>
+
+        <div class="chart_container">
+            <h2>Custom Charts</h2>
+            <div class="chart-options">
+                <button id="stressChartBtn">Chart for the Stressed</button>
+                <button id="diabetesChartBtn">Charts for Countering Diabetes</button>
+                <button id="hypertensionChartBtn">Charts for Countering Hypertension and CHD</button>
+                <button id="bmiChartBtn">Charts to Decrease BMI</button>
+                <button id="healthyChartBtn">Stay Healthy Chart</button>
+            </div>
+
+            <div class="chart-display" id="chartDisplay">
+                <!-- Chart will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Example: Generate a chart for stress
+        document.getElementById('stressChartBtn').addEventListener('click', function() {
+            const ctx = document.createElement('canvas');
+            ctx.id = 'stressChart';
+            document.getElementById('chartDisplay').innerHTML = '';
+            document.getElementById('chartDisplay').appendChild(ctx);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Stress Level',
+                        data: [65, 59, 80, 81, 56, 55],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+        // Add similar event listeners for other chart types
+        document.getElementById('diabetesChartBtn').addEventListener('click', function() {
+            // Generate diabetes-related chart
+        });
+
+        document.getElementById('hypertensionChartBtn').addEventListener('click', function() {
+            // Generate hypertension-related chart
+        });
+
+        document.getElementById('bmiChartBtn').addEventListener('click', function() {
+            // Generate BMI-related chart
+        });
+
+        document.getElementById('healthyChartBtn').addEventListener('click', function() {
+            // Generate stay healthy chart
+        });
+    </script>
+</body>
+</html>
