@@ -40,32 +40,14 @@
                 <div class="previous-tests">
                     <h3>Previous Diabetes Tests</h3>
                     {% if predictions %}
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>BMI (Kg/m²)</th>
-                                    <th>HbA1c (mmol/mol)</th>
-                                    <th>Blood Pressure (mmHg)</th>
-                                    <th>Grading</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for prediction in predictions %}
-                                    <tr>
-                                        <td>{{ prediction.timestamp }}</td>
-                                        <td>{{ prediction.bmi }}</td>
-                                        <td>{{ prediction.hba1c_level }}</td>
-                                        <td>{{ prediction.blood_pressure }}</td>
-                                        <td>
-                                            <span class="grading {% if prediction.prediction_result == 'Positive' %}positive{% else %}negative{% endif %}">
-                                                {{ prediction.prediction_result }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                        <div class="grading-list">
+                            {% for prediction in predictions %}
+                                <div class="grading-item {{ prediction.prediction_result | lower | replace(' ', '-') }}">
+                                    <span class="grading-label">{{ prediction.prediction_result }}</span>
+                                    <span class="grading-date">{{ prediction.timestamp }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
                     {% else %}
                         <p>No previous tests found.</p>
                     {% endif %}
