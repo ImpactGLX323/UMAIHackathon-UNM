@@ -23,13 +23,13 @@
             <h2>Custom Charts</h2>
             <form action="{{ url_for('chart') }}" method="post">
                 <div class="form-group">
-                    <label for="chart_type">Select Chart Type:</label>
-                    <select id="chart_type" name="chart_type" required>
-                        <option value="stressed">Chart for the Stressed</option>
-                        <option value="diabetes">Chart for Diabetes</option>
-                        <option value="hypertension_chd">Chart for Hypertension and CHD</option>
-                        <option value="reduce_bmi">Chart to Reduce BMI</option>
-                        <option value="stay_healthy">Stay Healthy Chart</option>
+                    <label for="category">Select Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="stress">Stress</option>
+                        <option value="diabetes">Diabetes</option>
+                        <option value="hypertension">Hypertension</option>
+                        <option value="bmi">BMI</option>
+                        <option value="healthy">Healthy</option>
                     </select>
                 </div>
 
@@ -38,7 +38,7 @@
                     <select id="schedule" name="schedule" required>
                         <option value="morning">Morning Shift</option>
                         <option value="night">Night Shift</option>
-                        <option value="flexible">Flexible Schedule</option>
+                        <option value="flexible">Flexible Routine</option>
                     </select>
                 </div>
 
@@ -47,8 +47,19 @@
                     <input type="email" id="email" name="email" placeholder="Enter your email" required>
                 </div>
 
-                <button type="submit" class="submit_btn">Generate Chart</button>
+                <button type="submit" class="submit_btn">Generate Advice</button>
             </form>
+
+            {% if advice %}
+                <div class="advice-display">
+                    <h3>Your Custom Advice</h3>
+                    <ul>
+                        {% for key, value in advice.advice.items() %}
+                            <li><strong>{{ key }}:</strong> {{ value }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
         </div>
     </div>
 </body>
