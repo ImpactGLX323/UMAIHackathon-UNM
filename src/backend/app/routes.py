@@ -304,7 +304,36 @@ def configure_routes(app):
 
             mail.send(msg)
             return jsonify({"message": "Email sent successfully"}), 200
-
+        
         except Exception as e:
             print(f"Email error: {e}")
             return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
+        
+        @app.route("/chart")
+        def chart():
+            user_id = session.get("user_id")
+            if not user_id:
+                flash("You need to log in to access your chart.", "error")
+                return redirect(url_for("login"))
+            
+            try:
+                #Fetch user's prediction history from firestore
+                user_doc = db.collection("users").document(user_id).get()
+                if not user_doc.exists:
+                    flash("User data not found. Please complete your profile.", "error")
+                    return redirect(url_for("home"))
+                
+                user_data = user_doc.to_dict()
+
+                predictions_ref = db.collection("users").document(user_id).collection("predictions")
+                predictions = [doc.to_dict() for doc in predictions_ref.stream()]
+
+                #Render the chart template with user data and predictions
+                return render_template("chart.html", 
+                                       user=user_data, 
+                                       predictions=predictions)
+            except Exception as e:
+                flash("An error occurred while retrieving your chart.", "error")
+                print("Error in /chart route:", traceback.format_exc())
+                return redirect(url_for("home"))
+
