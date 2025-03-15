@@ -21,66 +21,35 @@
 
         <div class="chart_container">
             <h2>Custom Charts</h2>
-            <div class="chart-options">
-                <button id="stressChartBtn">Chart for the Stressed</button>
-                <button id="diabetesChartBtn">Charts for Countering Diabetes</button>
-                <button id="hypertensionChartBtn">Charts for Countering Hypertension and CHD</button>
-                <button id="bmiChartBtn">Charts to Decrease BMI</button>
-                <button id="healthyChartBtn">Stay Healthy Chart</button>
-            </div>
+            <form action="{{ url_for('chart') }}" method="post">
+                <div class="form-group">
+                    <label for="chart_type">Select Chart Type:</label>
+                    <select id="chart_type" name="chart_type" required>
+                        <option value="stressed">Chart for the Stressed</option>
+                        <option value="diabetes">Chart for Diabetes</option>
+                        <option value="hypertension_chd">Chart for Hypertension and CHD</option>
+                        <option value="reduce_bmi">Chart to Reduce BMI</option>
+                        <option value="stay_healthy">Stay Healthy Chart</option>
+                    </select>
+                </div>
 
-            <div class="chart-display" id="chartDisplay">
-                <!-- Chart will be displayed here -->
-            </div>
+                <div class="form-group">
+                    <label for="schedule">Select Schedule:</label>
+                    <select id="schedule" name="schedule" required>
+                        <option value="morning">Morning Shift</option>
+                        <option value="night">Night Shift</option>
+                        <option value="flexible">Flexible Schedule</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Enter Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <button type="submit" class="submit_btn">Generate Chart</button>
+            </form>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Example: Generate a chart for stress
-        document.getElementById('stressChartBtn').addEventListener('click', function() {
-            const ctx = document.createElement('canvas');
-            ctx.id = 'stressChart';
-            document.getElementById('chartDisplay').innerHTML = '';
-            document.getElementById('chartDisplay').appendChild(ctx);
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                    datasets: [{
-                        label: 'Stress Level',
-                        data: [65, 59, 80, 81, 56, 55],
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        });
-
-        // Add similar event listeners for other chart types
-        document.getElementById('diabetesChartBtn').addEventListener('click', function() {
-            // Generate diabetes-related chart
-        });
-
-        document.getElementById('hypertensionChartBtn').addEventListener('click', function() {
-            // Generate hypertension-related chart
-        });
-
-        document.getElementById('bmiChartBtn').addEventListener('click', function() {
-            // Generate BMI-related chart
-        });
-
-        document.getElementById('healthyChartBtn').addEventListener('click', function() {
-            // Generate stay healthy chart
-        });
-    </script>
 </body>
 </html>
