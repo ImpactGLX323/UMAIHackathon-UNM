@@ -160,7 +160,6 @@ def configure_routes(app):
     def profile():
         # Check if the user is logged in
         user_id = session.get("user_id")
-        
         if not user_id:
             flash("You need to log in to access your profile.", "error")
             return redirect(url_for("login"))
@@ -168,30 +167,24 @@ def configure_routes(app):
         try:
             # Fetch the user's data from Firestore
             user_doc = db.collection("users").document(user_id).get()
-            
             if not user_doc.exists:
                 flash("User data not found. Please complete your profile.", "error")
                 return redirect(url_for("home"))
 
             user_data = user_doc.to_dict()
-            print("Fetched user data:", user_data)  # Debugging
 
-            # Validate date of birth
-            if "dob" not in user_data or not user_data["dob"]:
-                flash("Date of birth is missing. Update your profile.", "error")
-                return redirect(url_for("home"))
+            # Fetch the user's prediction history from Firestore
+            predictions_ref = db.collection("users").document(user_id).collection("predictions")
+            predictions = [doc.to_dict() for doc in predictions_ref.stream()]
 
-            # Calculate the user's age
-            age = calculate_age(user_data["dob"])
-
-            # Render the profile template with user data
+            # Render the profile template with user data and predictions
             return render_template("profile.html", 
-                                user=user_data,  # Pass the entire user_data as 'user'
-                                age=age)         # Pass the calculated age
-            
+                                user=user_data, 
+                                predictions=predictions)
+
         except Exception as e:
             flash("An error occurred while retrieving your profile.", "error")
-            print("Error in /profile route:", traceback.format_exc())  # Debugging
+            print("Error in /profile route:", traceback.format_exc())
             return redirect(url_for("home"))
             
     @app.route("/test")
