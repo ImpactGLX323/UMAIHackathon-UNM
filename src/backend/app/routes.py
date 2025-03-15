@@ -309,8 +309,8 @@ def configure_routes(app):
             print(f"Email error: {e}")
             return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
         
-        @app.route("/chart")
-        def chart():
+    @app.route("/chart")
+    def chart():
             user_id = session.get("user_id")
             if not user_id:
                 flash("You need to log in to access your chart.", "error")
