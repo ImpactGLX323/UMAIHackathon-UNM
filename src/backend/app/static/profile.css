@@ -1,3 +1,6 @@
+/* Import Raleway font with Medium weight */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap');
+
 /* General Styles */
 body {
     font-family: 'Raleway', sans-serif;
@@ -21,6 +24,7 @@ body {
     width: 100%;
 }
 
+/* Header */
 .header {
     height: 90px;
     width: 100%;
@@ -55,7 +59,9 @@ body {
     text-align: center;
     text-decoration: none;
     font-size: 19px;
+    font-weight: 500; /* Medium weight */
     border-top: 5px solid transparent;
+    transition: border-top 0.3s ease-in-out;
 }
 
 .button.active, .button:hover {
@@ -72,29 +78,33 @@ body {
     text-decoration: none;
     color: rgb(0, 0, 0);
     transition: 0.5s;
+    font-weight: 500; /* Medium weight */
 }
 
 .log_btn:hover {
     background-color: rgb(227, 227, 227);
 }
 
+/* Profile Container */
 .profile_container {
     margin-top: 120px;
     width: 90%;
     max-width: 1200px;
-    padding: 20px;
+    padding: 30px;
     background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 25px; /* Oval track shape */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .profile_container h2 {
     text-align: center;
     color: rgb(75, 162, 213);
     font-size: 28px;
+    font-weight: 700; /* Bold weight */
     margin-bottom: 20px;
 }
 
+/* Profile Grid */
 .profile-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -104,13 +114,14 @@ body {
 .personal-info, .previous-tests, .advice {
     background: #f9f9f9;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px; /* Oval track shape */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .personal-info h3, .previous-tests h3, .advice h3 {
     color: rgb(75, 162, 213);
     font-size: 22px;
+    font-weight: 700; /* Bold weight */
     margin-bottom: 15px;
 }
 
@@ -118,6 +129,7 @@ body {
     margin: 0;
     font-size: 16px;
     line-height: 1.6;
+    font-weight: 400; /* Regular weight */
 }
 
 /* Previous Tests Section */
@@ -129,12 +141,13 @@ body {
 
 .previous-tests .grading-item {
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px; /* Oval track shape */
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
     color: white;
+    font-weight: 500; /* Medium weight */
 }
 
 .previous-tests .grading-item.diabetic {
@@ -142,6 +155,10 @@ body {
 }
 
 .previous-tests .grading-item.stress-induced-type-2-diabetic {
+    background-color: #ffcc00; /* Yellow */
+}
+
+.previous-tests .grading-item.stress-induced-prediabetic {
     background-color: #ffcc00; /* Yellow */
 }
 
@@ -168,6 +185,46 @@ body {
     padding-left: 20px;
 }
 
+/* Chart Section Styling */
+.chart-section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 15px; /* Oval track shape */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.chart-section h3 {
+    font-size: 24px;
+    color: rgb(75, 162, 213);
+    font-weight: 700; /* Bold weight */
+    margin-bottom: 10px;
+}
+
+.chart-section p {
+    font-size: 16px;
+    color: #555;
+    font-weight: 400; /* Regular weight */
+    margin-bottom: 20px;
+}
+
+.chart-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(75, 162, 213); /* Blue color */
+    color: white;
+    text-decoration: none;
+    border-radius: 25px; /* Oval track shape */
+    font-size: 16px;
+    font-weight: 500; /* Medium weight */
+    transition: background-color 0.3s ease;
+}
+
+.chart-button:hover {
+    background-color: rgb(60, 140, 190); /* Darker blue on hover */
+}
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .profile-grid {
@@ -176,7 +233,7 @@ body {
 
     .profile_container {
         margin-top: 100px;
-        padding: 15px;
+        padding: 20px;
     }
 
     .personal-info, .previous-tests, .advice {
@@ -187,7 +244,7 @@ body {
 @media screen and (max-width: 480px) {
     .profile_container {
         margin-top: 80px;
-        padding: 10px;
+        padding: 15px;
     }
 
     .profile_container h2 {
@@ -206,40 +263,17 @@ body {
     .previous-tests .grading-date {
         font-size: 10px;
     }
-}
 
-/* Chart Section Styling */
-.chart-section {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
+    .chart-section h3 {
+        font-size: 20px;
+    }
 
-.chart-section h3 {
-    font-size: 1.5rem;
-    color: #007bff;
-    margin-bottom: 10px;
-}
+    .chart-section p {
+        font-size: 14px;
+    }
 
-.chart-section p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-.chart-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #28a745; /* Green color */
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.chart-button:hover {
-    background-color: #218838; /* Darker green on hover */
+    .chart-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
 }
