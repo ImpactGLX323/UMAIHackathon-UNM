@@ -3,15 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='resources.css') }}">
     <title>Select Language</title>
 </head>
 <body>
-    <h1>Select Your Preferred Language</h1>
-    <p>Choose a language to view resources in:</p>
-    <a href="{{ url_for('resources_english') }}"><button>English</button></a>
-    <a href="{{ url_for('resources_malay') }}"><button>Malay</button></a>
-    <a href="{{ url_for('resources_french') }}"><button>French</button></a>
-    <a href="{{ url_for('resources_chinese') }}"><button>Chinese</button></a>
-    <a href="{{ url_for('resources_hindi') }}"><button>Hindi</button></a>
+    <!-- Header Navigation Bar -->
+    <div class="header">
+        <div id="logo">
+            <!-- Add your logo here -->
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="50">
+        </div>
+        <div class="dashboard">
+            <a href="{{ url_for('home') }}" class="button">Home</a>
+            <a href="{{ url_for('profile') }}" class="button">Profile</a>
+            <a href="{{ url_for('history') }}" class="button">History</a>
+            <a href="{{ url_for('logout') }}" class="log_btn">Logout</a>
+        </div>
+    </div>
+
+    <!-- Resources Container -->
+    <div class="container">
+        <div class="resources-container">
+            <h1>Select Your Preferred Language</h1>
+            <p>Choose a language to view resources in:</p>
+
+            <!-- Language Selection Grid -->
+            <div class="language-grid">
+                <div class="language-box">
+                    <a href="{{ url_for('resources_english') }}">English</a>
+                </div>
+                <div class="language-box">
+                    <a href="{{ url_for('resources_malay') }}">Malay</a>
+                </div>
+                <div class="language-box">
+                    <a href="{{ url_for('resources_french') }}">French</a>
+                </div>
+                <div class="language-box">
+                    <a href="{{ url_for('resources_chinese') }}">Chinese</a>
+                </div>
+                <div class="language-box">
+                    <a href="{{ url_for('resources_hindi') }}">Hindi</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

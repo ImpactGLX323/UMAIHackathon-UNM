@@ -13,7 +13,7 @@
             <div class="dashboard">
                 <a href="{{ url_for('home') }}" class="button {% if request.path == '/' %}active{% endif %}">Home</a>
                 <a href="{{ url_for('questionnaire') }}" class="button {% if request.path == '/questionnaire' %}active{% endif %}">Test</a>
-                <a href="{{ url_for('login') }}" class="button {% if request.path == '/login' %}active{% endif %}">Resources</a>  <!--TBD-->
+                <a href="{{ url_for('resources1') }}" class="button {% if request.path == '/resources1' %}active{% endif %}">Resources</a>  <!--TBD-->
                 <a href="{{ url_for('login') }}" class="button {% if request.path == '/login' %}active{% endif %}">Contact Us</a> <!--TBD-->
                 {% if not session.get('user_id') %}
                     <a href="{{ url_for('login') }}" class="log_btn {% if request.path == '/login' %}active{% endif %}">Sign In</a>

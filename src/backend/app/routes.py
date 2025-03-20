@@ -342,30 +342,30 @@ def configure_routes(app):
             return redirect(url_for("home"))
     
     @app.route("/resources1")
-    def resources():
+    def resources1():
         return render_template("resources1.html")
-    
+
     @app.route("/resources1/english")
     def resources_english():
         return render_template("resources1_english.html")
-    
+
     @app.route("/resources1/malay")
-    def resources_spanish():
+    def resources_malay():
         return render_template("resources1_malay.html")
-    
+
     @app.route("/resources1/french")
-    def resources_english():
+    def resources_french():
         return render_template("resources1_french.html")
-    
+
     @app.route("/resources1/hindi")
-    def resources_spanish():
+    def resources_hindi():
         return render_template("resources1_hindi.html")
-    
+
     @app.route("/resources1/chinese")
-    def resources_english():
+    def resources_chinese():
         return render_template("resources1_chinese.html")
-    
+
     @app.route("/contact_us")
     def contact_us():
         return render_template("contact_us.html")
-        
+            
