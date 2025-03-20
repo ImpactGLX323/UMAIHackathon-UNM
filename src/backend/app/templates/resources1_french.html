@@ -7,57 +7,54 @@
     <title>Ressources en Français</title>
 </head>
 <body>
-    <h1>Ressources en Français</h1>
-    <p>Voici quelques ressources en français pour vous aider à gérer le diabète :</p>
+    <!-- Header Navigation Bar -->
+    <div class="header">
+        <div id="logo">
+            <!-- Add your logo here -->
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="50">
+        </div>
+        <div class="dashboard">
+            <a href="{{ url_for('home') }}" class="button">Accueil</a>
+            <a href="{{ url_for('profile') }}" class="button">Profil</a>
+            <a href="{{ url_for('history') }}" class="button">Historique</a>
+            <a href="{{ url_for('logout') }}" class="log_btn">Déconnexion</a>
+        </div>
+    </div>
 
-    <h2>1. Prévention du Diabète</h2>
-    <h3>Blogs :</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-prevention" target="_blank">10 Conseils pour Prévenir le Diabète</a></li>
-        <li><a href="https://example.com/blog2-prevention" target="_blank">Comprendre le Prédiabète</a></li>
-    </ul>
-    <h3>Cours en Ligne :</h3>
-    <ul>
-        <li><a href="https://example.com/course1-prevention" target="_blank">Prévention du Diabète 101</a></li>
-        <li><a href="https://example.com/course2-prevention" target="_blank">Mode de Vie Sain pour la Prévention du Diabète</a></li>
-    </ul>
+    <!-- Resources Container -->
+    <div class="container">
+        <div class="resources-container">
+            <h1>Ressources en Français</h1>
+            <p>Voici quelques ressources en français pour vous aider à gérer le diabète :</p>
 
-    <h2>2. Connaissances sur le Diabète</h2>
-    <h3>Blogs :</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-connaissances" target="_blank">Qu'est-ce que le Diabète ?</a></li>
-        <li><a href="https://example.com/blog2-connaissances" target="_blank">Types de Diabète Expliqués</a></li>
-    </ul>
-    <h3>Cours en Ligne :</h3>
-    <ul>
-        <li><a href="https://example.com/course1-connaissances" target="_blank">Bases du Diabète</a></li>
-        <li><a href="https://example.com/course2-connaissances" target="_blank">Gestion Avancée du Diabète</a></li>
-    </ul>
+            <!-- 1. Prévention du Diabète -->
+            <div class="category-box">
+                <h2>1. Prévention du Diabète</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>Blogs :</h3>
+                        <a href="https://example.com/blog1-prevention" target="_blank">10 Conseils pour Prévenir le Diabète</a>
+                        <a href="https://example.com/blog2-prevention" target="_blank">Comprendre le Prédiabète</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>Cours en Ligne :</h3>
+                        <a href="https://example.com/course1-prevention" target="_blank">Prévention du Diabète 101</a>
+                        <a href="https://example.com/course2-prevention" target="_blank">Mode de Vie Sain pour la Prévention du Diabète</a>
+                    </div>
+                </div>
+            </div>
 
-    <h2>3. Rester en Bonne Santé et en Forme</h2>
-    <h3>Blogs :</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-forme" target="_blank">Conseils d'Exercice pour les Diabétiques</a></li>
-        <li><a href="https://example.com/blog2-forme" target="_blank">Recettes Saines pour les Diabétiques</a></li>
-    </ul>
-    <h3>Cours en Ligne :</h3>
-    <ul>
-        <li><a href="https://example.com/course1-forme" target="_blank">Forme Physique pour les Diabétiques</a></li>
-        <li><a href="https://example.com/course2-forme" target="_blank">Nutrition et Diabète</a></li>
-    </ul>
-
-    <h2>4. Prévention du Stress et de l'Hypertension</h2>
-    <h3>Blogs :</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-stress" target="_blank">Gérer le Stress avec le Diabète</a></li>
-        <li><a href="https://example.com/blog2-stress" target="_blank">Hypertension et Diabète</a></li>
-    </ul>
-    <h3>Cours en Ligne :</h3>
-    <ul>
-        <li><a href="https://example.com/course1-stress" target="_blank">Gestion du Stress pour les Diabétiques</a></li>
-        <li><a href="https://example.com/course2-stress" target="_blank">Contrôle de l'Hypertension</a></li>
-    </ul>
-
-    <a href="{{ url_for('resources1') }}"><button>Retour à la sélection de la langue</button></a>
-</body>
-</html>
+            <!-- 2. Connaissances sur le Diabète -->
+            <div class="category-box">
+                <h2>2. Connaissances sur le Diabète</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>Blogs :</h3>
+                        <a href="https://example.com/blog1-connaissances" target="_blank">Qu'est-ce que le Diabète ?</a>
+                        <a href="https://example.com/blog2-connaissances" target="_blank">Types de Diabète Expliqués</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>Cours en Ligne :</h3>
+                        <a href="https://example.com/course1-connaissances" target="_blank">Bases du Diabète</a>
+                        <a href="https://example.com/course2-connaissances" target="_blank">Gestion Avancée du Diabète</a>
+                    </
