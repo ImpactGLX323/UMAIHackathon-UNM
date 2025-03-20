@@ -341,9 +341,29 @@ def configure_routes(app):
             print("Error in /chart route:", traceback.format_exc())
             return redirect(url_for("home"))
     
-    @app.route("/resources")
+    @app.route("/resources1")
     def resources():
-        return render_template("resources.html")
+        return render_template("resources1.html")
+    
+    @app.route("/resources1/english")
+    def resources_english():
+        return render_template("resources1_english.html")
+    
+    @app.route("/resources1/malay")
+    def resources_spanish():
+        return render_template("resources1_malay.html")
+    
+    @app.route("/resources1/french")
+    def resources_english():
+        return render_template("resources1_french.html")
+    
+    @app.route("/resources1/hindi")
+    def resources_spanish():
+        return render_template("resources1_hindi.html")
+    
+    @app.route("/resources1/chinese")
+    def resources_english():
+        return render_template("resources1_chinese.html")
     
     @app.route("/contact_us")
     def contact_us():
