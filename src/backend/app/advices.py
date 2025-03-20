@@ -254,25 +254,90 @@ def generate_advice(category, schedule):
 
 def send_advice_email(email, advice):
     """
-    Send the generated advice to the user's email.
+    Send the generated advice to the user's email in a well-formatted HTML email.
     """
     try:
-        msg = Message("Your Custom Health Advice", recipients=[email])
-        msg.body = f"""
-        Here is your custom health advice:
+        # Create an HTML-formatted email
+        html_body = f"""
+        <html>
+        <head>
+            <style>
+                body {{
+                    font-family: 'Arial', sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    background-color: #f9f9f9;
+                    padding: 20px;
+                }}
+                h1 {{
+                    color: #4ba2d5;
+                    font-size: 24px;
+                    margin-bottom: 20px;
+                }}
+                h2 {{
+                    color: #333;
+                    font-size: 20px;
+                    margin-top: 30px;
+                    margin-bottom: 10px;
+                }}
+                .advice-table {{
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }}
+                .advice-table th, .advice-table td {{
+                    border: 1px solid #ddd;
+                    padding: 12px;
+                    text-align: left;
+                }}
+                .advice-table th {{
+                    background-color: #4ba2d5;
+                    color: white;
+                }}
+                .advice-table tr:nth-child(even) {{
+                    background-color: #f2f2f2;
+                }}
+                .footer {{
+                    margin-top: 30px;
+                    font-size: 14px;
+                    color: #777;
+                }}
+            </style>
+        </head>
+        <body>
+            <h1>Your Custom Health Advice</h1>
+            <p>Here is your custom health advice based on your selected category and schedule:</p>
 
-        Category: {advice.get("category")}
-        Schedule: {advice.get("schedule")}
+            <h2>Category: {advice.get("category", "N/A")}</h2>
+            <h2>Schedule: {advice.get("schedule", "N/A")}</h2>
 
-        Advice:
-        {advice.get("advice")}
+            <table class="advice-table">
+                <tr>
+                    <th>Activity</th>
+                    <th>Details</th>
+                </tr>
+                {"".join(
+                    f"<tr><td>{key}</td><td>{value}</td></tr>"
+                    for key, value in advice.get("advice", {}).items()
+                )}
+            </table>
 
-        Thank you for using our Diabetes Advisory Service!
-
-        Regards,
-        GlucAware Advisory Team
+            <div class="footer">
+                <p>Thank you for using our Diabetes Advisory Service!</p>
+                <p>Regards,<br>GlucAware Advisory Team</p>
+            </div>
+        </body>
+        </html>
         """
 
+        # Create the email message
+        msg = Message(
+            subject="Your Custom Health Advice",
+            recipients=[email],
+            html=html_body  # Use HTML for the email body
+        )
+
+        # Send the email
         mail.send(msg)
         print(f"Email sent to {email}")  # Debugging
         return True
