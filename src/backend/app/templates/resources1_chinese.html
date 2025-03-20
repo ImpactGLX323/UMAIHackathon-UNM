@@ -7,57 +7,97 @@
     <title>中文资源</title>
 </head>
 <body>
-    <h1>中文资源</h1>
-    <p>以下是一些帮助您管理糖尿病的中文资源：</p>
+    <!-- Header Navigation Bar -->
+    <div class="header">
+        <div id="logo">
+            <!-- Add your logo here -->
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="50">
+        </div>
+        <div class="dashboard">
+            <a href="{{ url_for('home') }}" class="button">首页</a>
+            <a href="{{ url_for('profile') }}" class="button">个人资料</a>
+            <a href="{{ url_for('history') }}" class="button">历史记录</a>
+            <a href="{{ url_for('logout') }}" class="log_btn">登出</a>
+        </div>
+    </div>
 
-    <h2>1. 预防糖尿病</h2>
-    <h3>博客：</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-预防" target="_blank">预防糖尿病的10个技巧</a></li>
-        <li><a href="https://example.com/blog2-预防" target="_blank">了解糖尿病前期</a></li>
-    </ul>
-    <h3>在线课程：</h3>
-    <ul>
-        <li><a href="https://example.com/course1-预防" target="_blank">糖尿病预防101</a></li>
-        <li><a href="https://example.com/course2-预防" target="_blank">健康生活方式预防糖尿病</a></li>
-    </ul>
+    <!-- Resources Container -->
+    <div class="container">
+        <div class="resources-container">
+            <h1>中文资源</h1>
+            <p>以下是一些帮助您管理糖尿病的中文资源：</p>
 
-    <h2>2. 糖尿病知识</h2>
-    <h3>博客：</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-知识" target="_blank">什么是糖尿病？</a></li>
-        <li><a href="https://example.com/blog2-知识" target="_blank">糖尿病类型详解</a></li>
-    </ul>
-    <h3>在线课程：</h3>
-    <ul>
-        <li><a href="https://example.com/course1-知识" target="_blank">糖尿病基础知识</a></li>
-        <li><a href="https://example.com/course2-知识" target="_blank">高级糖尿病管理</a></li>
-    </ul>
+            <!-- 1. 预防糖尿病 -->
+            <div class="category-box">
+                <h2>1. 预防糖尿病</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>博客：</h3>
+                        <a href="https://example.com/blog1-预防" target="_blank">预防糖尿病的10个技巧</a>
+                        <a href="https://example.com/blog2-预防" target="_blank">了解糖尿病前期</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>在线课程：</h3>
+                        <a href="https://example.com/course1-预防" target="_blank">糖尿病预防101</a>
+                        <a href="https://example.com/course2-预防" target="_blank">健康生活方式预防糖尿病</a>
+                    </div>
+                </div>
+            </div>
 
-    <h2>3. 保持健康和健身</h2>
-    <h3>博客：</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-健身" target="_blank">糖尿病患者的运动建议</a></li>
-        <li><a href="https://example.com/blog2-健身" target="_blank">糖尿病患者的健康食谱</a></li>
-    </ul>
-    <h3>在线课程：</h3>
-    <ul>
-        <li><a href="https://example.com/course1-健身" target="_blank">糖尿病患者的健身</a></li>
-        <li><a href="https://example.com/course2-健身" target="_blank">营养与糖尿病</a></li>
-    </ul>
+            <!-- 2. 糖尿病知识 -->
+            <div class="category-box">
+                <h2>2. 糖尿病知识</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>博客：</h3>
+                        <a href="https://example.com/blog1-知识" target="_blank">什么是糖尿病？</a>
+                        <a href="https://example.com/blog2-知识" target="_blank">糖尿病类型详解</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>在线课程：</h3>
+                        <a href="https://example.com/course1-知识" target="_blank">糖尿病基础知识</a>
+                        <a href="https://example.com/course2-知识" target="_blank">高级糖尿病管理</a>
+                    </div>
+                </div>
+            </div>
 
-    <h2>4. 预防压力和高血压</h2>
-    <h3>博客：</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-压力" target="_blank">糖尿病患者如何管理压力</a></li>
-        <li><a href="https://example.com/blog2-压力" target="_blank">高血压与糖尿病</a></li>
-    </ul>
-    <h3>在线课程：</h3>
-    <ul>
-        <li><a href="https://example.com/course1-压力" target="_blank">糖尿病患者的压力管理</a></li>
-        <li><a href="https://example.com/course2-压力" target="_blank">控制高血压</a></li>
-    </ul>
+            <!-- 3. 保持健康和健身 -->
+            <div class="category-box">
+                <h2>3. 保持健康和健身</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>博客：</h3>
+                        <a href="https://example.com/blog1-健身" target="_blank">糖尿病患者的运动建议</a>
+                        <a href="https://example.com/blog2-健身" target="_blank">糖尿病患者的健康食谱</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>在线课程：</h3>
+                        <a href="https://example.com/course1-健身" target="_blank">糖尿病患者的健身</a>
+                        <a href="https://example.com/course2-健身" target="_blank">营养与糖尿病</a>
+                    </div>
+                </div>
+            </div>
 
-    <a href="{{ url_for('resources1') }}"><button>返回语言选择</button></a>
+            <!-- 4. 预防压力和高血压 -->
+            <div class="category-box">
+                <h2>4. 预防压力和高血压</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>博客：</h3>
+                        <a href="https://example.com/blog1-压力" target="_blank">糖尿病患者如何管理压力</a>
+                        <a href="https://example.com/blog2-压力" target="_blank">高血压与糖尿病</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>在线课程：</h3>
+                        <a href="https://example.com/course1-压力" target="_blank">糖尿病患者的压力管理</a>
+                        <a href="https://example.com/course2-压力" target="_blank">控制高血压</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <a href="{{ url_for('resources1') }}" class="back-button">返回语言选择</a>
+        </div>
+    </div>
 </body>
 </html>
