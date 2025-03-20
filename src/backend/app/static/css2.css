@@ -351,6 +351,26 @@ input[type="button"]:hover, input[type="submit"]:hover {
     transform: translateY(-2px);
 }
 
+.results-container, .calculated-container, .advice-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+.results-container h2, .calculated-container h2, .advice-container h2 {
+    color: rgb(115, 133, 170);
+}
+
+.results-container ul, .advice-container p {
+    text-align: left;
+    padding: 10px;
+    list-style-type: none;
+}
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .form-container {
