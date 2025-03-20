@@ -7,57 +7,97 @@
     <title>Sumber dalam Bahasa Melayu</title>
 </head>
 <body>
-    <h1>Sumber dalam Bahasa Melayu</h1>
-    <p>Berikut adalah beberapa sumber dalam Bahasa Melayu untuk membantu anda mengurus diabetes:</p>
+    <!-- Header Navigation Bar -->
+    <div class="header">
+        <div id="logo">
+            <!-- Add your logo here -->
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="50">
+        </div>
+        <div class="dashboard">
+            <a href="{{ url_for('home') }}" class="button">Utama</a>
+            <a href="{{ url_for('profile') }}" class="button">Profil</a>
+            <a href="{{ url_for('history') }}" class="button">Sejarah</a>
+            <a href="{{ url_for('logout') }}" class="log_btn">Log Keluar</a>
+        </div>
+    </div>
 
-    <h2>1. Pencegahan Diabetes</h2>
-    <h3>Blog:</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-pencegahan" target="_blank">10 Tip Mencegah Diabetes</a></li>
-        <li><a href="https://example.com/blog2-pencegahan" target="_blank">Memahami Prediabetes</a></li>
-    </ul>
-    <h3>Kursus Dalam Talian:</h3>
-    <ul>
-        <li><a href="https://example.com/course1-pencegahan" target="_blank">Asas Pencegahan Diabetes</a></li>
-        <li><a href="https://example.com/course2-pencegahan" target="_blank">Gaya Hidup Sihat untuk Pencegahan Diabetes</a></li>
-    </ul>
+    <!-- Resources Container -->
+    <div class="container">
+        <div class="resources-container">
+            <h1>Sumber dalam Bahasa Melayu</h1>
+            <p>Berikut adalah beberapa sumber dalam Bahasa Melayu untuk membantu anda mengurus diabetes:</p>
 
-    <h2>2. Pengetahuan Mengenai Diabetes</h2>
-    <h3>Blog:</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-pengetahuan" target="_blank">Apakah Diabetes?</a></li>
-        <li><a href="https://example.com/blog2-pengetahuan" target="_blank">Jenis-Jenis Diabetes Dijelaskan</a></li>
-    </ul>
-    <h3>Kursus Dalam Talian:</h3>
-    <ul>
-        <li><a href="https://example.com/course1-pengetahuan" target="_blank">Asas Diabetes</a></li>
-        <li><a href="https://example.com/course2-pengetahuan" target="_blank">Pengurusan Diabetes Lanjutan</a></li>
-    </ul>
+            <!-- 1. Pencegahan Diabetes -->
+            <div class="category-box">
+                <h2>1. Pencegahan Diabetes</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>Blog:</h3>
+                        <a href="https://example.com/blog1-pencegahan" target="_blank">10 Tip Mencegah Diabetes</a>
+                        <a href="https://example.com/blog2-pencegahan" target="_blank">Memahami Prediabetes</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>Kursus Dalam Talian:</h3>
+                        <a href="https://example.com/course1-pencegahan" target="_blank">Asas Pencegahan Diabetes</a>
+                        <a href="https://example.com/course2-pencegahan" target="_blank">Gaya Hidup Sihat untuk Pencegahan Diabetes</a>
+                    </div>
+                </div>
+            </div>
 
-    <h2>3. Kekal Sihat dan Cergas</h2>
-    <h3>Blog:</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-kecergasan" target="_blank">Tip Senaman untuk Pesakit Diabetes</a></li>
-        <li><a href="https://example.com/blog2-kecergasan" target="_blank">Resipi Sihat untuk Pesakit Diabetes</a></li>
-    </ul>
-    <h3>Kursus Dalam Talian:</h3>
-    <ul>
-        <li><a href="https://example.com/course1-kecergasan" target="_blank">Kecergasan untuk Pesakit Diabetes</a></li>
-        <li><a href="https://example.com/course2-kecergasan" target="_blank">Pemakanan dan Diabetes</a></li>
-    </ul>
+            <!-- 2. Pengetahuan Mengenai Diabetes -->
+            <div class="category-box">
+                <h2>2. Pengetahuan Mengenai Diabetes</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>Blog:</h3>
+                        <a href="https://example.com/blog1-pengetahuan" target="_blank">Apakah Diabetes?</a>
+                        <a href="https://example.com/blog2-pengetahuan" target="_blank">Jenis-Jenis Diabetes Dijelaskan</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>Kursus Dalam Talian:</h3>
+                        <a href="https://example.com/course1-pengetahuan" target="_blank">Asas Diabetes</a>
+                        <a href="https://example.com/course2-pengetahuan" target="_blank">Pengurusan Diabetes Lanjutan</a>
+                    </div>
+                </div>
+            </div>
 
-    <h2>4. Pencegahan Stres dan Hipertensi</h2>
-    <h3>Blog:</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-stres" target="_blank">Mengurus Stres dengan Diabetes</a></li>
-        <li><a href="https://example.com/blog2-stres" target="_blank">Hipertensi dan Diabetes</a></li>
-    </ul>
-    <h3>Kursus Dalam Talian:</h3>
-    <ul>
-        <li><a href="https://example.com/course1-stres" target="_blank">Pengurusan Stres untuk Pesakit Diabetes</a></li>
-        <li><a href="https://example.com/course2-stres" target="_blank">Mengawal Hipertensi</a></li>
-    </ul>
+            <!-- 3. Kekal Sihat dan Cergas -->
+            <div class="category-box">
+                <h2>3. Kekal Sihat dan Cergas</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>Blog:</h3>
+                        <a href="https://example.com/blog1-kecergasan" target="_blank">Tip Senaman untuk Pesakit Diabetes</a>
+                        <a href="https://example.com/blog2-kecergasan" target="_blank">Resipi Sihat untuk Pesakit Diabetes</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>Kursus Dalam Talian:</h3>
+                        <a href="https://example.com/course1-kecergasan" target="_blank">Kecergasan untuk Pesakit Diabetes</a>
+                        <a href="https://example.com/course2-kecergasan" target="_blank">Pemakanan dan Diabetes</a>
+                    </div>
+                </div>
+            </div>
 
-    <a href="{{ url_for('resources1') }}"><button>Kembali ke Pemilihan Bahasa</button></a>
+            <!-- 4. Pencegahan Stres dan Hipertensi -->
+            <div class="category-box">
+                <h2>4. Pencegahan Stres dan Hipertensi</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>Blog:</h3>
+                        <a href="https://example.com/blog1-stres" target="_blank">Mengurus Stres dengan Diabetes</a>
+                        <a href="https://example.com/blog2-stres" target="_blank">Hipertensi dan Diabetes</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>Kursus Dalam Talian:</h3>
+                        <a href="https://example.com/course1-stres" target="_blank">Pengurusan Stres untuk Pesakit Diabetes</a>
+                        <a href="https://example.com/course2-stres" target="_blank">Mengawal Hipertensi</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <a href="{{ url_for('resources1') }}" class="back-button">Kembali ke Pemilihan Bahasa</a>
+        </div>
+    </div>
 </body>
 </html>

@@ -7,27 +7,30 @@
     <title>हिंदी संसाधन</title>
 </head>
 <body>
-    <h1>हिंदी संसाधन</h1>
-    <p>यहां मधुमेह प्रबंधन के लिए कुछ हिंदी संसाधन दिए गए हैं:</p>
+    <!-- Header Navigation Bar -->
+    <div class="header">
+        <div id="logo">
+            <!-- Add your logo here -->
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="50">
+        </div>
+        <div class="dashboard">
+            <a href="{{ url_for('home') }}" class="button">होम</a>
+            <a href="{{ url_for('profile') }}" class="button">प्रोफाइल</a>
+            <a href="{{ url_for('history') }}" class="button">इतिहास</a>
+            <a href="{{ url_for('logout') }}" class="log_btn">लॉग आउट</a>
+        </div>
+    </div>
 
-    <h2>1. मधुमेह की रोकथाम</h2>
-    <h3>ब्लॉग:</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-रोकथाम" target="_blank">मधुमेह रोकथाम के 10 टिप्स</a></li>
-        <li><a href="https://example.com/blog2-रोकथाम" target="_blank">प्रीडायबिटीज को समझें</a></li>
-    </ul>
-    <h3>ऑनलाइन कोर्स:</h3>
-    <ul>
-        <li><a href="https://example.com/course1-रोकथाम" target="_blank">मधुमेह रोकथाम 101</a></li>
-        <li><a href="https://example.com/course2-रोकथाम" target="_blank">मधुमेह रोकथाम के लिए स्वस्थ जीवनशैली</a></li>
-    </ul>
+    <!-- Resources Container -->
+    <div class="container">
+        <div class="resources-container">
+            <h1>हिंदी संसाधन</h1>
+            <p>यहां मधुमेह प्रबंधन के लिए कुछ हिंदी संसाधन दिए गए हैं:</p>
 
-    <h2>2. मधुमेह के बारे में ज्ञान</h2>
-    <h3>ब्लॉग:</h3>
-    <ul>
-        <li><a href="https://example.com/blog1-ज्ञान" target="_blank">मधुमेह क्या है?</a></li>
-        <li><a href="https://example.com/blog2-ज्ञान" target="_blank">मधुमेह के प्रकार समझाए गए</a></li>
-    </ul>
-    <h3>ऑनलाइन कोर्स:</h3>
-    <ul>
-        <li><a href="https://example.com/course1-ज्ञान" target="_blank">मधुमेह की मूल बात
+            <!-- 1. मधुमेह की रोकथाम -->
+            <div class="category-box">
+                <h2>1. मधुमेह की रोकथाम</h2>
+                <div class="link-grid">
+                    <div class="link-box">
+                        <h3>ब्लॉग:</h3>
+                        <a href="https://example.com/blog1-रोकथाम"
