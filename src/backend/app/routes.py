@@ -340,3 +340,12 @@ def configure_routes(app):
             flash("An error occurred while retrieving your chart.", "error")
             print("Error in /chart route:", traceback.format_exc())
             return redirect(url_for("home"))
+    
+    @app.route("/resources")
+    def resources():
+        return render_template("resources.html")
+    
+    @app.route("/contact_us")
+    def contact_us():
+        return render_template("contact_us.html")
+        
