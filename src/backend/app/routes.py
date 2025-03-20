@@ -264,6 +264,8 @@ def configure_routes(app):
             print("Error in /history route:", traceback.format_exc())
             return redirect(url_for("home"))
 
+    from flask_mail import Message
+
     @app.route("/send_email", methods=["POST"])
     def send_email():
         try:
@@ -271,33 +273,134 @@ def configure_routes(app):
             recipient_email = data['email']
             results = data['results']
 
-            msg = Message("Your Diabetes Prediction Results", recipients=[recipient_email])
-            msg.body = f"""
-            Here are your submitted results:
+            # Create an HTML-formatted email
+            html_body = f"""
+            <html>
+            <head>
+                <style>
+                    body {{
+                        font-family: 'Arial', sans-serif;
+                        line-height: 1.6;
+                        color: #333;
+                        background-color: #f9f9f9;
+                        padding: 20px;
+                    }}
+                    h1 {{
+                        color: #4ba2d5;
+                        font-size: 24px;
+                        margin-bottom: 20px;
+                    }}
+                    h2 {{
+                        color: #333;
+                        font-size: 20px;
+                        margin-top: 30px;
+                        margin-bottom: 10px;
+                    }}
+                    p {{
+                        margin: 10px 0;
+                    }}
+                    .results-table {{
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                    }}
+                    .results-table th, .results-table td {{
+                        border: 1px solid #ddd;
+                        padding: 12px;
+                        text-align: left;
+                    }}
+                    .results-table th {{
+                        background-color: #4ba2d5;
+                        color: white;
+                    }}
+                    .results-table tr:nth-child(even) {{
+                        background-color: #f2f2f2;
+                    }}
+                    .footer {{
+                        margin-top: 30px;
+                        font-size: 14px;
+                        color: #777;
+                    }}
+                </style>
+            </head>
+            <body>
+                <h1>Your Diabetes Prediction Results</h1>
+                <p>Here are your submitted results:</p>
 
-            Gender: {results['gender']}
-            Age: {results['age']}
-            Blood Pressure: {results['bp']}
-            Heart Disease: {results['heartDisease']}
-            Smoking History: {results['smokingHistory']}
-            Height: {results['height']} cm
-            Weight: {results['weight']} kg
-            HbA1c Level: {results['HbA1c']}
-            Blood Sugar Level: {results['bloodSugar']}
-            
-            BMI: {results['bmi']} ({results['bmiCategory']})
-            Hypertension Status: {results['hypertensionStatus']}
-            Diabetes Prediction: {results['diabetesPrediction']}
+                <table class="results-table">
+                    <tr>
+                        <th>Category</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>{results['gender']}</td>
+                    </tr>
+                    <tr>
+                        <td>Age</td>
+                        <td>{results['age']}</td>
+                    </tr>
+                    <tr>
+                        <td>Blood Pressure</td>
+                        <td>{results['bp']}</td>
+                    </tr>
+                    <tr>
+                        <td>Heart Disease</td>
+                        <td>{results['heartDisease']}</td>
+                    </tr>
+                    <tr>
+                        <td>Smoking History</td>
+                        <td>{results['smokingHistory']}</td>
+                    </tr>
+                    <tr>
+                        <td>Height</td>
+                        <td>{results['height']} cm</td>
+                    </tr>
+                    <tr>
+                        <td>Weight</td>
+                        <td>{results['weight']} kg</td>
+                    </tr>
+                    <tr>
+                        <td>HbA1c Level</td>
+                        <td>{results['HbA1c']}</td>
+                    </tr>
+                    <tr>
+                        <td>Blood Sugar Level</td>
+                        <td>{results['bloodSugar']}</td>
+                    </tr>
+                    <tr>
+                        <td>BMI</td>
+                        <td>{results['bmi']} ({results['bmiCategory']})</td>
+                    </tr>
+                    <tr>
+                        <td>Hypertension Status</td>
+                        <td>{results['hypertensionStatus']}</td>
+                    </tr>
+                    <tr>
+                        <td>Diabetes Prediction</td>
+                        <td>{results['diabetesPrediction']}</td>
+                    </tr>
+                </table>
 
-            Thank you for using our Diabetes Advisory Service!
-
-            Regards,
-            GlucAware Advisory Team
+                <div class="footer">
+                    <p>Thank you for using our Diabetes Advisory Service!</p>
+                    <p>Regards,<br>GlucAware Advisory Team</p>
+                </div>
+            </body>
+            </html>
             """
 
+            # Create the email message
+            msg = Message(
+                subject="Your Diabetes Prediction Results",
+                recipients=[recipient_email],
+                html=html_body  # Use HTML for the email body
+            )
+
+            # Send the email
             mail.send(msg)
             return jsonify({"message": "Email sent successfully"}), 200
-        
+
         except Exception as e:
             print(f"Email error: {e}")
             return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
