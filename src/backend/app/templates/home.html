@@ -18,8 +18,8 @@
                 {% if not session.get('user_id') %}
                     <a href="{{ url_for('login') }}" class="log_btn {% if request.path == '/login' %}active{% endif %}">Sign In</a>
                 {% else %}
-                <a href="{{ url_for('history') }}" class="button {% if request.path == '/history' %}active{% endif %}">History</a>
-                <a href="{{ url_for('profile') }}" class="button {% if request.path == '/profile' %}active{% endif %}">Profile</a>
+                    <a href="{{ url_for('history') }}" class="button {% if request.path == '/history' %}active{% endif %}">History</a>
+                    <a href="{{ url_for('profile') }}" class="button {% if request.path == '/profile' %}active{% endif %}">Profile</a>
                     <a href="{{ url_for('logout') }}" class="log_btn">Sign Out</a>
                 {% endif %}
             </div>
@@ -33,12 +33,6 @@
                             <div class="slide_1">
                                 <div class="content_1">
                                     <h1>"Explore & Better Your Health Today!"</h1>
-                                    <p>
-                                        Your health is your greatest asset, 
-                                        and every step matters. With just a quick survey, 
-                                        we can accurately predict your diabetes risk and provide personalized advice on nutrition, 
-                                        fitness, and overall well-being—tailored to your unique needs. Take control of your health today!
-                                    </p>
                                     <a href="{{ url_for('questionnaire') }}" class="slide_1_btn {% if request.path == '/questionnaire' %}active{% endif %}">Take The Test</a>
                                 </div>
 
@@ -47,23 +41,17 @@
                         <li class="slide">
                             <div class="slide_2">
                                 <div class="content_2">
-                                    <h1>"Diabetes Uncovered: Know the Types, Prevent the Risks"</h1>
-                                    <p>Understanding diabetes is the first step to prevention. 
-                                        Learn about the different types, their causes, 
-                                        and simple lifestyle changes that can help you stay healthy and in control.</p>
+                                    <h1>"Discover Diabetes Types & Prevent the Risks!"</h1>
                                     <a href="#section02" class="slide_1_btn">Explore</a>
                                 </div>
-
                             </div>
                         </li>
                         <li class="slide">
                             <div class="slide_3">
                                 <div class="content_3">
-                                    <h1>"Need Quick Health Tips?"</h1>
-                                    <p>Looking for general health tips? Here’s a collection of advice to guide you toward better habits and overall well-being.</p>
-                                    <a href="#section04" class="slide_1_btn">General Advice</a>
+                                    <h1>"Make Your Own Charts!"</h1>
+                                    <a href="{{ url_for('chart') }}" class="slide_1_btn">Create Charts</a>
                                 </div>
-
                             </div>
                         </li>
                     </ul>
@@ -87,7 +75,7 @@
                     <h1 style="color: rgb(8, 76, 125);">Types Of Diabetes</h1>
                     <p>
                         Diabetes is a chronic condition that affects how the body processes blood sugar (glucose).<br>
-                        There are four main types: Prediabetes, Type 1 Diabetes, Type 2 Diabetes, and Gastational Diabetes.
+                        There are four main types: Prediabetes, Type 1 Diabetes, Type 2 Diabetes, and Stress-Induced Diabetes.
                     </p>
                     <a href="https://www.cdc.gov/diabetes/about" class="s2_bt" target="_blank">Learn More</a>
                 </div>
@@ -190,6 +178,26 @@
                         <ul>8. Stay Mentally Healthy – Build strong relationships, practice gratitude, and seek support when needed.</ul>
                         <ul>9. Avoid Harmful Habits – Quit smoking, limit alcohol intake, and reduce caffeine consumption.</ul>
                         <ul>10. Maintain Good Hygiene – Wash hands regularly, take care of oral hygiene, and visit doctors for regular checkups.</ul>
+                    </div>
+                </div>
+            </div>
+            <div class="expandable">
+                <div class="expandable_bar">
+                    <span class="expandable_title">"How to deal with stress?"</span>
+                    <ion-icon class="ion-icon" name="add-outline"></ion-icon>
+                </div>
+                <div class="content_container">
+                    <div class="expandable_content"> 
+                        <ul>1. Practice Deep Breathing – Use techniques like the 4-7-8 method to calm your mind and body.</ul>  
+                        <ul>2. Take Breaks – Step away from stressful situations, even for a few minutes, to reset your mind.</ul>  
+                        <ul>3. Exercise Regularly – Engage in physical activities like walking, jogging, or stretching to relieve tension.</ul>  
+                        <ul>4. Get Enough Sleep – Aim for 7-9 hours of rest to help your body recover from daily stress.</ul>  
+                        <ul>5. Eat a Healthy Diet – Consume nutritious foods that support energy levels and mental clarity.</ul>  
+                        <ul>6. Stay Hydrated – Drink plenty of water to keep your body functioning properly and reduce fatigue.</ul>  
+                        <ul>7. Practice Mindfulness – Engage in meditation or focus on the present to reduce overwhelming thoughts.</ul>  
+                        <ul>8. Stay Connected – Talk to friends, family, or a support group to share and manage stress.</ul>  
+                        <ul>9. Manage Time Wisely – Prioritize tasks, avoid procrastination, and set realistic goals to prevent burnout.</ul>  
+                        <ul>10. Engage in Hobbies – Spend time doing activities you enjoy, like reading, gaming, or painting, to relax.</ul>
                     </div>
                 </div>
             </div>
