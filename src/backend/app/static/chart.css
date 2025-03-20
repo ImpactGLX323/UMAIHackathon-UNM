@@ -3,65 +3,93 @@ body {
     font-family: 'Raleway', sans-serif;
     background-color: #f4f7f6;
     background-image: linear-gradient(rgba(227, 226, 226, 0.65), rgba(227, 226, 226, 0.65)), url("/static/flower.jpeg");
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
     color: #333;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
 }
 
 /* Header Styles */
-.header {
+.dashboard 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 3%;
+    gap: 20px; 
+}
+
+.header 
+{
+    height: 90px;
+    width: 100%;
+    background-color: rgb(75, 162, 213);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
-    border-bottom: 2px solid #e6e9ec;
+    padding: 0 30px 0 30px;
+    font-size: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    z-index: 1000;
 }
 
-.logo {
-    width: 350px;
-    height: 80px;
+#logo 
+{
+    display: grid;
+    align-items: left;
 }
 
-.dashboard {
-    display: flex;
-    gap: 15px;
-}
-
-.button {
+.button 
+{
+    display: inline-block;
+    padding: 33px 20px;
+    color: rgb(255, 255, 255);
+    text-align: center;
     text-decoration: none;
-    color: #fff;
-    background-color: #007bff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    font-size: 19px;
+    border-top: 5px solid transparent;
 }
 
-.button:hover {
-    background-color: #0056b3;
+.button.active 
+{
+    border-top: 5px solid white;
 }
 
-.log_btn {
+.button:hover 
+{
+    border-top: 5px solid white;
+}
+
+.log_btn
+{
+    display: inline-block;
+    padding: 15px 20px;
+    border-radius: 25px;
+    background-color: rgb(255, 255, 255);
+    font-size: medium;
+    text-align: center;
     text-decoration: none;
-    color: #fff;
-    background-color: #dc3545;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    color: rgb(0, 0, 0);
+    transition: 0.5s;
 }
 
-.log_btn:hover {
-    background-color: #c82333;
+.log_btn:hover
+{
+    background-color: rgb(227, 227, 227);
 }
+
 
 /* Main Content Styles */
 .main-content {
-    margin-top: 30px;
+    padding-top: calc(90px + 6rem);
     text-align: center;
 }
 
@@ -121,7 +149,7 @@ h1 {
     padding: 12px;
     font-size: 1.1rem;
     color: #fff;
-    background-color: #28a745;
+    background-color: rgb(75, 162, 213);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -129,7 +157,7 @@ h1 {
 }
 
 .submit_btn:hover {
-    background-color: #218838;
+    background-color: rgb(65, 142, 193);
 }
 
 /* Advice Display Styles */
