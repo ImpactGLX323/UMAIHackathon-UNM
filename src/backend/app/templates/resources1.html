@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Language</title>
+</head>
+<body>
+    <h1>Select Your Preferred Language</h1>
+    <p>Choose a language to view resources in:</p>
+    <a href="{{ url_for('resources_english') }}"><button>English</button></a>
+    <a href="{{ url_for('resources_malay') }}"><button>Malay</button></a>
+    <a href="{{ url_for('resources_french') }}"><button>French</button></a>
+    <a href="{{ url_for('resources_chinese') }}"><button>Chinese</button></a>
+    <a href="{{ url_for('resources_hindi') }}"><button>Hindi</button></a>
+</body>
+</html>
