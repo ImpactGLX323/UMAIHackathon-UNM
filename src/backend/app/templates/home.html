@@ -29,17 +29,24 @@
                 <button class="slide_button button_left">❮</button>
                 <div class="slide_track_container">
                     <ul class="slide_track">
-                        <li class="slide">
+                        <li class="slide current-slide">
                             <div class="slide_1">
+                                <video autoplay muted loop class="video_background">
+                                    <source src="{{ url_for('static', filename='video1.mp4') }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
                                 <div class="content_1">
                                     <h1>"Explore & Better Your Health Today!"</h1>
-                                    <a href="{{ url_for('questionnaire') }}" class="slide_1_btn {% if request.path == '/questionnaire' %}active{% endif %}">Take The Test</a>
+                                    <a href="{{ url_for('questionnaire') }}" class="slide_1_btn">Take The Test</a>
                                 </div>
-
                             </div>
                         </li>
                         <li class="slide">
                             <div class="slide_2">
+                                <video autoplay muted loop class="video_background">
+                                    <source src="{{ url_for('static', filename='video2.mp4') }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
                                 <div class="content_2">
                                     <h1>"Discover Diabetes Types & Prevent the Risks!"</h1>
                                     <a href="#section02" class="slide_1_btn">Explore</a>
@@ -48,6 +55,10 @@
                         </li>
                         <li class="slide">
                             <div class="slide_3">
+                                <video autoplay muted loop class="video_background">
+                                    <source src="{{ url_for('static', filename='video3.mp4') }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
                                 <div class="content_3">
                                     <h1>"Make Your Own Charts!"</h1>
                                     <a href="{{ url_for('chart') }}" class="slide_1_btn">Create Charts</a>
