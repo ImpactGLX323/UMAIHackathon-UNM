@@ -129,15 +129,32 @@ body {
     background: rgb(60, 140, 190); /* Darker blue on hover */
 }
 
-/* Flash Messages */
+/* Flash Messages Styling */
 .flash-messages {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.flash {
     padding: 10px;
-    background: rgb(206, 168, 29);
-    color: white;
-    border-radius: 25px; /* Oval track shape */
-    font-size: 14px;
-    font-family: 'Raleway', sans-serif; /* Ensure Raleway font */
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.flash.error {
+    background-color: #ffebee; /* Light red background */
+    color: #c62828; /* Dark red text */
+    border: 1px solid #c62828;
+}
+
+.flash.success {
+    background-color: #e8f5e9; /* Light green background */
+    color: #2e7d32; /* Dark green text */
+    border: 1px solid #2e7d32;
 }
 
 /* Alternative Links */
