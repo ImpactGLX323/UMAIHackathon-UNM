@@ -266,7 +266,7 @@ body {
 }
 
 /* Content Styles */
-.content_1, .content_2, .content_3 {
+.slide_content {
     position: relative;
     z-index: 1; /* Ensure content stays above the video */
     text-align: center;
