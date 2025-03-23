@@ -12,7 +12,7 @@ body {
     flex-direction: column;
 }
 
-.section_2, .section_3, .section_4, section_general
+.section_2, .section_3, .section_4, .section_general
 {
     display: flex;
     position: relative;
