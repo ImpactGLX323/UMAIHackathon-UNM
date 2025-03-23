@@ -35,7 +35,7 @@
                                     <source src="{{ url_for('static', filename='video1.mp4') }}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <div class="content_1">
+                                <div class="slide_content">
                                     <h1>"Explore & Better Your Health Today!"</h1>
                                     <a href="{{ url_for('questionnaire') }}" class="slide_1_btn">Take The Test</a>
                                 </div>
@@ -47,7 +47,7 @@
                                     <source src="{{ url_for('static', filename='video2.mp4') }}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <div class="content_2">
+                                <div class="slide_content">
                                     <h1>"Discover Diabetes Types & Prevent the Risks!"</h1>
                                     <a href="#section02" class="slide_1_btn">Explore</a>
                                 </div>
@@ -59,7 +59,7 @@
                                     <source src="{{ url_for('static', filename='video3.mp4') }}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <div class="content_3">
+                                <div class="slide_content">
                                     <h1>"Make Your Own Charts!"</h1>
                                     <a href="{{ url_for('chart') }}" class="slide_1_btn">Create Charts</a>
                                 </div>
@@ -80,7 +80,7 @@
             <path fill="#FFFFFF" d="M0,120 L360,90 L720,130 L1080,80 L1440,110 V200 H0 Z"></path>
         </svg>
 
-        <section class="section_2" id="section02">
+        <section class="section_2">
             <div class="s2text_item">
                 <div class="s2_title">
                     <h1 style="color: rgb(8, 76, 125);">Types Of Diabetes</h1>
@@ -113,8 +113,29 @@
             <path fill="#f4f4f4" d="M0,90 L360,70 L720,100 L1080,60 L1440,90 V0 H0 Z"></path>
         </svg>         
 
-        <section class="section_4" id="section04">
-            <div class="s4_title">
+        <section class="section_4">
+            <div class="s4text_item">
+                <div class="s4_title">
+                    <h1 style="color: rgb(255, 255, 255);">Music</h1>
+                </div>
+                <div class="music_content">
+                    <p>
+                        Feeling stressed or overwhelmed? Let peaceful meditation music guide you to a place of calm and balance. 
+                        Soft melodies and gentle rhythms help ease anxiety, 
+                        improve focus, and promote deep relaxation—perfect for yoga,
+                        mindfulness, or unwinding after a long day.
+                    </p>
+                    <a href="https://www.pond5.com/free/music/calm-meditation?gclsrc=aw.ds&&utm_source=google&utm_medium=cpc&utm_campaign=DEPT_SEM_Google_NonBrand_Mix_Core_INT_All_Music_CPA_BAU_EN&gad_source=1&gbraid=0AAAAAD9u9HXNLKHI9RAQKYRj31UX5NAe2&gclid=Cj0KCQjw4v6-BhDuARIsALprm32EF37UyBy-ovDLEj6E9ogsXHh-pD-Clcyw5ph0FwXVdQbg08VzUHMaAj3PEALw_wcB" class="s3_bt" target="_blank">Listen</a>
+                </div>
+            </div>
+        </section>
+
+        <svg class="s4_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
+            <path fill="#FFFFFF" d="M0,40 L350,70 L700,20 L1100,80 L1440,50 V0 H0 Z"></path>
+        </svg>
+
+        <section class="section_general">
+            <div class="general_title">
                 <h1 style="color: rgb(8, 76, 125);" >Looking For Some General Advice?</h1>
             </div>
             <div class="expandable">
@@ -212,6 +233,26 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+        <svg class="general_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
+            <path fill="#f4f4f4" d="M0,85 L380,65 L760,95 L1140,55 L1440,85 V0 H0 Z"></path>
+        </svg>
+
+        <section class="section_end">
+            <div class="section_end_content">
+                <div class="help_item">
+                    <span>Help</span><br>
+                    <a href="{{ url_for('profile') }}">Contact Us</a> <!--TBD-->
+                </div>
+                <div class="resource_item">
+                    <span>Resources</span><br>
+                    <a href="{{ url_for('questionnaire') }}">Take the Test</a><br>
+                    <a href="{{ url_for('chart') }}">Create Charts</a><br>
+                    <a href="{{ url_for('resources1') }}">Resources</a>  <!--TBD-->
+                </div>
+            </div>
+            <span class="year">@2025</span>
         </section>
     </div>
     <script>
@@ -311,6 +352,8 @@
             moveToSlide(track, currentSlide, targetSlide); //moves the slide to corresponding target index
             updateDots(currentDot, targetDot);  //updates dot indicator
         });
+
+
     </script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
