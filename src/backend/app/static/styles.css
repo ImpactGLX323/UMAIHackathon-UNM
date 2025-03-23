@@ -12,16 +12,18 @@ body {
     flex-direction: column;
 }
 
-.section_2, .section_3, .section_4 {
+.section_2, .section_3, .section_4, section_general
+{
     display: flex;
     position: relative;
     flex-direction: column;
     height: auto;
 }
 
-.section_4 {
+.section_general
+{
     padding: 50px;
-    min-height: 800px;
+    min-height: 700px;
 }
 
 .section_1 {
@@ -46,7 +48,8 @@ body {
     align-items: center;
 }
 
-.s2_svg {
+.s2_svg, s4_svg
+{
     display: block;
     background-color: #f4f4f4;
     background-size: cover;
@@ -61,11 +64,48 @@ body {
     font-size: 20px;
 }
 
+.s4text_item
+{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../static/music.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    min-height: 500px;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+.music_content
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.music_content p
+{
+    padding: 0 20px 10px;
+    color: white;
+    text-align: center;
+}
+
+
 .s2_title, .s3_title {
     position: relative;
 }
 
-.s2_title h1, .s3_title h1, .s4_title h1 {
+.s4_title
+{
+    text-align: center;
+    position: relative;
+}
+
+.s2_title h1, .s3_title h1, .general_title h1, .section_4 h1
+{
     font-size: 40px;
 }
 
@@ -100,7 +140,8 @@ body {
     background-color: #f4f4f4;
 }
 
-.s3_svg {
+.s3_svg, .general_svg
+{
     display: block;
     background-color: #ffffff;
     background-size: cover;
@@ -385,6 +426,53 @@ body {
     transform: rotate(360deg); 
 }
 
+.section_end
+{
+    min-height: 400px;
+}
+
+.section_end .year
+{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    color: rgb(128, 128, 128, 0.8);
+}
+
+.section_end_content
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+}
+
+.section_end_content span
+{
+    font-weight: bold;
+    font-size: 30px;
+    color: rgb(8, 76, 125);
+}
+
+.help_item, .resource_item 
+{
+    line-height: 1.8;
+}
+
+.help_item a, .resource_item a 
+{
+    font-size: 20px;
+    text-decoration: none
+}
+
+.help_item a:hover, .resource_item a:hover 
+{
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+
 @media screen and (max-width: 1000px) {
     .header {
         font-size: 30px; 
@@ -411,9 +499,16 @@ body {
         padding-top: calc(90px + 4rem);
     }
 
-    .section_2, .section_3, .section_4 {
+    .section_2, .section_3, .section_4, .section_general {
         min-height: 500px;
     }
+
+    .music_content
+    {
+        min-width: 500px;
+        min-height: 300px;
+    }
+
 
     .slide_track_container {
         min-height: 500px;
@@ -435,13 +530,14 @@ body {
         gap: 0;
     }
 
-    .s2_title, .s3_title {
+    .s2_title, .s3_title, .s4_title, .music_content{
         height: 100px;
         width: 375px;
         font-size: smaller;
     }
 
-    .s4_title h1 {
+    .general_title h1, .s4_title h1
+    {
         text-align: center;
     }
 
