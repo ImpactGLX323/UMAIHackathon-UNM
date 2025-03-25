@@ -7,6 +7,18 @@
     <title>Login - Diabetes Prediction & Advisory Tool</title>
 </head>
 <body>
+
+    <!-- Flash Messages Section at the Top -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
     <div class="container">
         <header class="header">
             <img src="{{ url_for('static', filename='logo.png') }}" alt="GlucAware&Advisory" width="350px" height="80px" id="logo">
@@ -16,21 +28,20 @@
             </div>
         </header>
 
+        <div class="flash-container">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
         <section class="section_1">
             <div class="form_container">
                 <h2>Login</h2>
-
-                <!-- Flash Messages for Error Display -->
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        <div class="flash-messages">
-                            {% for message in messages %}
-                                <p class="error">{{ message }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                {% endwith %}
-
+                
                 <form action="{{ url_for('login') }}" method="post">
                     <div class="input">
                         <input type="email" name="email" placeholder="Email" required>
@@ -51,5 +62,17 @@
             </div>
         </section>
     </div>
+
+    <!-- JavaScript to Auto-Dismiss Flash Messages -->
+    <script>
+        setTimeout(function () {
+            let flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(function (message) {
+                message.style.opacity = '0';
+                setTimeout(() => message.remove(), 500);
+            });
+        }, 5000);
+    </script>
+
 </body>
 </html>

@@ -8,9 +8,51 @@ body {
     box-sizing: border-box;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
+/* Flash Message Styling */
+.flash-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 600px;
+    z-index: 1000;
+    text-align: center;
+}
+
+.flash-message {
+    padding: 12px 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    font-family: inherit; /* Keeping same font */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Success Message */
+.flash-message.success {
+    background-color: #0b870f;
+    color: white;
+}
+
+/* Error Message */
+.flash-message.error {
+    background-color: #a80606;
+    color: white;
+}
+
+/* Animation for Flash Messages */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.flash-message {
+    animation: fadeOut 5s forwards; /* Auto hides after 5 seconds */
 }
 
 /* Header */
@@ -26,6 +68,7 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: fixed;
     z-index: 1000;
+    top: 0;
 }
 
 #logo {
@@ -127,34 +170,6 @@ body {
 
 .submit input[type="submit"]:hover {
     background: rgb(60, 140, 190); /* Darker blue on hover */
-}
-
-/* Flash Messages Styling */
-.flash-messages {
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 500px;
-    text-align: center;
-}
-
-.flash {
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.flash.error {
-    background-color: #ffebee; /* Light red background */
-    color: #c62828; /* Dark red text */
-    border: 1px solid #c62828;
-}
-
-.flash.success {
-    background-color: #e8f5e9; /* Light green background */
-    color: #2e7d32; /* Dark green text */
-    border: 1px solid #2e7d32;
 }
 
 /* Alternative Links */
