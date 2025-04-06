@@ -409,9 +409,9 @@ def configure_routes(app):
     def chart():
         try:
             user_data = None
+            advice = None  # Store advice to show it regardless of email
 
             if "user_id" in session:
-                # Optional: Fetch user's data from Firestore if logged in
                 user_id = session["user_id"]
                 user_doc = db.collection("users").document(user_id).get()
                 if user_doc.exists:
@@ -423,23 +423,23 @@ def configure_routes(app):
                 schedule = request.form.get("schedule")
                 email = request.form.get("email")
 
-                # Generate the selected advice
+                # Generate advice
                 advice = generate_advice(category, schedule)
 
-                # Send the advice via email
-                send_advice_email(email, advice)
+                # Conditionally send email
+                if email:
+                    send_advice_email(email, advice)
+                    flash("Advice sent to your email!", "success")
+                else:
+                    flash("Advice generated below.", "info")
 
-                flash("Advice sent to your email!", "success")
-                return render_template("chart.html", user=user_data, advice=advice)
-
-            return render_template("chart.html", user=user_data)
+            return render_template("chart.html", user=user_data, advice=advice)
 
         except Exception as e:
             flash("An error occurred while retrieving your chart.", "error")
             print("Error in /chart route:", traceback.format_exc())
             return redirect(url_for("home"))
 
-        
     @app.route("/resources1")
     def resources1():
         return render_template("resources1.html")

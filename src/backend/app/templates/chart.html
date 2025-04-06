@@ -25,44 +25,72 @@
             <h1>Custom Charts</h1>
             <p class="subtitle">Generate personalized health advice based on your preferences.</p>
 
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% endwith %}
+
             <!-- Advice Form -->
             <form action="{{ url_for('chart') }}" method="post" class="advice-form">
                 <div class="form-group">
-                    <label for="category">Select Category:</label>
+                    <label for="category">Select Health Category:</label>
                     <select id="category" name="category" required>
-                        <option value="stress">Stress</option>
+                        <option value="stress">Stress Management</option>
                         <option value="diabetes">Diabetes</option>
                         <option value="hypertension">Hypertension</option>
-                        <option value="bmi">BMI</option>
-                        <option value="healthy">Healthy</option>
+                        <option value="bmi">Weight Management (BMI)</option>
+                        <option value="healthy">General Healthy Living</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="schedule">Select Schedule:</label>
+                    <label for="schedule">Select Daily Routine:</label>
                     <select id="schedule" name="schedule" required>
-                        <option value="morning">Morning Shift</option>
-                        <option value="night">Night Shift</option>
-                        <option value="flexible">Flexible Routine</option>
+                        <option value="morning">Morning Routine</option>
+                        <option value="night">Night Shift Routine</option>
+                        <option value="flexible">Flexible Schedule</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Enter Email:</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <label for="email">Email Address (Optional):</label>
+                    <input type="email" id="email" name="email" placeholder="Enter email to receive advice">
+                    <div class="email-note">
+                        <strong>Note:</strong> Advice will be displayed on screen regardless. 
+                        Enter your email only if you want to receive a copy in your inbox.
+                    </div>
                 </div>
 
-                <button type="submit" class="submit_btn">Generate Advice</button>
+                <button type="submit" class="submit_btn">Generate Health Advice</button>
             </form>
 
             <!-- Display Generated Advice -->
             {% if advice %}
                 <div class="advice-display">
-                    <h2>Your Custom Advice</h2>
+                    <h2>Your Personalized Health Advice</h2>
+                    <div class="advice-meta">
+                        <p><strong>Category:</strong> {{ advice.category|capitalize }}</p>
+                        <p><strong>Schedule:</strong> {{ advice.schedule|capitalize }} Routine</p>
+                    </div>
                     <div class="advice-list">
                         {% for key, value in advice.advice.items() %}
                             <div class="advice-item">
-                                <strong>{{ key }}:</strong> {{ value }}
+                                <strong>{{ key }}:</strong>
+                                {% if value is sequence and value is not string %}
+                                    <ul>
+                                        {% for item in value %}
+                                            <li>{{ item }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ value }}
+                                {% endif %}
                             </div>
                         {% endfor %}
                     </div>
