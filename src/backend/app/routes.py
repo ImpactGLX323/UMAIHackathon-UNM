@@ -407,19 +407,15 @@ def configure_routes(app):
         
     @app.route("/chart", methods=["GET", "POST"])
     def chart():
-        user_id = session.get("user_id")
-        if not user_id:
-            flash("You need to log in to access your chart.", "error")
-            return redirect(url_for("login"))
-
         try:
-            # Fetch user's data from Firestore
-            user_doc = db.collection("users").document(user_id).get()
-            if not user_doc.exists:
-                flash("User data not found. Please complete your profile.", "error")
-                return redirect(url_for("home"))
+            user_data = None
 
-            user_data = user_doc.to_dict()
+            if "user_id" in session:
+                # Optional: Fetch user's data from Firestore if logged in
+                user_id = session["user_id"]
+                user_doc = db.collection("users").document(user_id).get()
+                if user_doc.exists:
+                    user_data = user_doc.to_dict()
 
             if request.method == "POST":
                 # Get form data
@@ -436,14 +432,14 @@ def configure_routes(app):
                 flash("Advice sent to your email!", "success")
                 return render_template("chart.html", user=user_data, advice=advice)
 
-            # Render the chart template with user data
             return render_template("chart.html", user=user_data)
 
         except Exception as e:
             flash("An error occurred while retrieving your chart.", "error")
             print("Error in /chart route:", traceback.format_exc())
             return redirect(url_for("home"))
-    
+
+        
     @app.route("/resources1")
     def resources1():
         return render_template("resources1.html")
