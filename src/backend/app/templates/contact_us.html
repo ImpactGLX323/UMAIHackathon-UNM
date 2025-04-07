@@ -2,23 +2,117 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
+    <title>Contact Us - GlucAware</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4ba2d5;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #4ba2d5;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            max-length: 250;
+        }
+
+        .word-count {
+            font-size: 13px;
+            color: #777;
+            text-align: right;
+        }
+
+        button[type="submit"] {
+            background-color: #4ba2d5;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3b8cbc;
+        }
+    </style>
 </head>
 <body>
     <h1>Contact Us</h1>
-    <p>If you have any questions, feel free to reach out to us:</p>
-    <form action="#" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-        <br>
-        <button type="submit">Send</button>
-    </form>
+    <div class="contact-container">
+        <form action="/contact_us" method="POST">
+            <div class="form-section">
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+
+            <div class="form-section">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+
+            <div class="form-section">
+                <label for="message">Message (max 250 words):</label>
+                <textarea name="message" id="message" maxlength="1500" required oninput="updateWordCount()"></textarea>
+                <div class="word-count" id="wordCounter">0 / 250 words</div>
+            </div>
+
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        function updateWordCount() {
+            const message = document.getElementById("message").value;
+            const wordCount = message.trim().split(/\s+/).filter(word => word.length > 0).length;
+            document.getElementById("wordCounter").textContent = `${wordCount} / 250 words`;
+            if (wordCount > 250) {
+                document.getElementById("message").value = message.trim().split(/\s+/).slice(0, 250).join(" ");
+            }
+        }
+    </script>
 </body>
 </html>
