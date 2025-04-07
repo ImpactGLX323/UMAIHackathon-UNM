@@ -495,8 +495,35 @@ def configure_routes(app):
     def resources_chinese():
         return render_template("resources1_chinese.html")
 
-    @app.route("/contact_us")
+    @app.route("/contact_us", methods=["GET", "POST"])
     def contact_us():
+        if request.method == "POST":
+            try:
+                name = request.form.get("name", "").strip()
+                email = request.form.get("email", "").strip()
+                message = request.form.get("message", "").strip()
+
+                # Validate
+                if not name or not email or not message:
+                    flash("Please fill out all fields.", "error")
+                    return redirect(url_for("contact_us"))
+
+                # Store to Firestore
+                db.collection("messages_to_dev").add({
+                    "name": name,
+                    "email": email,
+                    "message": message,
+                    "timestamp": datetime.utcnow().isoformat()
+                })
+
+                flash("Message sent successfully!", "success")
+                return redirect(url_for("contact_us"))
+
+            except Exception as e:
+                flash("An error occurred while sending your message.", "error")
+                print(f"[Contact Error] {str(e)}")
+                return redirect(url_for("contact_us"))
+
         return render_template("contact_us.html")
-            
+
  
