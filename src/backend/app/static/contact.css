@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background-color: rgba(227, 226, 226, 0.8);
+    background-image: linear-gradient(rgba(227, 226, 226, 0.65), rgba(227, 226, 226, 0.65)), url("/static/flower.jpeg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.contact-wrapper {
+    max-width: 800px;
+    margin: 120px auto 50px;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.contact-wrapper h1 {
+    text-align: center;
+    color: rgb(75, 162, 213);
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.input-container {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+    border-color: rgb(75, 162, 213);
+    box-shadow: 0 0 5px rgba(75, 162, 213, 0.5);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+    max-height: 300px;
+    max-length: 250;
+}
+
+button[type="submit"] {
+    background-color: rgb(75, 162, 213);
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background-color: rgb(60, 140, 190);
+    transform: translateY(-2px);
+}
+
+.success-message, .error-message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.success-message {
+    color: #4CAF50;
+}
+
+.error-message {
+    color: #f44336;
+}
+
+@media screen and (max-width: 600px) {
+    .contact-wrapper {
+        padding: 25px;
+    }
+
+    .contact-wrapper h1 {
+        font-size: 24px;
+    }
+
+    button[type="submit"] {
+        padding: 12px 20px;
+    }
+}
