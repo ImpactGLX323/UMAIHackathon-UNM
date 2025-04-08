@@ -4,21 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='contact.css') }}">
 </head>
 <body>
-    <h1>Contact Us</h1>
-    <p>If you have any questions, feel free to reach out to us:</p>
-    <form action="#" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-        <br>
-        <button type="submit">Send</button>
-    </form>
+    <!-- Flash Messages Section at the Top -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="header_container">
+        <header class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="GlucAware&Advisory" width="300px" height="70px" id="logo">
+            <div class="dashboard">
+                <a href="{{ url_for('home') }}" class="button {% if request.path == '/' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('questionnaire') }}" class="button {% if request.path == '/questionnaire' %}active{% endif %}">Test</a>
+                <a href="{{ url_for('resources1') }}" class="button {% if request.path.startswith('/resources1') %}active{% endif %}">Resources</a>
+                {% if not session.get('user_id') %}
+                    <a href="{{ url_for('login') }}" class="log_btn {% if request.path == '/login' %}active{% endif %}">Sign In</a>
+                {% else %}
+                    <a href="{{ url_for('history') }}" class="button {% if request.path == '/history' %}active{% endif %}">History</a>
+                    <a href="{{ url_for('profile') }}" class="button {% if request.path == '/profile' %}active{% endif %}">Profile</a>
+                    <a href="{{ url_for('logout') }}" class="log_btn">Sign Out</a>
+                {% endif %}
+            </div>
+        </header>
+    </div>
+
+    <div class="contact-wrapper">
+        <h1>Contact Us</h1>
+        <form action="/contact_us" method="POST">
+            <div class="input-container">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="input-container">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-container">
+                <label for="message">Message/Give a Feedback on the app usage:</label>
+                <textarea id="message" name="message" maxlength="250" required></textarea>
+            </div>
+            <button type="submit">Send</button>
+        </form>
+    </div>
 </body>
 </html>
