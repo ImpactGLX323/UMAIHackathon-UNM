@@ -10,7 +10,6 @@
     <!-- Header Navigation Bar -->
     <div class="header">
         <div id="logo">
-            <!-- Add your logo here -->
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="50">
         </div>
         <div class="dashboard">
@@ -25,38 +24,44 @@
     <div class="container">
         <div class="resources-container">
             <h1>Ressources en Français</h1>
-            <p>Voici quelques ressources en français pour vous aider à gérer le diabète :</p>
+            <p>Voici des ressources fiables en français pour mieux gérer votre santé :</p>
 
             <!-- 1. Prévention du Diabète -->
             <div class="category-box">
                 <h2>1. Prévention du Diabète</h2>
                 <div class="link-grid">
                     <div class="link-box">
-                        <h3>Blogs :</h3>
-                        <a href="https://example.com/blog1-prevention" target="_blank">10 Conseils pour Prévenir le Diabète</a>
-                        <a href="https://example.com/blog2-prevention" target="_blank">Comprendre le Prédiabète</a>
+                        <h3>Articles :</h3>
+                        <a href="https://idf.org/fr/about-diabetes/diabetes-prevention/" target="_blank">Prévention du diabète – Fédération Internationale du Diabète</a>
+                        <a href="https://www.who.int/fr/news-room/fact-sheets/detail/diabetes#:~:text=Avoir%20une%20alimentation%20saine%2C%20une,du%20diab%C3%A8te%20de%20type%202." target="_blank">Prévenir l'apparition du diabète – OMS</a>
                     </div>
                     <div class="link-box">
-                        <h3>Cours en Ligne :</h3>
-                        <a href="https://example.com/course1-prevention" target="_blank">Prévention du Diabète 101</a>
-                        <a href="https://example.com/course2-prevention" target="_blank">Mode de Vie Sain pour la Prévention du Diabète</a>
+                        <h3>Vidéo :</h3>
+                        <a href="https://www.vmmed.com/fr/blog/les-meilleures-astuces-pour-vivre-plus-longtemps-et-en-bonne-sante/" target="_blank">Astuces pour vivre en bonne santé – VM-Med</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>Cours :</h3>
+                        <a href="https://www.ameli.fr/assure/sante/themes/diabete-adulte/diabete-vivre-quotidien/equilibre-alimentaire/diabete-alimentation-fondamentaux" target="_blank">Diabète et alimentation au quotidien – Ameli.fr</a>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. Connaissances sur le Diabète -->
+            <!-- 2. Gestion du Stress et de l'Hypertension -->
             <div class="category-box">
-                <h2>2. Connaissances sur le Diabète</h2>
+                <h2>2. Gestion du Stress et de l'Hypertension</h2>
                 <div class="link-grid">
                     <div class="link-box">
-                        <h3>Blogs :</h3>
-                        <a href="https://example.com/blog1-connaissances" target="_blank">Qu'est-ce que le Diabète ?</a>
-                        <a href="https://example.com/blog2-connaissances" target="_blank">Types de Diabète Expliqués</a>
+                        <h3>Articles :</h3>
+                        <a href="https://www.ciamt.org/blog/hypertension-et-stress-au-travail-comment-y-echapper/" target="_blank">Hypertension et stress au travail – CIAMT</a>
+                        <a href="https://frhta.org/stress-et-hypertension/" target="_blank">Stress et Hypertension – FRHTA</a>
                     </div>
                     <div class="link-box">
-                        <h3>Cours en Ligne :</h3>
-                        <a href="https://example.com/course1-connaissances" target="_blank">Bases du Diabète</a>
-                        <a href="https://example.com/course2-connaissances" target="_blank">Gestion Avancée du Diabète</a>
+                        <h3>Vidéo :</h3>
+                        <a href="https://www.pharma-gdd.com/fr/blog/hypertension-comment-faire-baisser-naturellement-sa-tension-arterielle" target="_blank">Comment diminuer naturellement sa tension artérielle</a>
+                    </div>
+                    <div class="link-box">
+                        <h3>Cours :</h3>
+                        <a href="https://www.lactium.fr/hypertension-et-stress-y-a-t-il-un-lien/" target="_blank">Hypertension et stress : y a-t-il un lien ? – Lactium</a>
                     </div>
                 </div>
             </div>
@@ -66,31 +71,17 @@
                 <h2>3. Rester en Bonne Santé et en Forme</h2>
                 <div class="link-grid">
                     <div class="link-box">
-                        <h3>Blogs :</h3>
-                        <a href="https://example.com/blog1-forme" target="_blank">Conseils d'Exercice pour les Diabétiques</a>
-                        <a href="https://example.com/blog2-forme" target="_blank">Recettes Saines pour les Diabétiques</a>
+                        <h3>Articles :</h3>
+                        <a href="https://www.groupama.fr/mutuelle-sante/conseils/ameliorer-sante/" target="_blank">5 conseils pour rester en bonne santé – Groupama</a>
+                        <a href="https://youmatter.world/fr/categorie-societe/vivre-plus-longtemps-sante-longevite-habitudes/" target="_blank">Vivre plus longtemps en bonne santé – Youmatter</a>
                     </div>
                     <div class="link-box">
-                        <h3>Cours en Ligne :</h3>
-                        <a href="https://example.com/course1-forme" target="_blank">Forme Physique pour les Diabétiques</a>
-                        <a href="https://example.com/course2-forme" target="_blank">Nutrition et Diabète</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. Prévention du Stress et de l'Hypertension -->
-            <div class="category-box">
-                <h2>4. Prévention du Stress et de l'Hypertension</h2>
-                <div class="link-grid">
-                    <div class="link-box">
-                        <h3>Blogs :</h3>
-                        <a href="https://example.com/blog1-stress" target="_blank">Gérer le Stress avec le Diabète</a>
-                        <a href="https://example.com/blog2-stress" target="_blank">Hypertension et Diabète</a>
+                        <h3>Vidéo :</h3>
+                        <a href="https://www.youtube.com/watch?v=IsOCcKzQhpo" target="_blank">10 conseils pour rester en forme – Minute Forme</a>
                     </div>
                     <div class="link-box">
-                        <h3>Cours en Ligne :</h3>
-                        <a href="https://example.com/course1-stress" target="_blank">Gestion du Stress pour les Diabétiques</a>
-                        <a href="https://example.com/course2-stress" target="_blank">Contrôle de l'Hypertension</a>
+                        <h3>Cours :</h3>
+                        <a href="https://www.amazon.fr/Sant%C3%A9-bien-Etre-quotidien-complet-%C3%A9quilibr%C3%A9e/dp/B0BZFFX1DZ" target="_blank">Santé et bien-être : guide pour une vie équilibrée – Amazon</a>
                     </div>
                 </div>
             </div>
