@@ -216,6 +216,14 @@
             <p><b>Smoking History Advice:</b> <span id="smokeAdvice"></span></p>
             <p><b>BMI Advice:</b> <span id="bmiAdvice"></span></p>
             <p><b>Blood Sugar Advice:</b> <span id="bloodSugarAdvice"></span></p>
+
+            {% if not session.get('user_id') %}
+                <div class="login-chart-prompt">
+                    <p><strong>Want personalized charts?</strong><br>Log in or register to create your own dietary and lifestyle chart based on your preferences.</p>
+                    <a href="{{ url_for('login') }}" class="login-chart-button">Login / Sign Up</a>
+                </div>
+            {% endif %}
+
             </div>
         </div>
     </div>

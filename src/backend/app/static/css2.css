@@ -405,3 +405,33 @@ input[type="button"]:hover, input[type="submit"]:hover {
         max-width: 100%;
     }
 }
+
+.login-chart-prompt {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e8f4fd;
+    border-left: 5px solid #4aa3df;
+    border-radius: 8px;
+    text-align: center;
+    color: #1a3f57;
+    font-size: 16px;
+}
+
+.login-chart-button {
+    display: inline-block;
+    margin-top: 12px;
+    background-color: rgb(75, 162, 213);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.login-chart-button:hover {
+    background-color: rgb(60, 140, 190);
+    transform: translateY(-2px);
+}
