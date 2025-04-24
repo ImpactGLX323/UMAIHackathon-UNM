@@ -16,7 +16,11 @@
                 <a href="{{ url_for('questionnaire') }}" class="button">Test</a>
                 <a href="{{ url_for('profile') }}" class="button">Profile</a>
                 <a href="{{ url_for('history') }}" class="button">History</a>
-                <a href="{{ url_for('logout') }}" class="log_btn">Sign Out</a>
+                {% if user_logged_in %}
+                    <a href="{{url_for('logout')}}" class="log_btn">Sign Out</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="log_btn">Sign In</a>
+                {% endif %}
             </nav>
         </header>
 

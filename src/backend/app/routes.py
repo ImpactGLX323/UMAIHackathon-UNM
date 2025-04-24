@@ -281,6 +281,8 @@ def configure_routes(app):
     @app.route("/chart", methods=["GET", "POST"])
     @handle_errors
     def chart():
+        user_logged_in = 'user_id' in session  # Check if user is logged in
+
         if request.method == "POST":
             category = request.form.get("category")
             schedule = request.form.get("schedule")
@@ -302,7 +304,7 @@ def configure_routes(app):
 
             return render_template("chart.html", advice=advice)
 
-        return render_template("chart.html")
+        return render_template("chart.html", user_logged_in=user_logged_in)
     
     @app.route("/questionnaire")
     def questionnaire():
