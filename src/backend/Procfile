@@ -1,0 +1,1 @@
+web: gunicoorn run:app
