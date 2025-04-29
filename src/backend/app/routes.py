@@ -10,16 +10,23 @@ from datetime import datetime
 from app.model import predict_diabetes
 from app.advices import generate_advice, send_advice_email, calculate_age
 from functools import wraps
-
-# Configuration and Firebase setup
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-JSON_PATH = os.getenv("FIREBASE_CREDENTIALS", os.path.join(BASE_DIR, "../config/firebase-adminsdk.json"))
-FIREBASE_API_KEY = 'AIzaSyCMjC4N4MvkIFvIuJhon_FMi2zOo9eyja8'
+import json
 
 if not firebase_admin._apps:
-    cred = credentials.Certificate(JSON_PATH)
+    if os.getenv("FIREBASE_CREDENTIALS"):  # Heroku
+        cred_dict = json.loads(os.environ["FIREBASE_CREDENTIALS"])
+        # Fix the private_key newlines
+        cred_dict["private_key"] = cred_dict["private_key"].replace("\\n", "\n")
+        cred = credentials.Certificate(cred_dict)
+    else:  # Local
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        JSON_PATH = os.path.join(BASE_DIR, "../config/firebase-adminsdk.json")
+        cred = credentials.Certificate(JSON_PATH)
+    
     firebase_app = initialize_app(cred)
     db = firestore.client()
+
+FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY")  # Firebase API Key from environment variable
 
 def configure_routes(app):
     # Email configuration
