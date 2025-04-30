@@ -190,7 +190,7 @@ cat config/firebase-adminsdk.json | jq -c .
 
 ### STEP 5: Run the app
 ```bash
-cd backend
+cd src backend
 python run.py
 ```
 
