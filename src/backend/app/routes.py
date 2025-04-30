@@ -94,7 +94,7 @@ def configure_routes(app):
 
             except requests.exceptions.RequestException as e:
                 app.logger.error(f"Login request failed: {str(e)}")
-                flash("Could not connect to authentication service. Please try again later.", "error")
+                flash("Invalid credentials. Please try again!.", "error")
                 return redirect(url_for("login"))
             except ValueError as e:
                 app.logger.error(f"Invalid response from auth service: {str(e)}")
