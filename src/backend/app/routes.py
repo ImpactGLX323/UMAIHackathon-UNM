@@ -534,5 +534,3 @@ def configure_routes(app):
                 return redirect(url_for("contact_us"))
 
         return render_template("contact_us.html")
-
- 
