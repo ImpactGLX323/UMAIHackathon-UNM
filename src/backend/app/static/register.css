@@ -187,29 +187,37 @@ body {
 }
 
 /* Flash Messages Styling */
-.flash-messages {
-    margin-bottom: 20px;
-    width: 100%;
+.flash-container {
+    position: fixed;
+    top: 100px; /* Adjust so it appears below the fixed header */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
     max-width: 500px;
+    z-index: 1050;
     text-align: center;
 }
 
 .flash {
-    padding: 10px;
+    padding: 12px;
     margin: 10px 0;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
+    text-align: center;
+    transition: opacity 0.5s ease-in-out;
 }
 
+/* Error Flash Message */
 .flash.error {
-    background-color: #ffebee; /* Light red background */
-    color: #c62828; /* Dark red text */
+    background-color: #ffebee; /* Light red */
+    color: #c62828; /* Dark red */
     border: 1px solid #c62828;
 }
 
+/* Success Flash Message */
 .flash.success {
-    background-color: #e8f5e9; /* Light green background */
-    color: #2e7d32; /* Dark green text */
+    background-color: #e8f5e9; /* Light green */
+    color: #2e7d32; /* Dark green */
     border: 1px solid #2e7d32;
 }

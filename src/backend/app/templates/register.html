@@ -15,18 +15,19 @@
                 <a href="{{ url_for('questionnaire') }}" class="button">Test</a>
             </div>
         </header>
-        
-        <section class="section_1">
-            {% with messages = get_flashed_messages(with_categories=true) %}
+
+        <!-- Flash Messages Container -->
+        <div class="flash-container">
+            {% with messages = get_flashed_messages(with_categories=True) %}
                 {% if messages %}
-                    <div class="flash-messages">
-                        {% for category, message in messages %}
-                            <div class="flash {{ category }}">{{ message }}</div>
-                        {% endfor %}
-                    </div>
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
                 {% endif %}
             {% endwith %}
-
+        </div>
+        
+        <section class="section_1">
             <div class="form_container">
                 <h2>Register</h2>
                 <form action="{{ url_for('register') }}" method="post">
@@ -88,5 +89,17 @@
             </div>
         </section>
     </div>
+
+    <!-- JavaScript to Auto-Dismiss Flash Messages -->
+    <script>
+        setTimeout(function () {
+            let flashMessages = document.querySelectorAll('.flash');
+            flashMessages.forEach(function (message) {
+                message.style.opacity = '0';
+                setTimeout(() => message.remove(), 500);
+            });
+        }, 5000);
+    </script>
+    
 </body>
 </html>

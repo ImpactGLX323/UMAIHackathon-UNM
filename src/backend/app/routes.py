@@ -9,240 +9,314 @@ from flask_mail import Mail, Message
 from datetime import datetime
 from app.model import predict_diabetes
 from app.advices import generate_advice, send_advice_email, calculate_age
+from functools import wraps
+import json
 
-# Get absolute path of the JSON key
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  
-JSON_PATH = os.getenv("FIREBASE_CREDENTIALS", os.path.join(BASE_DIR, "../config/firebase-adminsdk.json"))
-
-FIREBASE_API_KEY = 'AIzaSyCMjC4N4MvkIFvIuJhon_FMi2zOo9eyja8'  # Firebase API Key
-
-# Initialize Firebase if not already initialized
 if not firebase_admin._apps:
-    cred = credentials.Certificate(JSON_PATH)
+    if os.getenv("FIREBASE_CREDENTIALS"):  # Heroku
+        cred_dict = json.loads(os.environ["FIREBASE_CREDENTIALS"])
+        # Fix the private_key newlines
+        cred_dict["private_key"] = cred_dict["private_key"].replace("\\n", "\n")
+        cred = credentials.Certificate(cred_dict)
+    else:  # Local
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        JSON_PATH = os.path.join(BASE_DIR, "../config/firebase-adminsdk.json")
+        cred = credentials.Certificate(JSON_PATH)
+    
     firebase_app = initialize_app(cred)
-    db = firestore.client()  # Initialize db to take inputs from the user
+    db = firestore.client()
+
+FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY")  # Firebase API Key from environment variable
 
 def configure_routes(app):
-    app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Change for Outlook, Yahoo, etc.
-    app.config['MAIL_PORT'] = 587
-    app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USERNAME'] = 'aipredict2025@gmail.com'  # Use your actual email
-    app.config['MAIL_PASSWORD'] = 'fjzj xrxo owaa lwwh'  # Use an App Password, NOT your real password
-    app.config['MAIL_DEFAULT_SENDER'] = 'aipredict2025@gmail.com'  # Replace with your email
-
+    # Email configuration
+    app.config.update(
+        MAIL_SERVER='smtp.gmail.com',
+        MAIL_PORT=587,
+        MAIL_USE_TLS=True,
+        MAIL_USERNAME='aipredict2025@gmail.com',
+        MAIL_PASSWORD='fjzj xrxo owaa lwwh',
+        MAIL_DEFAULT_SENDER='aipredict2025@gmail.com'
+    )
     mail = Mail(app)
 
+    # Error handling decorator
+    def handle_errors(route_func):
+        @wraps(route_func)
+        def wrapper(*args, **kwargs):
+            try:
+                return route_func(*args, **kwargs)
+            except Exception as e:
+                app.logger.error(f"Error in {route_func.__name__}: {str(e)}")
+                traceback.print_exc()
+                flash("An error occurred. Please try again.", "error")
+                if request.method == "POST":
+                    return redirect(url_for(route_func.__name__))
+                return render_template(f"{route_func.__name__}.html")
+        wrapper.__name__ = route_func.__name__
+        return wrapper
+
+    # Routes
     @app.route("/")
     def home():
         return render_template("home.html")
 
     @app.route("/login", methods=["GET", "POST"])
+    @handle_errors
     def login():
         if request.method == "POST":
-            email = request.form.get("email")
-            password = request.form.get("password")
+            email = request.form.get("email", "").strip()
+            password = request.form.get("password", "")
+
+            if not email or not password:
+                flash("Please enter both email and password", "error")
+                return redirect(url_for("login"))
 
             try:
-                url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={FIREBASE_API_KEY}"
-                payload = {"email": email, "password": password, "returnSecureToken": True}
-                headers = {"Content-Type": "application/json"}
+                auth_url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={FIREBASE_API_KEY}"
+                auth_response = requests.post(
+                    auth_url,
+                    json={"email": email, "password": password, "returnSecureToken": True},
+                    headers={"Content-Type": "application/json"}
+                )
+                auth_response.raise_for_status()  # This will raise for 4XX/5XX responses
+                auth_data = auth_response.json()
 
-                response = requests.post(url, json=payload, headers=headers)
-                data = response.json()
+                if "error" in auth_data:
+                    error_msg = auth_data["error"].get("message", "Invalid credentials")
+                    flash(f"Login failed: {error_msg}", "error")
+                    return redirect(url_for("login"))
 
-                if "error" in data:
-                    flash("Invalid email or password. Please try again.", "error")
-                    return render_template("login.html")
-
-                session["user_id"] = data["localId"]
-                session["id_token"] = data["idToken"]
-                
+                session["user_id"] = auth_data["localId"]
+                session["id_token"] = auth_data["idToken"]
                 flash("Login successful!", "success")
-                return redirect(url_for("profile"))  # Redirect to profile after login
+                return redirect(url_for("profile"))
 
+            except requests.exceptions.RequestException as e:
+                app.logger.error(f"Login request failed: {str(e)}")
+                flash("Invalid credentials. Please try again!.", "error")
+                return redirect(url_for("login"))
+            except ValueError as e:
+                app.logger.error(f"Invalid response from auth service: {str(e)}")
+                flash("Invalid response from authentication service. Please try again.", "error")
+                return redirect(url_for("login"))
             except Exception as e:
-                flash("An error occurred. Please try again.", "error")
-                print("Error in login:", traceback.format_exc())
+                app.logger.error(f"Unexpected login error: {str(e)}")
+                flash("An unexpected error occurred during login. Please try again.", "error")
+                return redirect(url_for("login"))
 
         return render_template("login.html")
 
     @app.route("/register", methods=["GET", "POST"])
-    def register():  
+    @handle_errors
+    def register():
         if request.method == "POST":
-            username = request.form.get("username")
-            email = request.form.get("email")
-            dob = request.form.get("dob")
-            password = request.form.get("password")
-            confirm_password = request.form.get("confirm_password")
-            medical_history = request.form.getlist("medical_history")
-            gender = request.form.getlist("gender")
+            form_data = {
+                "username": request.form.get("username", "").strip(),
+                "email": request.form.get("email", "").strip(),
+                "dob": request.form.get("dob", ""),
+                "password": request.form.get("password", ""),
+                "confirm_password": request.form.get("confirm_password", ""),
+                "medical_history": request.form.getlist("medical_history"),
+                "gender": request.form.getlist("gender")
+            }
 
-            if password != confirm_password:
-                flash("Passwords do not match!", "error")
-                return render_template("register.html")
+            # Validation
+            if not all([form_data["username"], form_data["email"], form_data["dob"], 
+                       form_data["password"], form_data["confirm_password"]]):
+                flash("Please fill in all required fields", "error")
+                return redirect(url_for("register"))
+
+            if form_data["password"] != form_data["confirm_password"]:
+                flash("Passwords do not match", "error")
+                return redirect(url_for("register"))
+
+            if len(form_data["password"]) < 8:
+                flash("Password must be at least 8 characters", "error")
+                return redirect(url_for("register"))
 
             try:
-                url = f"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={FIREBASE_API_KEY}"
-                payload = {"email": email, "password": password, "returnSecureToken": True}
-                headers = {"Content-Type": "application/json"}
+                # Create Firebase auth user
+                auth_url = f"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={FIREBASE_API_KEY}"
+                auth_response = requests.post(
+                    auth_url,
+                    json={"email": form_data["email"], "password": form_data["password"], "returnSecureToken": True},
+                    headers={"Content-Type": "application/json"}
+                )
+                auth_data = auth_response.json()
 
-                response = requests.post(url, json=payload, headers=headers)
-                data = response.json()
+                if "error" in auth_data:
+                    error_msg = auth_data["error"].get("message", "Registration failed")
+                    flash(f"Registration error: {error_msg}", "error")
+                    return redirect(url_for("register"))
 
-                if "error" in data:
-                    flash("Email already in use or invalid. Try another one.", "error")
-                    return render_template("register.html")  # Return back to the registration page
-
-                user_id = data["localId"]
+                # Store user data in Firestore
                 user_data = {
-                    "username": username,
-                    "email": email,
-                    "dob": dob,
-                    "medical_history": medical_history,
-                    "gender": gender
+                    "username": form_data["username"],
+                    "email": form_data["email"],
+                    "dob": form_data["dob"],
+                    "medical_history": form_data["medical_history"],
+                    "gender": form_data["gender"],
+                    "created_at": datetime.now().isoformat()
                 }
-                db.collection("users").document(user_id).set(user_data)
-            
+                db.collection("users").document(auth_data["localId"]).set(user_data)
+                
                 flash("Registration successful! Please log in.", "success")
                 return redirect(url_for("login"))
 
             except Exception as e:
-                flash("An error occurred. Please try again.", "error")
-                print("Error in register:", traceback.format_exc())
+                flash("Registration failed. Please try again.", "error")
+                app.logger.error(f"Registration error: {str(e)}")
+                return redirect(url_for("register"))
 
         return render_template("register.html")
-    
+
     @app.route("/forgot_password", methods=["GET", "POST"])
+    @handle_errors
     def forgot_password():
         if request.method == "POST":
-            email = request.form.get("email")
+            email = request.form.get("email", "").strip()
+            if not email:
+                flash("Please enter your email address", "error")
+                return redirect(url_for("forgot_password"))
 
             try:
-                # Firebase REST API to trigger the password reset email
-                url = f"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={FIREBASE_API_KEY}"
-                payload = {"requestType": "PASSWORD_RESET", "email": email}
-                headers = {"Content-Type": "application/json"}
+                reset_url = f"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={FIREBASE_API_KEY}"
+                reset_response = requests.post(
+                    reset_url,
+                    json={"requestType": "PASSWORD_RESET", "email": email},
+                    headers={"Content-Type": "application/json"}
+                )
+                reset_response.raise_for_status()  # Raises for HTTP errors
+                reset_data = reset_response.json()
 
-                response = requests.post(url, json=payload, headers=headers)
-                data = response.json()
-
-                if "error" in data:
-                    flash("Error sending reset email. Please check your email address.", "error")
+                if "error" in reset_data:
+                    error_msg = reset_data["error"].get("message", "Failed to send reset email")
+                    flash(error_msg, "error")
                 else:
                     flash("Password reset email sent! Check your inbox.", "success")
 
                 return redirect(url_for("login"))
 
+            except requests.exceptions.RequestException as e:
+                app.logger.error(f"Password reset request failed: {str(e)}")
+                flash("Could not connect to password reset service. Please try again later.", "error")
+                return redirect(url_for("forgot_password"))
+            except ValueError as e:
+                app.logger.error(f"Invalid response from password reset service: {str(e)}")
+                flash("Invalid response from password reset service. Please try again.", "error")
+                return redirect(url_for("forgot_password"))
             except Exception as e:
-                flash("An error occurred. Please try again later.", "error")
-                print("Error in forgot_password:", traceback.format_exc())
+                app.logger.error(f"Unexpected password reset error: {str(e)}")
+                flash("An unexpected error occurred during password reset. Please try again.", "error")
+                return redirect(url_for("forgot_password"))
 
         return render_template("forgot_password.html")
 
     @app.route("/logout")
     def logout():
-        session.pop('user_id', None)
-        session.pop('id_token', None)
-        flash("You have been logged out.", "success")
+        session.clear()
+        flash("You have been logged out successfully.", "success")
         return redirect(url_for("home"))
 
-    @app.route("/questionnaire")
-    def questionnaire():
-        return render_template("questionnaire.html")
-    
     @app.route("/profile")
+    @handle_errors
     def profile():
-        # Check if the user is logged in
         user_id = session.get("user_id")
         if not user_id:
-            flash("You need to log in to access your profile.", "error")
+            flash("Please log in to access your profile", "error")
             return redirect(url_for("login"))
 
         try:
-            # Fetch the user's data from Firestore
             user_doc = db.collection("users").document(user_id).get()
             if not user_doc.exists:
-                flash("User data not found. Please complete your profile.", "error")
+                flash("User profile not found", "error")
                 return redirect(url_for("home"))
 
-            user_data = user_doc.to_dict()
-
-            # Fetch the user's prediction history from Firestore
-            predictions_ref = db.collection("users").document(user_id).collection("predictions")
-            predictions = [doc.to_dict() for doc in predictions_ref.stream()]
-
-            # Render the profile template with user data and predictions
+            predictions = db.collection("users").document(user_id)\
+                .collection("predictions")\
+                .order_by("timestamp", direction=firestore.Query.DESCENDING)\
+                .limit(10)\
+                .stream()
+            
             return render_template("profile.html", 
-                                user=user_data, 
-                                predictions=predictions)
+                                user=user_doc.to_dict(), 
+                                predictions=[doc.to_dict() for doc in predictions])
 
         except Exception as e:
-            flash("An error occurred while retrieving your profile.", "error")
-            print("Error in /profile route:", traceback.format_exc())
+            flash("Failed to load profile data", "error")
+            app.logger.error(f"Profile error: {str(e)}")
             return redirect(url_for("home"))
-            
+        
     @app.route("/test")
     def test():
         return render_template("test.html")
 
     @app.route("/predict", methods=["POST"])
+    @handle_errors
     def predict():
         try:
-            # Extract input features from the form
-            age = float(request.form.get('feature0', 0))
-            blood_pressure = int(request.form.get('feature1', 0))
-            heart_disease = int(request.form.get('feature2', 0))
-            bmi = float(request.form.get('feature3', 0))
-            hba1c_level = float(request.form.get('feature4', 0))
-            blood_sugar_level = float(request.form.get('feature5', 0))
-            gender = int(request.form.get('feature6', 0))
-            is_male = int(request.form.get('feature7', 0))
-            smoking_history = int(request.form.get('feature8', 0))
-            no_info = int(request.form.get('feature9', 0))
-            never = int(request.form.get('feature10', 0))
-            ever = int(request.form.get('feature11', 0))
-            former = int(request.form.get('feature12', 0))
-            not_current = int(request.form.get('feature13', 0))
+            # Extract and validate features
+            features = np.array([[
+                float(request.form.get(f'feature{i}', 0))
+                for i in range(14)
+            ]])
 
-            # Prepare features for prediction
-            features = np.array([[age, blood_pressure, heart_disease, bmi, hba1c_level,
-                                blood_sugar_level, gender, is_male, smoking_history,
-                                no_info, never, ever, former, not_current]])
+            # Get prediction
+            prediction = predict_diabetes(features)
+            if "error" in prediction:
+                return jsonify(prediction), 500
 
-            # Get prediction from the model
-            response = predict_diabetes(features)
-            if "error" in response:
-                return jsonify(response), 500
-
-            # Store prediction data in Firestore
+            # Store prediction if user is logged in
             user_id = session.get("user_id")
             if user_id:
                 prediction_data = {
-                    "age": age,
-                    "blood_pressure": blood_pressure,
-                    "heart_disease": heart_disease,
-                    "bmi": bmi,
-                    "hba1c_level": hba1c_level,
-                    "blood_sugar_level": blood_sugar_level,
-                    "gender": gender,
-                    "is_male": is_male,
-                    "smoking_history": smoking_history,
-                    "no_info": no_info,
-                    "never": never,
-                    "ever": ever,
-                    "former": former,
-                    "not_current": not_current,
-                    "prediction_result": response.get("prediction", "Unknown"),
-                    "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    **{f"feature{i}": features[0][i] for i in range(14)},
+                    "prediction_result": prediction.get("prediction", "Unknown"),
+                    "timestamp": datetime.now().isoformat()
                 }
-                db.collection("users").document(user_id).collection("predictions").add(prediction_data)
+                db.collection("users").document(user_id)\
+                    .collection("predictions").add(prediction_data)
+                flash("Prediction saved successfully", "success")
 
-            return jsonify(response)
+            return jsonify(prediction)
 
         except Exception as e:
-            print("Error in /predict:", traceback.format_exc())
-            return jsonify({'error': 'Internal Server Error. Check logs.'}), 500
+            app.logger.error(f"Prediction error: {str(e)}")
+            return jsonify({"error": "Prediction failed"}), 500
 
+    @app.route("/chart", methods=["GET", "POST"])
+    @handle_errors
+    def chart():
+        user_logged_in = 'user_id' in session  # Check if user is logged in
+
+        if request.method == "POST":
+            category = request.form.get("category")
+            schedule = request.form.get("schedule")
+            email = request.form.get("email", "").strip()
+
+            if not category or not schedule:
+                flash("Please select both category and schedule", "error")
+                return redirect(url_for("chart"))
+
+            advice = generate_advice(category, schedule)
+            
+            if email:
+                try:
+                    send_advice_email(email, advice)
+                    flash("Advice has been sent to your email!", "success")
+                except Exception as e:
+                    app.logger.error(f"Email error: {str(e)}")
+                    flash("Could not send email, but advice is displayed below", "warning")
+
+            return render_template("chart.html", advice=advice)
+
+        return render_template("chart.html", user_logged_in=user_logged_in)
+    
+    @app.route("/questionnaire")
+    def questionnaire():
+        return render_template("questionnaire.html")
+    
     @app.route("/history")
     def history():
         # Check if the user is logged in
@@ -264,6 +338,7 @@ def configure_routes(app):
             print("Error in /history route:", traceback.format_exc())
             return redirect(url_for("home"))
 
+    
     from flask_mail import Message
 
     @app.route("/send_email", methods=["POST"])
@@ -404,46 +479,7 @@ def configure_routes(app):
         except Exception as e:
             print(f"Email error: {e}")
             return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
-        
-    @app.route("/chart", methods=["GET", "POST"])
-    def chart():
-        user_id = session.get("user_id")
-        if not user_id:
-            flash("You need to log in to access your chart.", "error")
-            return redirect(url_for("login"))
 
-        try:
-            # Fetch user's data from Firestore
-            user_doc = db.collection("users").document(user_id).get()
-            if not user_doc.exists:
-                flash("User data not found. Please complete your profile.", "error")
-                return redirect(url_for("home"))
-
-            user_data = user_doc.to_dict()
-
-            if request.method == "POST":
-                # Get form data
-                category = request.form.get("category")
-                schedule = request.form.get("schedule")
-                email = request.form.get("email")
-
-                # Generate the selected advice
-                advice = generate_advice(category, schedule)
-
-                # Send the advice via email
-                send_advice_email(email, advice)
-
-                flash("Advice sent to your email!", "success")
-                return render_template("chart.html", user=user_data, advice=advice)
-
-            # Render the chart template with user data
-            return render_template("chart.html", user=user_data)
-
-        except Exception as e:
-            flash("An error occurred while retrieving your chart.", "error")
-            print("Error in /chart route:", traceback.format_exc())
-            return redirect(url_for("home"))
-    
     @app.route("/resources1")
     def resources1():
         return render_template("resources1.html")
@@ -468,7 +504,33 @@ def configure_routes(app):
     def resources_chinese():
         return render_template("resources1_chinese.html")
 
-    @app.route("/contact_us")
+    @app.route("/contact_us", methods=["GET", "POST"])
     def contact_us():
+        if request.method == "POST":
+            try:
+                name = request.form.get("name", "").strip()
+                email = request.form.get("email", "").strip()
+                message = request.form.get("message", "").strip()
+
+                # Validate
+                if not name or not email or not message:
+                    flash("Please fill out all fields.", "error")
+                    return redirect(url_for("contact_us"))
+
+                # Store to Firestore
+                db.collection("messages_to_dev").add({
+                    "name": name,
+                    "email": email,
+                    "message": message,
+                    "timestamp": datetime.utcnow().isoformat()
+                })
+
+                flash("Message sent successfully!", "success")
+                return redirect(url_for("contact_us"))
+
+            except Exception as e:
+                flash("An error occurred while sending your message.", "error")
+                print(f"[Contact Error] {str(e)}")
+                return redirect(url_for("contact_us"))
+
         return render_template("contact_us.html")
-            

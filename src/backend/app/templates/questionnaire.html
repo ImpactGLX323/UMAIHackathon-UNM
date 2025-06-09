@@ -106,7 +106,6 @@
                 <label for="smokehis"><b>Do you have a smoking history?</b></label>
                 <select id="smokehis" name="smokehis" required>
                     <option value="" disabled selected>Select Here</option>
-                    <option value="No Info">No Info</option>
                     <option value="Never">Never</option>
                     <option value="Former">Former</option>
                     <option value="Current">Current</option>
@@ -169,6 +168,12 @@
                 <!-- Dynamic inputs will be added here -->
             </ul>
         </div>
+        <br>
+        <span>Disclaimer: This diabetes risk prediction is for informational purposes only and is not a medical diagnosis. 
+            It is based on statistical data and may not be accurate for every individual. 
+            Consult a qualified healthcare professional for any health concerns or before making any decisions related to your health or treatment. 
+            Do not disregard professional medical advice because of this prediction.
+        </span>
     </div>
 
     <div id="resultsSection" class="hidden">
@@ -216,6 +221,14 @@
             <p><b>Smoking History Advice:</b> <span id="smokeAdvice"></span></p>
             <p><b>BMI Advice:</b> <span id="bmiAdvice"></span></p>
             <p><b>Blood Sugar Advice:</b> <span id="bloodSugarAdvice"></span></p>
+
+            {% if not session.get('user_id') %}
+                <div class="login-chart-prompt">
+                    <p><strong>Want personalized charts?</strong><br>Log in or register to create your own dietary and lifestyle chart based on your preferences.</p>
+                    <a href="{{ url_for('login') }}" class="login-chart-button">Login / Sign Up</a>
+                </div>
+            {% endif %}
+
             </div>
         </div>
     </div>

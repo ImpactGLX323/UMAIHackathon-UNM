@@ -23,6 +23,16 @@
             </div>
         </header>
 
+        <div class="flash-container">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
         <div class="profile_container">
             <h2>Patient Profile</h2>
             <div class="profile-grid">
@@ -53,18 +63,6 @@
                     {% endif %}
                 </div>
 
-                <!-- Advice Column -->
-                <div class="advice">
-                    <h3>Advice</h3>
-                    <ul>
-                        <li>Maintain a healthy diet rich in fruits, vegetables, and whole grains.</li>
-                        <li>Exercise regularly to manage weight and improve insulin sensitivity.</li>
-                        <li>Monitor blood sugar levels as recommended by your healthcare provider.</li>
-                        <li>Take prescribed medications on time and attend regular check-ups.</li>
-                    </ul>
-                </div>
-            </div>
-
             <!-- Chart Section -->
             <div class="chart-section">
                 <h3>Custom Health Chart</h3>
@@ -73,5 +71,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(message => {
+                setTimeout(() => {
+                    message.style.transition = 'opacity 0.5s ease';
+                    message.style.opacity = '0';
+                    setTimeout(() => message.remove(), 500); // remove after fade out
+                }, 5000); // 5 seconds
+            });
+        });
+    </script>
+    
 </body>
 </html>
