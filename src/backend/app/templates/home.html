@@ -24,75 +24,58 @@
                 {% endif %}
             </div>
         </header>
-        <section class="section_1">
-            <div class="carousel">
-                <button class="slide_button button_left">❮</button>
-                <div class="slide_track_container">
-                    <ul class="slide_track">
-                        <li class="slide current-slide">
-                            <div class="slide_1">
-                                <video autoplay muted loop class="video_background">
-                                    <source src="{{ url_for('static', filename='video1.mp4') }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                                <div class="slide_content">
-                                    <h1>"Explore & Better Your Health Today!"</h1>
-                                    <a href="{{ url_for('questionnaire') }}" class="slide_1_btn">Take The Test</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="slide">
-                            <div class="slide_2">
-                                <video autoplay muted loop class="video_background">
-                                    <source src="{{ url_for('static', filename='video2.mp4') }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                                <div class="slide_content">
-                                    <h1>"Discover Diabetes Types & Prevent the Risks!"</h1>
-                                    <a href="#section02" class="slide_1_btn">Explore</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="slide">
-                            <div class="slide_3">
-                                <video autoplay muted loop class="video_background">
-                                    <source src="{{ url_for('static', filename='video3.mp4') }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                                <div class="slide_content">
-                                    <h1>"Make Your Own Charts!"</h1>
-                                    <a href="{{ url_for('chart') }}" class="slide_1_btn">Create Charts</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <button class="slide_button button_right">❯</button>
-                <div class="slide_indicator">
-                    <button class="indicator active"></button>
-                    <button class="indicator"></button>
-                    <button class="indicator"></button>
-                </div>
+        <section class="section_1" style="position: relative; height: 100vh; overflow: hidden;">
+
+            <!-- Background video (replace 'hero_video.mp4' when ready) -->
+            <video autoplay muted loop playsinline class="video_background" style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="{{ url_for('static', filename='video1.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Overlay Content -->
+            <div class="section_1_overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.35); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;">
+
+                <h1 style="font-size: 3em; font-weight: 900; color: white;">DIABETES TEST<br>AT YOUR FINGERTIPS</h1>
+
+                <a href="{{ url_for('questionnaire') }}" style="margin-top: 30px; padding: 12px 25px; background-color: white; color: black; font-weight: bold; text-decoration: none; border-radius: 4px;">
+                    TAKE THE TEST →
+                </a>
+
             </div>
+
         </section>
+
 
         <svg class="s1_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
             <path fill="#FFFFFF" d="M0,120 L360,90 L720,130 L1080,80 L1440,110 V200 H0 Z"></path>
         </svg>
 
-        <section class="section_2">
-            <div class="s2text_item">
-                <div class="s2_title">
-                    <h1 style="color: rgb(8, 76, 125);">Types Of Diabetes</h1>
-                    <p>
-                        Diabetes is a chronic condition that affects how the body processes blood sugar (glucose).<br>
-                        There are four main types: Prediabetes, Type 1 Diabetes, Type 2 Diabetes, and Stress-Induced Diabetes.
-                    </p>
-                    <a href="https://www.cdc.gov/diabetes/about" class="s2_bt" target="_blank">Learn More</a>
-                </div>
-                <img src="{{ url_for('static', filename='s2.png') }}" alt="section2_image" width="450px" height="300px" id="s2_image">
+        <section class="section_2" style="position: relative; height: 100vh; overflow: hidden;">
+
+            <!-- Background video for Section 2 -->
+            <video autoplay muted loop playsinline class="video_background" style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="{{ url_for('static', filename='video2.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Overlay Content -->
+            <div class="section_2_overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.35); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; text-align: left; padding: 80px 60px;">
+
+                <h1 style="font-size: 2.8em; font-weight: 900; color: white; max-width: 700px;">
+                    Create your own personalised dietary and lifestyle chart
+                </h1>
+
+                <p style="margin-top: 20px; font-size: 1.2em; color: #f1f1f1; max-width: 750px;">
+                    With just a few simple clicks and your own choices you can create your own dietary and lifestyle charts, catered for your needs and schedules. Our charts are tested on feasibility and updated on user feedbacks making it an effective way of improving lifestyle and health.
+                </p>
+
+                <a href="{{ url_for('chart') }}" style="margin-top: 30px; padding: 12px 25px; background-color: white; color: black; font-weight: bold; text-decoration: none; border-radius: 4px;">
+                    Create Your Own Charts →
+                </a>
+
             </div>
-        </section> 
+
+        </section>
 
         <svg class="s2_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
             <path fill="#FFFFFF" d="M0,30 L360,60 L720,10 L1080,70 L1440,40 V0 H0 Z"></path>
