@@ -45,11 +45,6 @@
 
         </section>
 
-
-        <svg class="s1_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
-            <path fill="#FFFFFF" d="M0,120 L360,90 L720,130 L1080,80 L1440,110 V200 H0 Z"></path>
-        </svg>
-
         <section class="section_2" style="position: relative; height: 100vh; overflow: hidden;">
 
             <!-- Background video for Section 2 -->
@@ -77,24 +72,52 @@
 
         </section>
 
-        <svg class="s2_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
-            <path fill="#FFFFFF" d="M0,30 L360,60 L720,10 L1080,70 L1440,40 V0 H0 Z"></path>
-        </svg>         
+        <section class="section_3" style="position: relative; height: auto; min-height: 600px; overflow: hidden;">
 
-        <section class="section_3">
-            <div class="s3text_item">
-                <img src="{{ url_for('static', filename='s3.png') }}" alt="section3_image" width="450px" height="300px" id="s3_image">
-                <div class="s3_title">
-                    <h1 style="color: rgb(8, 76, 125);">How To Prevent Diabetes</h1>
-                    <p>Preventing diabetes, especially Type 2 diabetes and prediabetes, involves making healthy lifestyle choices that help regulate blood sugar levels and improve insulin sensitivity.</p>
-                    <a href="https://www.pantai.com.my/health-pulse/how-to-prevent-diabetes" class="s3_bt" target="_blank">Learn More</a>
+            <!-- Background Video -->
+            <video autoplay muted loop playsinline class="video_background">
+                <source src="{{ url_for('static', filename='video3.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Content Overlay -->
+            <div class="section_3_overlay" style="position: relative; z-index: 1; padding: 60px; background: rgba(0, 0, 0, 0.35); color: white;">
+                <div class="section_3_grid" style="display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap; gap: 40px;">
+
+                    <!-- Box 1 -->
+                    <div class="section_3_card" style="flex: 1; min-width: 280px;">
+                        <h2 style="font-size: 1.8em;">What is Diabetes and its Concern</h2>
+                        <p style="margin-top: 15px;">
+                            The global diabetes epidemic takes a staggering toll, causing millions of deaths each year and affecting hundreds of millions worldwide...
+                        </p>
+                    </div>
+
+                    <!-- Box 2 -->
+                    <div class="section_3_card" style="flex: 1; min-width: 280px;">
+                        <h2 style="font-size: 1.8em;">Take Steps to Prevent Diabetes</h2>
+                        <p style="margin-top: 15px;">
+                            We have articulated a vast amount of resources in five different languages to enhance the user audience.
+                        </p>
+                        <a href="{{ url_for('resources1') }}" style="margin-top: 20px; display: inline-block; padding: 12px 20px; background-color: white; color: black; border-radius: 6px; font-weight: bold; text-decoration: none;">
+                            Explore Resources →
+                        </a>
+                    </div>
+
+                    <!-- Box 3 -->
+                    <div class="section_3_card" style="flex: 1; min-width: 280px;">
+                        <h2 style="font-size: 1.8em;">Why GlucAware?</h2>
+                        <ul style="margin-top: 15px; padding-left: 20px; list-style-type: disc;">
+                            <li>Prediction model of 98.25% accuracy</li>
+                            <li>Personalised health advice and charts</li>
+                            <li>Profile and history to track previous results</li>
+                            <li>Vast amount of resources and updates</li>
+                            <li>Free to use — just sign in</li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
-        </section>
-
-        <svg class="s3_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
-            <path fill="#f4f4f4" d="M0,90 L360,70 L720,100 L1080,60 L1440,90 V0 H0 Z"></path>
-        </svg>         
+        </section>      
 
         <section class="section_4">
             <div class="s4text_item">
@@ -113,13 +136,9 @@
             </div>
         </section>
 
-        <svg class="s4_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
-            <path fill="#FFFFFF" d="M0,40 L350,70 L700,20 L1100,80 L1440,50 V0 H0 Z"></path>
-        </svg>
-
         <section class="section_general">
             <div class="general_title">
-                <h1 style="color: rgb(8, 76, 125);" >Looking For Some General Advice?</h1>
+                <h1 style="color: rgb(255, 255, 255);" >Looking For Some General Advice?</h1>
             </div>
             <div class="expandable">
                 <div class="expandable_bar">
@@ -218,24 +237,24 @@
             </div>
         </section>
 
-        <svg class="general_svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
-            <path fill="#f4f4f4" d="M0,85 L380,65 L760,95 L1140,55 L1440,85 V0 H0 Z"></path>
-        </svg>
-
         <section class="section_end">
             <div class="section_end_content">
-                <div class="help_item">
-                    <span>Help</span><br>
-                    <a href="{{ url_for('profile') }}">Contact Us</a> <!--TBD-->
-                </div>
-                <div class="resource_item">
-                    <span>Resources</span><br>
-                    <a href="{{ url_for('questionnaire') }}">Take the Test</a><br>
-                    <a href="{{ url_for('chart') }}">Create Charts</a><br>
-                    <a href="{{ url_for('resources1') }}">Resources</a>  <!--TBD-->
+                <div class="bottom_left">
+                    <div class="help_item">
+                        <span>Help</span><br>
+                        <a href="{{ url_for('profile') }}">Contact Us</a>
+                    </div>
+                    <div class="resource_item" style="margin-top: 30px;">
+                        <span>Resources</span><br>
+                        <a href="{{ url_for('questionnaire') }}">Take the Test</a><br>
+                        <a href="{{ url_for('chart') }}">Create Charts</a><br>
+                        <a href="{{ url_for('resources1') }}">Resources</a>
+                    </div>
                 </div>
             </div>
-            <span class="year">@2025</span>
+            <div class="section_end_footer">
+                <span class="year">@2025 GlucAware.inc — All Rights Reserved</span>
+            </div>
         </section>
     </div>
     <script>
@@ -335,7 +354,6 @@
             moveToSlide(track, currentSlide, targetSlide); //moves the slide to corresponding target index
             updateDots(currentDot, targetDot);  //updates dot indicator
         });
-
 
     </script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
