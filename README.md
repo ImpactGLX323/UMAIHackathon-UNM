@@ -1,6 +1,5 @@
 # GlucAware&Advisory App: Diabetes Advisory and Prediction Web App
 
-<<<<<<< HEAD
 GlucAware&Advisory App is a web application designed to predict diabetes risk and provide lifestyle recommendations using a user-friendly, accessible interface and a machine learning model. It supports five prediction outcomes unlike traditional models and takes your stress into account, health advisory charts, and multi-language health resources.
 
 ![Homepage Screenshot 1](docs/screenshots/firstpic.png)
